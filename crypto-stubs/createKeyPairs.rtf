@@ -1,0 +1,63 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf510
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red170\green13\blue145;\red92\green38\blue153;\red196\green26\blue22;
+\red46\green13\blue110;\red28\green0\blue207;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab560
+\pard\tx560\pardeftab560\pardirnatural
+
+\f0\fs22 \cf2 \CocoaLigature0 static\cf0  \cf2 const\cf0  \cf3 UInt8\cf0  privateKeyIdentifier[] = \cf4 "privKey\\0"\cf0 ;\
+\cf2 static\cf0  \cf2 const\cf0  \cf3 UInt8\cf0  publicKeyIdentifier[] = \cf4 "pubKey\\0"\cf0 ;\
+\
++(\cf2 void\cf0 )generateKeyPairs\
+\{\
+    \cf3 OSStatus\cf0  status = \cf5 noErr\cf0 ;\
+    \
+    \cf3 NSMutableDictionary\cf0  *privateKeyAttr = [[\cf3 NSMutableDictionary\cf0  \cf5 alloc\cf0 ] \cf5 init\cf0 ];\
+    \cf3 NSMutableDictionary\cf0  *publicKeyAttr = [[\cf3 NSMutableDictionary\cf0  \cf5 alloc\cf0 ] \cf5 init\cf0 ];\
+    \cf3 NSMutableDictionary\cf0  *keyPairAttr = [[\cf3 NSMutableDictionary\cf0  \cf5 alloc\cf0 ] \cf5 init\cf0 ];\
+    \
+    \
+    \cf3 NSData\cf0  * publicTag = [NSData dataWithBytes:publicKeyIdentifier\
+                                        length:strlen((\cf2 const\cf0  \cf2 char\cf0  *)publicKeyIdentifier)];\
+    \cf3 NSData\cf0  * privateTag = [NSData dataWithBytes:privateKeyIdentifier\
+                                         length:strlen((\cf2 const\cf0  \cf2 char\cf0  *)privateKeyIdentifier)];\
+    \
+    \
+    \cf3 SecKeyRef\cf0  publicKey = \cf2 NULL\cf0 ;\
+    \cf3 SecKeyRef\cf0  privateKey = \cf2 NULL\cf0 ;\
+    \
+    [keyPairAttr \cf5 setObject\cf0 :(\cf2 id\cf0 )\cf3 kSecAttrKeyTypeRSA\cf0 \
+                    \cf5 forKey\cf0 :(\cf2 id\cf0 )\cf3 kSecAttrKeyType\cf0 ];\
+    [keyPairAttr \cf5 setObject\cf0 :[\cf3 NSNumber\cf0  \cf5 numberWithInt\cf0 :\cf6 1024\cf0 ]\
+                    \cf5 forKey\cf0 :(\cf2 id\cf0 )\cf3 kSecAttrKeySizeInBits\cf0 ];\
+    \
+    [publicKeyAttr \cf5 setObject\cf0 :[\cf3 NSNumber\cf0  \cf5 numberWithBool\cf0 :\cf2 YES\cf0 ]\
+                      \cf5 forKey\cf0 :(\cf2 id\cf0 )\cf3 kSecAttrIsPermanent\cf0 ];\
+    [publicKeyAttr \cf5 setObject\cf0 :publicTag\
+                      \cf5 forKey\cf0 :(\cf2 id\cf0 )\cf3 kSecAttrApplicationTag\cf0 ];\
+    \
+    [privateKeyAttr \cf5 setObject\cf0 :[\cf3 NSNumber\cf0  \cf5 numberWithBool\cf0 :\cf2 YES\cf0 ]\
+                       \cf5 forKey\cf0 :(\cf2 id\cf0 )\cf3 kSecAttrIsPermanent\cf0 ];\
+    [privateKeyAttr \cf5 setObject\cf0 :privateTag\
+                       \cf5 forKey\cf0 :\cf3 kSecAttrApplicationTag\cf0 ];\
+    \
+    [keyPairAttr \cf5 setObject\cf0 :privateKeyAttr\
+                    \cf5 forKey\cf0 :(\cf2 id\cf0 )\cf3 kSecPrivateKeyAttrs\cf0 ];\
+    [keyPairAttr \cf5 setObject\cf0 :publicKeyAttr\
+                    \cf5 forKey\cf0 :(\cf2 id\cf0 )\cf3 kSecPublicKeyAttrs\cf0 ];\
+    \
+    \
+    status=\cf5 SecKeyGeneratePair\cf0 ((\cf3 CFDictionaryRef\cf0 )keyPairAttr, &publicKey, &privateKey);\
+    \cf5 NSLog\cf0 (\cf4 @"%ld"\cf0 ,status);\
+    \cf5 NSLog\cf0 (\cf4 @"pub: %@"\cf0 ,(\cf3 NSString\cf0  *)publicKey);\
+    \cf5 NSLog\cf0 (\cf4 @"priv: %@"\cf0 ,(\cf3 NSString\cf0  *)privateKey);\
+    \
+    \
+    \cf2 if\cf0 (privateKeyAttr) [privateKeyAttr \cf5 release\cf0 ];\
+    \cf2 if\cf0 (publicKeyAttr) [publicKeyAttr \cf5 release\cf0 ];\
+    \cf2 if\cf0 (keyPairAttr) [keyPairAttr \cf5 release\cf0 ];\
+    \cf2 if\cf0 (publicKey) \cf5 CFRelease\cf0 (publicKey);\
+    \cf2 if\cf0 (privateKey) \cf5 CFRelease\cf0 (privateKey);\
+\}\
+}

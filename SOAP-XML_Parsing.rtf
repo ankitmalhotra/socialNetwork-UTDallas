@@ -1,0 +1,122 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf510
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green116\blue0;\red63\green110\blue116;\red170\green13\blue145;
+\red92\green38\blue153;\red46\green13\blue110;\red196\green26\blue22;\red28\green0\blue207;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab560
+\pard\tx560\pardeftab560\pardirnatural
+
+\f0\fs22 \cf2 \CocoaLigature0 /*Start XML request*/\cf0 \
+    \cf3 recordResults\cf0 =\cf4 NO\cf0 ;\
+    \cf5 NSURL\cf0  *url=[\cf5 NSURL\cf0  \cf6 URLWithString\cf0 :\cf7 @"http://localhost:8080/testConn/services/listServices"\cf0 ];\
+    \cf5 NSMutableURLRequest\cf0  *mutableURL = [\cf5 NSMutableURLRequest\cf0  \cf6 requestWithURL\cf0 :url];\
+    [mutableURL \cf6 addValue\cf0 :\cf7 @"text/xml; charset=utf-8"\cf0  \cf6 forHTTPHeaderField\cf0 :\cf7 @"Content-Type"\cf0 ];\
+    [mutableURL \cf6 addValue\cf0 :\cf7 @"http://localhost:8080/testConn/services/Converter?wsdl"\cf0  \cf6 forHTTPHeaderField\cf0 :\cf7 @"SOAPAction"\cf0 ];\
+    [mutableURL \cf6 setHTTPMethod\cf0 :\cf7 @"POST"\cf0 ];\
+    [mutableURL \cf6 setHTTPBody\cf0 :[\cf3 soapResults\cf0  \cf6 dataUsingEncoding\cf0 :\cf6 NSUTF8StringEncoding\cf0 ]];\
+    \
+    \cf5 NSURLConnection\cf0  *conn = [[\cf5 NSURLConnection\cf0  \cf6 alloc\cf0 ]\cf6 initWithRequest\cf0 :mutableURL \cf6 delegate\cf0 :\cf4 self\cf0 ];\
+    \cf4 if\cf0 (conn)\
+    \{\
+        \cf3 webData\cf0 =[[\cf5 NSMutableData\cf0  \cf6 data\cf0 ]\cf6 retain\cf0 ];\
+        \cf6 NSLog\cf0 (\cf7 @"Connection is acive: "\cf0 );\
+    \}\
+    \cf4 else\cf0 \
+    \{\
+        \cf6 NSLog\cf0 (\cf7 @"Connection is null.."\cf0 );\
+    \}\
+\
+\
+\
+\cf2 /*XML delegate methods*/\cf0 \
+-(\cf4 void\cf0 )connection:(\cf5 NSURLConnection\cf0 *)connection didReceiveResponse:(\cf5 NSURLResponse\cf0 *)response\
+\{\
+    [\cf3 webData\cf0  \cf6 setLength\cf0 :\cf8 0\cf0 ];\
+    \cf5 NSHTTPURLResponse\cf0  * httpResponse;\
+    httpResponse = (\cf5 NSHTTPURLResponse\cf0  *) response;\
+    \cf2 //NSLog(@"HTTP error %zd", (ssize_t) httpResponse.statusCode);\cf0 \
+    \
+\}\
+\
+-(\cf4 void\cf0 )connection:(\cf5 NSURLConnection\cf0  *)connection didReceiveData:(\cf5 NSData\cf0 *)data\
+\{\
+    [\cf3 webData\cf0  \cf6 appendData\cf0 :data];\
+    \cf2 //NSLog(@"webdata: %@", data);\cf0 \
+    \
+\}\
+\
+-(\cf4 void\cf0 )connection:(\cf5 NSURLConnection\cf0  *)connection didFailWithError:(\cf5 NSError\cf0 *)error\
+\{\
+	\cf6 NSLog\cf0 (\cf7 @"error with the connection"\cf0 );\
+	[connection \cf6 release\cf0 ];\
+	[\cf3 webData\cf0  \cf6 release\cf0 ];\
+\}\
+\
+-(\cf4 void\cf0 )connectionDidFinishLoading:(\cf5 NSURLConnection\cf0  *)connection\
+\{\
+	\cf6 NSLog\cf0 (\cf7 @"DONE. Received bytes %d"\cf0 , [\cf3 webData\cf0  \cf6 length\cf0 ]);\
+	\cf5 NSString\cf0  *theXML = [[\cf5 NSString\cf0  \cf6 alloc\cf0 ] \cf6 initWithBytes\cf0 :[\cf3 webData\cf0  \cf6 mutableBytes\cf0 ] \cf6 length\cf0 :[\cf3 webData\cf0  \cf6 length\cf0 ] \cf6 encoding\cf0 :\cf6 NSUTF8StringEncoding\cf0 ];\
+	\cf6 NSLog\cf0 (\cf7 @"xml %@"\cf0 ,theXML);\
+	[theXML \cf6 release\cf0 ];\
+    \
+	\cf4 if\cf0 (\cf3 xmlParser\cf0 )\
+	\{\
+		[\cf3 xmlParser\cf0  \cf6 release\cf0 ];\
+	\}\
+	\
+	\cf3 xmlParser\cf0  = [[\cf5 NSXMLParser\cf0  \cf6 alloc\cf0 ] \cf6 initWithData\cf0 :\cf3 webData\cf0 ];\
+    \cf6 NSLog\cf0 (\cf7 @"1:"\cf0 );    \
+	[\cf3 xmlParser\cf0  \cf6 setDelegate\cf0 :\cf4 self\cf0 ];\
+	[\cf3 xmlParser\cf0  \cf6 setShouldResolveExternalEntities\cf0 :\cf4 YES\cf0 ];\
+    \cf6 NSLog\cf0 (\cf7 @"2:"\cf0 );\
+	[\cf3 xmlParser\cf0  \cf6 parse\cf0 ];\
+    \cf6 NSLog\cf0 (\cf7 @"3:"\cf0 );\
+    \
+	\cf2 //[connection release];\cf0 \
+	\cf2 //[webData release];\cf0 \
+\}\
+\
+\
+\cf2 /*XML Response handlers*/\cf0 \
+- (\cf4 void\cf0 )parser:(\cf5 NSXMLParser\cf0  *)parser didStartElement:(\cf5 NSString\cf0  *)elementName namespaceURI:(\cf5 NSString\cf0  *)namespaceURI qualifiedName:(\cf5 NSString\cf0  *)qualifiedName attributes:(\cf5 NSDictionary\cf0  *)attributeDict\
+\{\
+    \cf6 NSLog\cf0 (\cf7 @"parse started.."\cf0 );\
+	\cf4 if\cf0 ([elementName \cf6 isEqualToString\cf0 :\cf7 @"ConverterResult"\cf0 ])\
+	\{\
+        \cf6 NSLog\cf0 (\cf7 @"inResult"\cf0 );\
+        \cf4 if\cf0 (!\cf3 soapResults\cf0 )\
+		\{\
+			\cf3 soapResults\cf0  = [[\cf5 NSMutableString\cf0  \cf6 alloc\cf0 ]\cf6 init\cf0 ];\
+		\}\
+		\cf3 recordResults\cf0  = \cf4 TRUE\cf0 ;\
+	\}\
+\}\
+\
+- (\cf4 void\cf0 )parser:(\cf5 NSXMLParser\cf0  *)parser foundCharacters:(\cf5 NSString\cf0  *)string\
+\{\
+    \cf6 NSLog\cf0 (\cf7 @"parse found chars.."\cf0 );\
+    \cf6 NSLog\cf0 (\cf7 @"string: %@"\cf0 ,string);\
+\
+	\cf4 if\cf0 (\cf3 recordResults\cf0 )\
+	\{\
+        \cf6 NSLog\cf0 (\cf7 @"inResult2"\cf0 );\
+		[\cf3 soapResults\cf0  \cf6 appendString\cf0 :string];\
+	\}\
+	\
+\}\
+\
+- (\cf4 void\cf0 )parser:(\cf5 NSXMLParser\cf0  *)parser didEndElement:(\cf5 NSString\cf0  *)elementName namespaceURI:(\cf5 NSString\cf0  *)namespaceURI qualifiedName:(\cf5 NSString\cf0  *)qName\
+\{\
+    \cf6 NSLog\cf0 (\cf7 @"parse results.."\cf0 );\
+    \cf6 NSLog\cf0 (\cf7 @"SOAP Results: %@"\cf0 , \cf3 soapResults\cf0 );\
+\
+	\cf4 if\cf0 ([elementName \cf6 isEqualToString\cf0 :\cf7 @"ConverterResult"\cf0 ])\
+	\{\
+        \cf6 NSLog\cf0 (\cf7 @"inResult3"\cf0 );\
+		\cf3 recordResults\cf0  = \cf4 FALSE\cf0 ;\
+		\cf6 NSLog\cf0 (\cf7 @"SOAP Results: %@"\cf0 , \cf3 soapResults\cf0 );\
+		[\cf3 soapResults\cf0  \cf6 release\cf0 ];\
+		\cf3 soapResults\cf0  = \cf4 nil\cf0 ;\
+	\}\
+\}\
+}

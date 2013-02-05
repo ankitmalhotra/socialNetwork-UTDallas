@@ -1,0 +1,428 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FE0AFCDD16255A10000A92C9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE0AFCDC16255A10000A92C9 /* UIKit.framework */; };
+		FE0AFCDF16255A10000A92C9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE0AFCDE16255A10000A92C9 /* Foundation.framework */; };
+		FE0AFCE116255A10000A92C9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE0AFCE016255A10000A92C9 /* CoreGraphics.framework */; };
+		FE0AFCE716255A10000A92C9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FE0AFCE516255A10000A92C9 /* InfoPlist.strings */; };
+		FE0AFCE916255A10000A92C9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0AFCE816255A10000A92C9 /* main.m */; };
+		FE0AFCED16255A10000A92C9 /* messengerAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0AFCEC16255A10000A92C9 /* messengerAppDelegate.m */; };
+		FE0AFCEF16255A10000A92C9 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FE0AFCEE16255A10000A92C9 /* Default.png */; };
+		FE0AFCF116255A10000A92C9 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE0AFCF016255A10000A92C9 /* Default@2x.png */; };
+		FE0AFCF316255A10000A92C9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE0AFCF216255A10000A92C9 /* Default-568h@2x.png */; };
+		FE0AFCF616255A10000A92C9 /* messengerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0AFCF516255A10000A92C9 /* messengerViewController.m */; };
+		FE0AFCF916255A10000A92C9 /* messengerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE0AFCF716255A10000A92C9 /* messengerViewController.xib */; };
+		FE0AFD0016255C33000A92C9 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE0AFCFF16255C33000A92C9 /* CoreLocation.framework */; };
+		FE1FCFA6166E7D7D009E61C7 /* groupsTableViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1FCFA4166E7D7C009E61C7 /* groupsTableViewViewController.m */; };
+		FE1FCFA7166E7D7D009E61C7 /* groupsTableViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE1FCFA5166E7D7C009E61C7 /* groupsTableViewViewController.xib */; };
+		FE4718421652C4B1004B4ED0 /* loginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4718401652C4B1004B4ED0 /* loginViewController.m */; };
+		FE4718431652C4B1004B4ED0 /* loginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE4718411652C4B1004B4ED0 /* loginViewController.xib */; };
+		FE502323167FC8F100A560EE /* friendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE502321167FC8F000A560EE /* friendsViewController.m */; };
+		FE502324167FC8F100A560EE /* friendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE502322167FC8F000A560EE /* friendsViewController.xib */; };
+		FE57BD071693F15000B97DCF /* newPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE57BD051693F15000B97DCF /* newPostViewController.m */; };
+		FE57BD081693F15000B97DCF /* newPostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE57BD061693F15000B97DCF /* newPostViewController.xib */; };
+		FE89AE7416B90340001FA8C8 /* signupUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE89AE7216B90340001FA8C8 /* signupUserViewController.m */; };
+		FE89AE7516B90340001FA8C8 /* signupUserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE89AE7316B90340001FA8C8 /* signupUserViewController.xib */; };
+		FE90F9A216ACA84B0089B34F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FE90F9A116ACA84B0089B34F /* Settings.bundle */; };
+		FE90F9A516ACB1EC0089B34F /* BaseRESTparser.m in Sources */ = {isa = PBXBuildFile; fileRef = FE90F9A416ACB1EC0089B34F /* BaseRESTparser.m */; };
+		FE90F9A816ACC6520089B34F /* messengerRESTclient.m in Sources */ = {isa = PBXBuildFile; fileRef = FE90F9A716ACC6520089B34F /* messengerRESTclient.m */; };
+		FEABE8A916464064000F27FD /* secureMessageRSA.m in Sources */ = {isa = PBXBuildFile; fileRef = FEABE8A816464064000F27FD /* secureMessageRSA.m */; };
+		FECCDC5F165727DC0084447E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FECCDC5E165727DC0084447E /* CFNetwork.framework */; };
+		FEEC2C0916314087000B2329 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEEC2C0816314087000B2329 /* MapKit.framework */; };
+		FEFDD41E162E37B600B88CFA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFDD41D162E37B600B88CFA /* Security.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		FE0AFCD816255A10000A92C9 /* socialNetwork-UTD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "socialNetwork-UTD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE0AFCDC16255A10000A92C9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		FE0AFCDE16255A10000A92C9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FE0AFCE016255A10000A92C9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		FE0AFCE416255A10000A92C9 /* socialNetwork-UTD-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "socialNetwork-UTD-Info.plist"; sourceTree = "<group>"; };
+		FE0AFCE616255A10000A92C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FE0AFCE816255A10000A92C9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FE0AFCEA16255A10000A92C9 /* socialNetwork-UTD-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "socialNetwork-UTD-Prefix.pch"; sourceTree = "<group>"; };
+		FE0AFCEB16255A10000A92C9 /* messengerAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = messengerAppDelegate.h; sourceTree = "<group>"; };
+		FE0AFCEC16255A10000A92C9 /* messengerAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = messengerAppDelegate.m; sourceTree = "<group>"; };
+		FE0AFCEE16255A10000A92C9 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		FE0AFCF016255A10000A92C9 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		FE0AFCF216255A10000A92C9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		FE0AFCF416255A10000A92C9 /* messengerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = messengerViewController.h; sourceTree = "<group>"; };
+		FE0AFCF516255A10000A92C9 /* messengerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = messengerViewController.m; sourceTree = "<group>"; };
+		FE0AFCF816255A10000A92C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/messengerViewController.xib; sourceTree = "<group>"; };
+		FE0AFCFF16255C33000A92C9 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		FE1FCFA3166E7D7C009E61C7 /* groupsTableViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = groupsTableViewViewController.h; sourceTree = "<group>"; };
+		FE1FCFA4166E7D7C009E61C7 /* groupsTableViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = groupsTableViewViewController.m; sourceTree = "<group>"; };
+		FE1FCFA5166E7D7C009E61C7 /* groupsTableViewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = groupsTableViewViewController.xib; sourceTree = "<group>"; };
+		FE47183F1652C4B1004B4ED0 /* loginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = loginViewController.h; path = ../loginViewController.h; sourceTree = "<group>"; };
+		FE4718401652C4B1004B4ED0 /* loginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = loginViewController.m; path = ../loginViewController.m; sourceTree = "<group>"; };
+		FE4718411652C4B1004B4ED0 /* loginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = loginViewController.xib; path = ../loginViewController.xib; sourceTree = "<group>"; };
+		FE502320167FC8F000A560EE /* friendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = friendsViewController.h; sourceTree = "<group>"; };
+		FE502321167FC8F000A560EE /* friendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = friendsViewController.m; sourceTree = "<group>"; };
+		FE502322167FC8F000A560EE /* friendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = friendsViewController.xib; sourceTree = "<group>"; };
+		FE57BD041693F15000B97DCF /* newPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = newPostViewController.h; sourceTree = "<group>"; };
+		FE57BD051693F15000B97DCF /* newPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = newPostViewController.m; sourceTree = "<group>"; };
+		FE57BD061693F15000B97DCF /* newPostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = newPostViewController.xib; sourceTree = "<group>"; };
+		FE89AE7116B9033F001FA8C8 /* signupUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = signupUserViewController.h; sourceTree = "<group>"; };
+		FE89AE7216B90340001FA8C8 /* signupUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = signupUserViewController.m; sourceTree = "<group>"; };
+		FE89AE7316B90340001FA8C8 /* signupUserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = signupUserViewController.xib; sourceTree = "<group>"; };
+		FE90F9A116ACA84B0089B34F /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		FE90F9A316ACB1EC0089B34F /* BaseRESTparser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseRESTparser.h; sourceTree = "<group>"; };
+		FE90F9A416ACB1EC0089B34F /* BaseRESTparser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseRESTparser.m; sourceTree = "<group>"; };
+		FE90F9A616ACC6520089B34F /* messengerRESTclient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = messengerRESTclient.h; sourceTree = "<group>"; };
+		FE90F9A716ACC6520089B34F /* messengerRESTclient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = messengerRESTclient.m; sourceTree = "<group>"; };
+		FEABE8A716464064000F27FD /* secureMessageRSA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = secureMessageRSA.h; sourceTree = "<group>"; };
+		FEABE8A816464064000F27FD /* secureMessageRSA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = secureMessageRSA.m; sourceTree = "<group>"; };
+		FECCDC5E165727DC0084447E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		FEEC2C0816314087000B2329 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		FEFDD41D162E37B600B88CFA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FE0AFCD516255A10000A92C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FECCDC5F165727DC0084447E /* CFNetwork.framework in Frameworks */,
+				FEEC2C0916314087000B2329 /* MapKit.framework in Frameworks */,
+				FEFDD41E162E37B600B88CFA /* Security.framework in Frameworks */,
+				FE0AFD0016255C33000A92C9 /* CoreLocation.framework in Frameworks */,
+				FE0AFCDD16255A10000A92C9 /* UIKit.framework in Frameworks */,
+				FE0AFCDF16255A10000A92C9 /* Foundation.framework in Frameworks */,
+				FE0AFCE116255A10000A92C9 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FE0AFCCD16255A0F000A92C9 = {
+			isa = PBXGroup;
+			children = (
+				FE0AFCE216255A10000A92C9 /* socialNetwork-UTD */,
+				FE0AFCDB16255A10000A92C9 /* Frameworks */,
+				FE0AFCD916255A10000A92C9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FE0AFCD916255A10000A92C9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FE0AFCD816255A10000A92C9 /* socialNetwork-UTD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FE0AFCDB16255A10000A92C9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FECCDC5E165727DC0084447E /* CFNetwork.framework */,
+				FEEC2C0816314087000B2329 /* MapKit.framework */,
+				FEFDD41D162E37B600B88CFA /* Security.framework */,
+				FE0AFCFF16255C33000A92C9 /* CoreLocation.framework */,
+				FE0AFCDC16255A10000A92C9 /* UIKit.framework */,
+				FE0AFCDE16255A10000A92C9 /* Foundation.framework */,
+				FE0AFCE016255A10000A92C9 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FE0AFCE216255A10000A92C9 /* socialNetwork-UTD */ = {
+			isa = PBXGroup;
+			children = (
+				FE89AE6E16B84BB8001FA8C8 /* RESTclasses */,
+				FE89AE6D16B84B74001FA8C8 /* InterfaceBuilders */,
+				FE8BEF2A165B3D68007FCA3B /* cryptoFiles */,
+				FE0AFCEB16255A10000A92C9 /* messengerAppDelegate.h */,
+				FE0AFCEC16255A10000A92C9 /* messengerAppDelegate.m */,
+				FE0AFCF416255A10000A92C9 /* messengerViewController.h */,
+				FE0AFCF516255A10000A92C9 /* messengerViewController.m */,
+				FE47183F1652C4B1004B4ED0 /* loginViewController.h */,
+				FE4718401652C4B1004B4ED0 /* loginViewController.m */,
+				FE1FCFA3166E7D7C009E61C7 /* groupsTableViewViewController.h */,
+				FE1FCFA4166E7D7C009E61C7 /* groupsTableViewViewController.m */,
+				FE502320167FC8F000A560EE /* friendsViewController.h */,
+				FE502321167FC8F000A560EE /* friendsViewController.m */,
+				FE57BD041693F15000B97DCF /* newPostViewController.h */,
+				FE57BD051693F15000B97DCF /* newPostViewController.m */,
+				FE89AE7116B9033F001FA8C8 /* signupUserViewController.h */,
+				FE89AE7216B90340001FA8C8 /* signupUserViewController.m */,
+				FE0AFCE316255A10000A92C9 /* Supporting Files */,
+				FE90F9A116ACA84B0089B34F /* Settings.bundle */,
+			);
+			path = "socialNetwork-UTD";
+			sourceTree = "<group>";
+		};
+		FE0AFCE316255A10000A92C9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FE0AFCE416255A10000A92C9 /* socialNetwork-UTD-Info.plist */,
+				FE0AFCE516255A10000A92C9 /* InfoPlist.strings */,
+				FE0AFCE816255A10000A92C9 /* main.m */,
+				FE0AFCEA16255A10000A92C9 /* socialNetwork-UTD-Prefix.pch */,
+				FE0AFCEE16255A10000A92C9 /* Default.png */,
+				FE0AFCF016255A10000A92C9 /* Default@2x.png */,
+				FE0AFCF216255A10000A92C9 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FE89AE6D16B84B74001FA8C8 /* InterfaceBuilders */ = {
+			isa = PBXGroup;
+			children = (
+				FE89AE7316B90340001FA8C8 /* signupUserViewController.xib */,
+				FE0AFCF716255A10000A92C9 /* messengerViewController.xib */,
+				FE4718411652C4B1004B4ED0 /* loginViewController.xib */,
+				FE1FCFA5166E7D7C009E61C7 /* groupsTableViewViewController.xib */,
+				FE502322167FC8F000A560EE /* friendsViewController.xib */,
+				FE57BD061693F15000B97DCF /* newPostViewController.xib */,
+			);
+			name = InterfaceBuilders;
+			sourceTree = "<group>";
+		};
+		FE89AE6E16B84BB8001FA8C8 /* RESTclasses */ = {
+			isa = PBXGroup;
+			children = (
+				FE90F9A316ACB1EC0089B34F /* BaseRESTparser.h */,
+				FE90F9A416ACB1EC0089B34F /* BaseRESTparser.m */,
+				FE90F9A616ACC6520089B34F /* messengerRESTclient.h */,
+				FE90F9A716ACC6520089B34F /* messengerRESTclient.m */,
+			);
+			name = RESTclasses;
+			sourceTree = "<group>";
+		};
+		FE8BEF2A165B3D68007FCA3B /* cryptoFiles */ = {
+			isa = PBXGroup;
+			children = (
+				FEABE8A716464064000F27FD /* secureMessageRSA.h */,
+				FEABE8A816464064000F27FD /* secureMessageRSA.m */,
+			);
+			name = cryptoFiles;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FE0AFCD716255A10000A92C9 /* socialNetwork-UTD */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FE0AFCFC16255A10000A92C9 /* Build configuration list for PBXNativeTarget "socialNetwork-UTD" */;
+			buildPhases = (
+				FE0AFCD416255A10000A92C9 /* Sources */,
+				FE0AFCD516255A10000A92C9 /* Frameworks */,
+				FE0AFCD616255A10000A92C9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "socialNetwork-UTD";
+			productName = "socialNetwork-UTD";
+			productReference = FE0AFCD816255A10000A92C9 /* socialNetwork-UTD.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FE0AFCCF16255A0F000A92C9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = messenger;
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Ankit Malhotra";
+			};
+			buildConfigurationList = FE0AFCD216255A10000A92C9 /* Build configuration list for PBXProject "socialNetwork-UTD" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = FE0AFCCD16255A0F000A92C9;
+			productRefGroup = FE0AFCD916255A10000A92C9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FE0AFCD716255A10000A92C9 /* socialNetwork-UTD */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FE0AFCD616255A10000A92C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FE0AFCE716255A10000A92C9 /* InfoPlist.strings in Resources */,
+				FE0AFCEF16255A10000A92C9 /* Default.png in Resources */,
+				FE0AFCF116255A10000A92C9 /* Default@2x.png in Resources */,
+				FE0AFCF316255A10000A92C9 /* Default-568h@2x.png in Resources */,
+				FE0AFCF916255A10000A92C9 /* messengerViewController.xib in Resources */,
+				FE4718431652C4B1004B4ED0 /* loginViewController.xib in Resources */,
+				FE1FCFA7166E7D7D009E61C7 /* groupsTableViewViewController.xib in Resources */,
+				FE502324167FC8F100A560EE /* friendsViewController.xib in Resources */,
+				FE57BD081693F15000B97DCF /* newPostViewController.xib in Resources */,
+				FE90F9A216ACA84B0089B34F /* Settings.bundle in Resources */,
+				FE89AE7516B90340001FA8C8 /* signupUserViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FE0AFCD416255A10000A92C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FE0AFCE916255A10000A92C9 /* main.m in Sources */,
+				FE0AFCED16255A10000A92C9 /* messengerAppDelegate.m in Sources */,
+				FE0AFCF616255A10000A92C9 /* messengerViewController.m in Sources */,
+				FEABE8A916464064000F27FD /* secureMessageRSA.m in Sources */,
+				FE4718421652C4B1004B4ED0 /* loginViewController.m in Sources */,
+				FE1FCFA6166E7D7D009E61C7 /* groupsTableViewViewController.m in Sources */,
+				FE502323167FC8F100A560EE /* friendsViewController.m in Sources */,
+				FE57BD071693F15000B97DCF /* newPostViewController.m in Sources */,
+				FE90F9A516ACB1EC0089B34F /* BaseRESTparser.m in Sources */,
+				FE90F9A816ACC6520089B34F /* messengerRESTclient.m in Sources */,
+				FE89AE7416B90340001FA8C8 /* signupUserViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		FE0AFCE516255A10000A92C9 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FE0AFCE616255A10000A92C9 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		FE0AFCF716255A10000A92C9 /* messengerViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FE0AFCF816255A10000A92C9 /* en */,
+			);
+			name = messengerViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FE0AFCFA16255A10000A92C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		FE0AFCFB16255A10000A92C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FE0AFCFD16255A10000A92C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Rakesh Kapoor (27DNJ5JEU2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rakesh Kapoor (27DNJ5JEU2)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "socialNetwork-UTD/socialNetwork-UTD-Prefix.pch";
+				INFOPLIST_FILE = "socialNetwork-UTD/socialNetwork-UTD-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-I/usr/include/libxml2";
+				OTHER_LDFLAGS = "-lxml2";
+				"OTHER_LDFLAGS[arch=*]" = "-lxml2";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "3F19D394-3852-409B-8EF1-E1F69EB324C2";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3F19D394-3852-409B-8EF1-E1F69EB324C2";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		FE0AFCFE16255A10000A92C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Rakesh Kapoor (27DNJ5JEU2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rakesh Kapoor (27DNJ5JEU2)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "socialNetwork-UTD/socialNetwork-UTD-Prefix.pch";
+				INFOPLIST_FILE = "socialNetwork-UTD/socialNetwork-UTD-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-I/usr/include/libxml2";
+				OTHER_LDFLAGS = "-lxml2";
+				"OTHER_LDFLAGS[arch=*]" = "-lxml2";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "3F19D394-3852-409B-8EF1-E1F69EB324C2";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "054EF5B8-913D-470C-9748-3C285DB3CCD1";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FE0AFCD216255A10000A92C9 /* Build configuration list for PBXProject "socialNetwork-UTD" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FE0AFCFA16255A10000A92C9 /* Debug */,
+				FE0AFCFB16255A10000A92C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FE0AFCFC16255A10000A92C9 /* Build configuration list for PBXNativeTarget "socialNetwork-UTD" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FE0AFCFD16255A10000A92C9 /* Debug */,
+				FE0AFCFE16255A10000A92C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FE0AFCCF16255A0F000A92C9 /* Project object */;
+}
