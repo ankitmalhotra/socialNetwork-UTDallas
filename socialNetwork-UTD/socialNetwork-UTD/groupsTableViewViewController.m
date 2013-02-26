@@ -18,11 +18,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //restObj=[[messengerRESTclient alloc]init];
-    //[restObj receiveMessage:@"list"];
-    messengerViewController *grabGroupsObj=[[messengerViewController alloc] init];
+    grabGroupsObj=[[messengerViewController alloc] init];
+    restObj=[[messengerRESTclient alloc]init];
+
     /*Call to retrieve the collated data from server*/
-    groupList=[grabGroupsObj setGroupObjects:nil :0];
+    groupList=[grabGroupsObj getGroupObjects:nil :0];
 }
 
 - (void)didReceiveMemoryWarning
@@ -67,6 +67,7 @@
     selectedIndex=[groupList objectAtIndex:[indexPath row]];
     messengerViewController *setIndexObj=[[messengerViewController alloc] init];
     [setIndexObj setSelectedIndex:selectedIndex];
+    [grabGroupsObj clearBufferList];
     [self dismissViewControllerAnimated:YES completion:NULL];
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -75,6 +76,8 @@
 
 -(IBAction)backToMain
 {
+    /*Call to main to clear buffer holding group list and then dismiss view*/
+    [grabGroupsObj clearBufferList];
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
@@ -110,12 +113,53 @@
         /*Capture entered group name*/
         grpName=groupNameField.text;
         NSLog(@"group name is: %@",grpName);
-        UIAlertView *createdAlert=[[UIAlertView alloc]initWithTitle:@"Success" message:[NSString stringWithFormat:@"New Group Successfully created"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [createdAlert show];
-        [createdAlert release];
+        
+        /*Place call to server to store new group details*/
+        NSLog(@"userid check: %@",localUserId);
+        NSLog(@"coords lat check: %f",locationLat);
+        NSLog(@"coords long check: %f",locationLong);
+
+        retval=[restObj createGroup:localUserId :grpName :locationLat :locationLong :@"addGroup"];
+        if(retval==1)
+        {
+            NSLog(@"calling for status from server..");
+            receivedStatus=[restObj returnValue];
+            NSLog(@"status received:%d",receivedStatus);
+            if(receivedStatus==1)
+            {
+                UIAlertView *createdAlert=[[UIAlertView alloc]initWithTitle:@"Success" message:[NSString stringWithFormat:@"New Group Successfully created"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [createdAlert show];
+                [createdAlert release];
+            }
+            else
+            {
+                UIAlertView *createdAlert=[[UIAlertView alloc]initWithTitle:@"Failed" message:[NSString stringWithFormat:@"New Group could not be created"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [createdAlert show];
+                [createdAlert release];
+            }
+        }
+        else
+        {
+          UIAlertView *connNullAlert=[[UIAlertView alloc]initWithTitle:@"Connection Error" message:@"Unable to contact server" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+          [connNullAlert show];
+          [connNullAlert release];
+        }
     }
 }
 
+
+-(void)getLocationCoords:(double)locationLatitude :(double)locationLongitude
+{
+    locationLat=locationLatitude;
+    locationLong=locationLongitude;
+    NSLog(@"received coords: lat: %f ,long: %f",locationLat,locationLong);
+}
+
+-(void)getUserId:(NSString *)userId
+{
+    localUserId=userId;
+    NSLog(@"received userId: %@",localUserId);
+}
 
 -(BOOL)shouldAutorotate
 {

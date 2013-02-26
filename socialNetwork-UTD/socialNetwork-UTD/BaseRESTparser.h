@@ -8,15 +8,22 @@
 
 #import <Foundation/Foundation.h>
 #import "messengerViewController.h"
+#import "loginViewController.h"
+#import "messengerRESTclient.h"
 
-@class messengerViewController;  /*use this forward declaration to avoid class parse issues*/
-/*Holds inbound service endpoint*/
+/*use this forward declaration to avoid class parse issues*/
+@class loginViewController;
+@class messengerViewController;  /*Holds inbound service endpoint*/
+@class messengerRESTclient;
+
 static NSString *serviceEndPoint;
 
 @interface BaseRESTparser : NSObject
 {
     NSMutableArray	*_contentsOfElement;	// Contents of the current element
     messengerViewController *mainViewPtr;
+    loginViewController *loginViewPtr;
+    messengerRESTclient *callRESTclient;
 }
 
 - (id) init;

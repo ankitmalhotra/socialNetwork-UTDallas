@@ -8,7 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "messengerViewController.h"
-//#import "messengerRESTclient.h"
+#import "messengerRESTclient.h"
+
+@class messengerViewController;
+@class messengerRESTclient;
+
+static double locationLat,locationLong;
+static NSString *localUserId;
 
 @interface groupsTableViewViewController : UIViewController
          <UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
@@ -18,10 +24,16 @@
     NSString *selectedIndex;
     NSString *grpName;
     UITextField *groupNameField;
-    //messengerRESTclient *restObj;
+    int retval;
+    
+    messengerViewController *grabGroupsObj;
+    messengerViewController *grabLocationCoordsObj;
+    messengerRESTclient *restObj;
 }
 
 -(IBAction)backToMain;
 -(IBAction)createGroup;
+-(void)getLocationCoords:(double)locationLatitude :(double)locationLongitude;
+-(void)getUserId:(NSString *)userId;
 
 @end

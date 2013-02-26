@@ -24,6 +24,7 @@
     [super viewDidLoad];
     spinningView.hidden=TRUE;
     appearFlagCheck=1;
+    receivedStatus=0;
     NSLog(@"loaded");
     NSLog(@"flagval: %d",appearFlagCheck);    
 }
@@ -33,6 +34,7 @@
     /*Accept username and password entered by user*/
     userId = nameField.text;
     userPwd = passwordField.text;
+    
     /*Signal username to main view*/
     messengerViewController *obj=[[messengerViewController alloc]init];
     [obj getUserId:userId];
@@ -40,20 +42,34 @@
     /*Start REST request*/
     spinningView.hidden=FALSE;
     [spinningView startAnimating];
-    //[obj processRequest];
     restObj=[[messengerRESTclient alloc]init];
+    
     /*Pass this username to server*/
     retVal=[restObj sendMessage:userId :nil :userPwd :nil :@"login"];
+
     if (retVal==1)
     {
+      NSLog(@"calling for status !");
+      receivedStatus=[restObj returnValue];
+      NSLog(@"status received:%d",receivedStatus);
+      if(receivedStatus==1)
+      {
         /*Generate Key Pairs routine*/
         [secureMessageRSA generateKeyPairs];
         
         /*Push back main view*/
         messengerViewController *mainVw=[[messengerViewController alloc]initWithNibName:nil bundle:nil];
         [self presentViewController:mainVw animated:YES completion:NULL];
-        [restObj receiveMessage:@"list"];
         [spinningView stopAnimating];
+      }
+      else
+      {
+         UIAlertView *loginFail=[[UIAlertView alloc]initWithTitle:@"Login Failed" message:@"Please check the login credentials" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+         [loginFail show];
+         [loginFail release];
+         [spinningView stopAnimating];
+         spinningView.hidden=TRUE;
+      }
     }
     else
     {

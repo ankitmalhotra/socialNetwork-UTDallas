@@ -12,6 +12,10 @@
 #import "messengerRESTclient.h"
 
 static int appearFlagCheck=0;
+static int status=0;
+static int receivedStatus;
+
+@class messengerRESTclient;
 
 @interface loginViewController : UIViewController
 {

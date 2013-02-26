@@ -32,6 +32,7 @@
 		FE90F9A216ACA84B0089B34F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FE90F9A116ACA84B0089B34F /* Settings.bundle */; };
 		FE90F9A516ACB1EC0089B34F /* BaseRESTparser.m in Sources */ = {isa = PBXBuildFile; fileRef = FE90F9A416ACB1EC0089B34F /* BaseRESTparser.m */; };
 		FE90F9A816ACC6520089B34F /* messengerRESTclient.m in Sources */ = {isa = PBXBuildFile; fileRef = FE90F9A716ACC6520089B34F /* messengerRESTclient.m */; };
+		FE91204B16D227480025FF60 /* ChallengeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FE91204A16D227480025FF60 /* ChallengeHandler.m */; };
 		FEABE8A916464064000F27FD /* secureMessageRSA.m in Sources */ = {isa = PBXBuildFile; fileRef = FEABE8A816464064000F27FD /* secureMessageRSA.m */; };
 		FECCDC5F165727DC0084447E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FECCDC5E165727DC0084447E /* CFNetwork.framework */; };
 		FEEC2C0916314087000B2329 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEEC2C0816314087000B2329 /* MapKit.framework */; };
@@ -76,6 +77,8 @@
 		FE90F9A416ACB1EC0089B34F /* BaseRESTparser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseRESTparser.m; sourceTree = "<group>"; };
 		FE90F9A616ACC6520089B34F /* messengerRESTclient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = messengerRESTclient.h; sourceTree = "<group>"; };
 		FE90F9A716ACC6520089B34F /* messengerRESTclient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = messengerRESTclient.m; sourceTree = "<group>"; };
+		FE91204916D227480025FF60 /* ChallengeHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeHandler.h; sourceTree = "<group>"; };
+		FE91204A16D227480025FF60 /* ChallengeHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeHandler.m; sourceTree = "<group>"; };
 		FEABE8A716464064000F27FD /* secureMessageRSA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = secureMessageRSA.h; sourceTree = "<group>"; };
 		FEABE8A816464064000F27FD /* secureMessageRSA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = secureMessageRSA.m; sourceTree = "<group>"; };
 		FECCDC5E165727DC0084447E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -188,6 +191,8 @@
 		FE89AE6E16B84BB8001FA8C8 /* RESTclasses */ = {
 			isa = PBXGroup;
 			children = (
+				FE91204916D227480025FF60 /* ChallengeHandler.h */,
+				FE91204A16D227480025FF60 /* ChallengeHandler.m */,
 				FE90F9A316ACB1EC0089B34F /* BaseRESTparser.h */,
 				FE90F9A416ACB1EC0089B34F /* BaseRESTparser.m */,
 				FE90F9A616ACC6520089B34F /* messengerRESTclient.h */,
@@ -289,6 +294,7 @@
 				FE90F9A516ACB1EC0089B34F /* BaseRESTparser.m in Sources */,
 				FE90F9A816ACC6520089B34F /* messengerRESTclient.m in Sources */,
 				FE89AE7416B90340001FA8C8 /* signupUserViewController.m in Sources */,
+				FE91204B16D227480025FF60 /* ChallengeHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

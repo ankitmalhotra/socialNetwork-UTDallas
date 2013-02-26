@@ -25,6 +25,7 @@
     NSString *userID;
     NSString *userName;
     NSString *password;
+    NSString *retypePwd;
     NSString *emailID;
     int retVal;
     
@@ -35,6 +36,7 @@
 -(IBAction)returnKeyboard:(id)sender;
 -(IBAction)switchBackLogin;
 -(IBAction)sendNewUserData;
+-(IBAction)backgroundTouched:(id)sender;
 
 
 @end

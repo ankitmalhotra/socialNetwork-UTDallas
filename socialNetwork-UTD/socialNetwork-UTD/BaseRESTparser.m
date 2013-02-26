@@ -53,20 +53,79 @@
    /*Manage call to main view and send the parsed data*/
     -(void)callMain:(NSMutableArray *)mainContents
     {
-        if(serviceEndPoint==@"add")
+        if([serviceEndPoint isEqualToString:@"add"])
         {
            /*point to add response handler in mainView*/
         }
-        else if(serviceEndPoint==@"login")
+        else if([serviceEndPoint isEqualToString:@"login"])
         {
-           /*point to login response handler in mainView*/
+            callRESTclient=[[messengerRESTclient alloc]init];
+           
+            /*Point to login response handler in loginView*/
+            NSLog(@"calling login check with %@",mainContents);
+            if([[mainContents objectAtIndex:0] isEqual:@"true"])
+            {
+                NSLog(@"returning 1 from BaseREST");
+                [callRESTclient valueToReturn:1];
+            }
+            else
+            {
+                NSLog(@"returning 0 from BaseREST");
+                [callRESTclient valueToReturn:0];
+            }
+            [callRESTclient release];
         }
-        else if(serviceEndPoint==@"list")
+        else if([serviceEndPoint isEqualToString:@"listMemberGroups"])
         {
-          NSLog(@"calling friends with: %@",mainContents);
-          [mainViewPtr getFriendObjects:mainContents :1];  
+          NSLog(@"calling groups with: %@",mainContents);
+            if([mainContents containsObject:@"false"])
+            {
+                [mainContents removeObject:@"false"];
+            }
+            if([mainContents containsObject:@"true"])
+            {
+                [mainContents removeObject:@"true"];
+            }
+          [mainViewPtr getGroupObjects:mainContents :1];
         }
-      //[mainViewPtr setGroupObjects:mainContents:1];
+        else if ([serviceEndPoint isEqualToString:@"addGroup"])
+        {
+            NSLog(@"creating group");
+            callRESTclient=[[messengerRESTclient alloc]init];
+            
+            /*Point to addGroup response handler in loginView*/
+            NSLog(@"calling addGroup check with %@",mainContents);
+            if([[mainContents objectAtIndex:0] isEqual:@"true"])
+            {
+                NSLog(@"returning 1 from BaseREST");
+                [callRESTclient valueToReturn:1];
+            }
+            else
+            {
+                NSLog(@"returning 0 from BaseREST");
+                [callRESTclient valueToReturn:0];
+            }
+            [callRESTclient release];
+        }
+        else if ([serviceEndPoint isEqualToString:@"postMessage"])
+        {
+            NSLog(@"creating new post");
+            callRESTclient=[[messengerRESTclient alloc]init];
+            
+            /*Point to addGroup response handler in loginView*/
+            NSLog(@"calling addGroup check with %@",mainContents);
+            if([[mainContents objectAtIndex:0] isEqual:@"true"])
+            {
+                NSLog(@"returning 1 from BaseREST");
+                [callRESTclient valueToReturn:1];
+            }
+            else
+            {
+                NSLog(@"returning 0 from BaseREST");
+                [callRESTclient valueToReturn:0];
+            }
+            [callRESTclient release];
+        }
     }
 
     -(NSArray *)dataExposer

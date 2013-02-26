@@ -13,46 +13,15 @@
 //#import <Security/Security.h>
 //#import <CommonCrypto/CommonCrypto.h>
 //#import <CommonCrypto/CommonDigest.h>
-//#import <MapKit/MapKit.h>
 #define kGeoCodingString @"http://maps.google.com/maps/geo?q=%f,%f&output=csv"
 
 @interface messengerViewController ()
 {
     /*Location constants*/
     CLLocationManager *locManager;
-    CLLocation *currLocation;
-    //SecKeyRef *kRef;
-    
-    /*XML Parser constants*/
-    NSXMLParser *xmlParser;
-	NSMutableData *webData;
-	NSMutableString *soapResults;
-	BOOL recordResults;
-    
-    
-    /*Login View constants*/
-    /*
-    UIAlertView *loginView;
-    UITextField *loginUsernameField;
-    UITextField *loginPassworField;
-    UILabel *loginUserNameLabel;
-    UILabel *loginPasswordLabel;
-    */
-
-    
-    /*Crypto Buffers*/
-    size_t cipherBufferSize;
-    uint8_t *cipherBuffer;
-    size_t plainBufferSize;
-    uint8_t *plainBuffer;
     
     /*User credentials*/
-    NSString *username;
-    NSString *userPwd;
-    
-    NSString *selectedIndex;
-    
-    
+    NSString *userPwd;    
 }
 
 @end
@@ -69,6 +38,8 @@
     groups=[[NSMutableArray alloc]init];
     friends=[[NSMutableArray alloc]init];
     restObj=[[messengerRESTclient alloc]init];
+    groupViewObj=[[groupsTableViewViewController alloc]init];
+    newPostObj=[[newPostViewController alloc]init];
     
     [super viewDidLoad];
 
@@ -81,6 +52,15 @@
     {
         [locManager startUpdatingLocation];
     }
+    
+    /*Set the label to display the logged-in user's ID*/
+    UILabel *userIdLabel=[[UILabel alloc]initWithFrame:CGRectMake(135, 42, 91, 21)];
+    userIdLabel.text=username;
+    userIdLabel.numberOfLines=3;
+    userIdLabel.backgroundColor=[UIColor clearColor];
+    userIdLabel.textColor=[UIColor blackColor];
+    userIdLabel.font=[UIFont systemFontOfSize:14.0];
+    [self.view addSubview: userIdLabel];
             
 }
 
@@ -97,61 +77,8 @@
 }
 
 
-
-
-/*SOAP request call
--(void)processRequest
-{
-
-    GroupsDataServiceServiceSoap11Binding *bindingSOAP=[GroupsDataServiceServiceSvc GroupsDataServiceServiceSoap11Binding];
-    GroupsDataServiceServiceSoap11BindingResponse *bindingResponse;
-    GroupsDataServiceServiceSvc_GetGroupsData *request=[[GroupsDataServiceServiceSvc_GetGroupsData alloc]init];
-    request.UserId=username;
-    bindingResponse=[bindingSOAP GetGroupsDataUsingParameters:request];
-    NSLog(@"done processing request.. %@",bindingResponse);
-    NSLog(@"at server: %@",request.UserId);
-    dispatch_async(dispatch_get_main_queue(), ^{[self processResponse:bindingResponse];});
-}
-*/
-
-/*SOAP response call
--(void)processResponse:(testGreetPortBindingResponse *)response
-{
-    NSArray *responseBodyParts = response.bodyParts;
-    NSLog(@"bodyparts: %@",responseBodyParts);
-    id bodyPart;
-    @try
-    {
-        bodyPart = [responseBodyParts objectAtIndex:0]; // Assuming just 1 part in response which is fine
-        NSLog(@"type is: %@",bodyPart);
-    }
-    @catch (NSException* exception)
-    {
-        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Server Error" message:@"Error while trying to process request" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-        [alert show];
-        return;
-    }
-    
-    if ([bodyPart isKindOfClass:[SOAPFault class]])
-    {
-        NSString* errorMesg = ((SOAPFault *)bodyPart).simpleFaultString;
-        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Server Error" message:errorMesg delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-        [alert show];
-    }
-    else if([bodyPart isKindOfClass:[GroupsDataServiceServiceSvc_GetGroupsDataResponse class]])
-    {
-        GroupsDataServiceServiceSvc_GetGroupsDataResponse* groupResponse = bodyPart;
-        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Success!" message:[NSString stringWithFormat:@"Response data is %@",groupResponse.return_] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-        [alert show];        
-    }
-}
-*/
-
-
-
-
 /*Define group values to be shown in group tableview*/
--(NSMutableArray *)setGroupObjects:(NSMutableArray *)arrayInput:(int)toReturn
+-(NSMutableArray *)getGroupObjects :(NSMutableArray *)arrayInput :(int)toReturn
 {
     /*If toReturn is 1: collate the data inbound into "groups object*/
     if(toReturn==1)
@@ -169,7 +96,7 @@
 }
 
 /*Define friend values to be shown in friend tableview*/
--(NSArray *)getFriendObjects:(NSMutableArray *)arrayInput:(int)toReturn
+-(NSArray *)getFriendObjects :(NSMutableArray *)arrayInput :(int)toReturn
 {
     /*If toReturn is 1: collate the data inbound into "friends object*/
     if(toReturn==1)
@@ -187,11 +114,16 @@
 }
 
 
-/*Receive the index selected in any tableview*/
+/*Receive the index selected in group tableview*/
 -(void)setSelectedIndex:(NSString *)indexVal
 {
-    selectedIndex=indexVal;
-    NSLog(@"index selected: %@",selectedIndex);
+    selectedGroupNameIndex=indexVal;
+    NSLog(@"index selected: %@",selectedGroupNameIndex);
+}
+
+-(NSString *)signalGroupName
+{
+    return selectedGroupNameIndex;
 }
 
 /*Setting the username received from loginView*/
@@ -217,13 +149,25 @@
         double latPos=newLocation.coordinate.latitude;
         double longPos=newLocation.coordinate.longitude;
         NSLog(@"Current user position: %@",showPos);
+        
+        /*Signal location co-ords to groupsTableView(to be used for new group creation)*/
+        [groupViewObj getLocationCoords:latPos :longPos];
+        
+        /*Signal location co-ords to groupsTableView(to be used for new group creation)*/
+        [newPostObj getLocationCoords:latPos :longPos];
+        
+        /*Signal userId to groupsTableView(to be used for new group creation*/
+        [groupViewObj getUserId:username];
+        
+        /*Signal userId to groupsTableView(to be used for new group creation*/
+        [newPostObj getUserId:username];
+        
         /*
         typedef double CLLocationDistance;
         CLLocationDistance dist = [oldLocation distanceFromLocation:newLocation];
         NSLog(@"distance moved: %f meters",(dist));
         NSString *distmoved=[NSString stringWithFormat:@"You just moved: %f meters",(dist)];
         */
-        
         
         /*Reverse Geo-coding*/
         NSString *urlLoc=[NSString stringWithFormat:kGeoCodingString,latPos,longPos];
@@ -239,12 +183,27 @@
     return NO;
 }
 
-/*show groups listing*/
+/*Clear the group list mutable array object(groups) when group tableview is dismissed*/
+-(void)clearBufferList
+{
+    [groups removeAllObjects];
+}
+
+/*Show groups listing*/
 -(IBAction)showGroups
 {
-    groupsTableViewViewController *gTblView=[[groupsTableViewViewController alloc]initWithNibName:nil bundle:nil];
-    [self presentViewController:gTblView animated:YES completion:NULL];
-    
+    int retVal=[restObj sendMessage:username :nil :nil :nil :@"listMemberGroups"];
+    if(retVal==1)
+    {
+      groupsTableViewViewController *gTblView=[[groupsTableViewViewController alloc]initWithNibName:nil bundle:nil];
+      [self presentViewController:gTblView animated:YES completion:NULL];
+    }
+    else
+    {
+        UIAlertView *connErr=[[UIAlertView alloc]initWithTitle:@"Connection Error" message:@"Unable to contact server" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [connErr show];
+        [connErr release];
+    }
 }
 
 /*show friends listing */

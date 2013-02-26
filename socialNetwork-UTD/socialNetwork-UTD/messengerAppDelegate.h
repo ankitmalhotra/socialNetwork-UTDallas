@@ -13,6 +13,9 @@
 @class messengerViewController,loginViewController;
 
 @interface messengerAppDelegate : UIResponder <UIApplicationDelegate>
+{
+    NSInteger *networkingCount;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 
@@ -20,5 +23,8 @@
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 
+-(void)didStartNetworking;
++ (messengerAppDelegate *)sharedAppDelegate;
+- (NSURL *)smartURLForString:(NSString *)str;
 
 @end
