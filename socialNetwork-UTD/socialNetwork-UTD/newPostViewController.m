@@ -17,8 +17,7 @@
 {
     [super viewDidLoad];
     restObj=[[messengerRESTclient alloc]init];
-    mainViewController=[[messengerViewController alloc]init];
-    
+    mainViewController=[[messengerViewController alloc]init];    
 }
 
 - (void)didReceiveMemoryWarning
@@ -38,11 +37,10 @@
     NSString *messageData;
     messageData=messageVw.text;
     
-    /*Retrive the group name selected from main view*/
-    [self getUserGroup];
-    
+    [self setUserGroup];
+    NSLog(@"received: %@",localGrpName);
     /*Place call to server with new post data & user,group,coord details*/
-    retVal=[restObj createNewPost:localUserId :localGroupName :messageData :locationLat :locationLong :@"postMessage"];
+    retVal=[restObj createNewPost:localUserId :localGrpName :messageData :locationLat :locationLong :@"postMessage"];
     if(retVal==1)
     {
         NSLog(@"calling for status from server..");
@@ -54,7 +52,7 @@
             [secureMessageRSA encryptMessage:messageData];
             [secureMessageRSA decryptMessage];
             
-            UIAlertView *createdAlert=[[UIAlertView alloc]initWithTitle:@"Success" message:[NSString stringWithFormat:@"Message Successfully posted to group: %@",localGroupName] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            UIAlertView *createdAlert=[[UIAlertView alloc]initWithTitle:@"Success" message:[NSString stringWithFormat:@"Message Successfully posted"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [createdAlert show];
             [createdAlert release];
             [self dismissViewControllerAnimated:YES completion:NULL];
@@ -91,10 +89,10 @@
 }
 
 /*This method invoked locally will call main view to retrieve the group name selected*/
--(void)getUserGroup
+-(void)setUserGroup
 {
-    localGroupName=[mainViewController signalGroupName];
-    NSLog(@"received userGroup: %@",localGroupName);
+    //localGrpName=@"Can our project be complete";
+    localGrpName=[mainViewController signalGroupName];
 }
 
 

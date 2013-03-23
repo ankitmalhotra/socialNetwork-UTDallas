@@ -126,6 +126,14 @@
             }
             [callRESTclient release];
         }
+        else if ([serviceEndPoint isEqualToString:@"getGroupMessages"])
+        {
+            NSLog(@"sending data is: %@",mainContents);
+            [mainViewPtr collectedPostData:mainContents];
+            NSLog(@"returning 1 from BaseREST");
+            callRESTclient=[[messengerRESTclient alloc]init];
+            [callRESTclient valueToReturn:1];
+        }
     }
 
     -(NSArray *)dataExposer

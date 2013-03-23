@@ -23,7 +23,7 @@
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 
--(void)didStartNetworking;
+//-(void)didStartNetworking;
 + (messengerAppDelegate *)sharedAppDelegate;
 - (NSURL *)smartURLForString:(NSString *)str;
 

@@ -28,7 +28,9 @@ static NSMutableArray *friends;
 /*Stores the userId (NOT user name)*/
 static NSString *username;
 /*Stores the selected group name from group table view*/
-static NSString *selectedGroupNameIndex;
+static NSString *grpname;
+/*Mutable Array object to collate message post data from server*/
+static NSMutableArray *messagePostData;
 
 @interface messengerViewController : UIViewController
 {
@@ -41,6 +43,8 @@ static NSString *selectedGroupNameIndex;
     messengerRESTclient *restObj;
     groupsTableViewViewController *groupViewObj;
     newPostViewController *newPostObj;
+    
+    int retVal;
 }
 
 @property (readwrite,assign) NSString *groups;
@@ -51,11 +55,13 @@ static NSString *selectedGroupNameIndex;
 -(IBAction)showFriends;
 -(NSMutableArray *)getGroupObjects :(NSMutableArray *)inputArray :(int)toReturn;
 -(NSMutableArray *)getFriendObjects : (NSMutableArray *)inputArray :(int)toReturn;
+-(void)collectedPostData : (NSMutableArray *)inputArray;
 -(void)setSelectedIndex:(NSString *)indexVal;
 -(IBAction)createPost;
 -(IBAction)stopUpdate;
 -(void)clearBufferList;
 -(NSString *)signalGroupName;
+-(void)showPostData:(NSString *)groupName;
 
 
 @end

@@ -136,12 +136,122 @@
     [[messengerAppDelegate sharedAppDelegate] didStartNetworking];
 }
 
+-(int)showPostData:(NSString *)groupName :(NSString *)endPointURL
+{
+    int retVal;
+    serviceEndPoint=endPointURL;
+    
+    NSString *settingsBundle=[[NSBundle mainBundle]pathForResource:@"Settings" ofType:@"bundle"];
+    if(!settingsBundle)
+    {
+        NSLog(@"settings found");
+    }
+    else
+    {
+        NSLog(@"settings missing..");
+    }
+    
+    NSDictionary *settings=[NSDictionary dictionaryWithContentsOfFile:[settingsBundle stringByAppendingPathComponent:@"Root.plist"]];
+    NSArray *prefrences=[settings objectForKey:@"PreferenceSpecifiers"];
+    
+    NSMutableDictionary *defaultsToRegister=[[NSMutableDictionary alloc]initWithCapacity:[prefrences count]];
+    
+    for(NSDictionary *prefSpecs in prefrences)
+    {
+        NSString *key=[prefSpecs objectForKey:@"Key"];
+        if(key)
+        {
+            [defaultsToRegister setObject:[prefSpecs objectForKey:@"DefaultValue"] forKey:key];
+        }
+        else
+        {
+            NSLog(@"key not found..");
+        }
+    }
+    
+    [[NSUserDefaults standardUserDefaults]registerDefaults:defaultsToRegister];
+    [defaultsToRegister release];
+    
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    NSString *urlString=[defaults stringForKey:@"server_url"];
+    
+    NSURL *url=[[messengerAppDelegate sharedAppDelegate]smartURLForString:[NSString stringWithFormat:@"%@/v1/%@",urlString,endPointURL]];
+    
+    NSLog(@"Sending Request to URL %@", url);
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible=YES;
+    
+    NSMutableURLRequest *request=[NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:10.0];
+    [request setHTTPMethod:@"POST"];
+    NSString *contentType=[NSString stringWithFormat:@"application/XML"];
+    [request addValue:contentType forHTTPHeaderField:@"Content-type"];
+    
+    /*Build the XML structure to send*/
+    if([endPointURL isEqualToString:@"getGroupMessages"])
+    {
+        NSMutableData *postData=[NSMutableData data];
+        [postData appendData:[[NSString stringWithFormat:@"<Group xmlns=\"http://appserver.utdallas.edu/schema\">"]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"<GroupName>%@</GroupName>",groupName]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"</Group>"]dataUsingEncoding:NSUTF8StringEncoding]];
+        [request setHTTPBody:postData];
+        NSLog(@"passing xml: %@",postData);
+    }
+    
+    /*Handle the synchronous response here*/
+    NSError			*requestError;
+	NSURLResponse	*urlResponse;
+	NSError			*error = nil;
+	NSData *responseData = [NSURLConnection sendSynchronousRequest:request
+												 returningResponse:&urlResponse
+															 error:&requestError];
+	if (error == nil)
+    {
+		if ([urlResponse isKindOfClass:[NSHTTPURLResponse class]])
+        {
+			NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) urlResponse;
+			int status = [httpResponse statusCode];
+			/*If the call was okay, then invoke the parser*/
+			if ((status >= 200) && (status < 300))
+            {
+                NSLog(@"sending parse request with: %@",responseData);
+                accessPtr = [[BaseRESTparser alloc]init];
+                NSLog(@"parsing for: %@",endPointURL);
+                NSString *xml = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+                NSLog(@"xml for: %@ = %@",endPointURL,xml);
+                [xml release];
+				[accessPtr parseDocument:responseData:endPointURL];
+                retVal=1;
+			}
+            else
+            {
+                NSLog(@"status error: %d and %@",status,httpResponse);
+                retVal=3;
+            }
+		}
+        else
+        {
+            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) urlResponse;
+			int status = [httpResponse statusCode];
+            NSLog(@"Unable to complete the request: %@",urlResponse);
+            NSLog(@"status error: %d and %@",status,httpResponse);
+            retVal=3;
+        }
+	}
+    else
+    {
+        retVal=3;
+    }
+    
+	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    return retVal;
+}
 
--(int)createNewPost:(NSString *)userID :(NSString *)groupName :(NSString *)postData :(double)locationLatitude :(double)locationLongitude :(NSString *)endPointURL
+
+-(int)createNewPost:(NSString *)userID :(NSString *)groupName :(NSString *)postMessage :(double)locationLatitude :(double)locationLongitude :(NSString *)endPointURL
 {
     NSLog(@"userid: %@",userID);
     NSLog(@"grp name: %@",groupName);
-    NSLog(@"postdata: %@",postData);
+    NSLog(@"postdata: %@",postMessage);
     NSLog(@"lat: %f",locationLatitude);
     NSLog(@"long: %f",locationLongitude);
     NSLog(@"endpoint: %@",endPointURL);
@@ -202,12 +312,11 @@
         [postData appendData:[[NSString stringWithFormat:@"<Message xmlns=\"http://appserver.utdallas.edu/schema\">"]dataUsingEncoding:NSUTF8StringEncoding]];
         [postData appendData:[[NSString stringWithFormat:@"<UserId>%@</UserId>",userID]dataUsingEncoding:NSUTF8StringEncoding]];
         [postData appendData:[[NSString stringWithFormat:@"<GroupName>%@</GroupName>",groupName]dataUsingEncoding:NSUTF8StringEncoding]];
-        [postData appendData:[[NSString stringWithFormat:@"<MessageData>%@</MessageData>",postData]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"<MessageData>%@</MessageData>",postMessage]dataUsingEncoding:NSUTF8StringEncoding]];
         [postData appendData:[[NSString stringWithFormat:@"<UserLocationLat>%f</UserLocationLat>",locationLatitude]dataUsingEncoding:NSUTF8StringEncoding]];
-        [postData appendData:[[NSString stringWithFormat:@"<UserLocationLong>%f</UserLocationLong>",locationLongitude]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"<UserLocationLong>%f</UserLocationLong>",locationLong]dataUsingEncoding:NSUTF8StringEncoding]];
         [postData appendData:[[NSString stringWithFormat:@"</Message>"]dataUsingEncoding:NSUTF8StringEncoding]];
         [request setHTTPBody:postData];
-        NSLog(@"passing xml: %@",postData);
     }
     
     /*Handle the synchronous response here*/

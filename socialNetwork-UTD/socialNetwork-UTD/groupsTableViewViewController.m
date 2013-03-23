@@ -19,7 +19,9 @@
 {
     [super viewDidLoad];
     grabGroupsObj=[[messengerViewController alloc] init];
+    setIndexObj=[[messengerViewController alloc]init];
     restObj=[[messengerRESTclient alloc]init];
+    newPostObj=[[newPostViewController alloc]init];
 
     /*Call to retrieve the collated data from server*/
     groupList=[grabGroupsObj getGroupObjects:nil :0];
@@ -65,7 +67,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     selectedIndex=[groupList objectAtIndex:[indexPath row]];
-    messengerViewController *setIndexObj=[[messengerViewController alloc] init];
+    //selectedIndex=@"test";
     [setIndexObj setSelectedIndex:selectedIndex];
     [grabGroupsObj clearBufferList];
     [self dismissViewControllerAnimated:YES completion:NULL];

@@ -30,8 +30,8 @@ static int valueToReturn=0;
 -(void)receiveMessage:(NSString *)endPoint;
 -(int)sendMessage :(NSString *)userID :(NSString *)userName :(NSString *)password :(NSString *)emailID :(NSString *)endPointURL;
 -(int)createGroup:(NSString *)userID :(NSString *)groupName :(double)locationLatitude :(double)locationLongitude :(NSString *)endPointURL;
--(int)createNewPost:(NSString *)userID :(NSString *)groupName :(NSString *) postData : (double)locationLatitude :(double)locationLongitude :(NSString *)endPointURL;
-
+-(int)createNewPost:(NSString *)userID :(NSString *)groupName :(NSString *) postMessage : (double)locationLatitude :(double)locationLongitude :(NSString *)endPointURL;
+-(int)showPostData:(NSString *)groupName :(NSString *)endPointURL;
 -(void)valueToReturn:(int)value;
 -(int)returnValue;
 -(void)_startReceive;

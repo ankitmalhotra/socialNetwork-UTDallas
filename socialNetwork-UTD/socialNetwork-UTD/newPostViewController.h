@@ -15,7 +15,7 @@
 
 static double locationLat,locationLong;
 static NSString *localUserId;
-static NSString *localGroupName;
+static NSString *localGrpName;
 
 @interface newPostViewController : UIViewController
 {    
@@ -32,6 +32,6 @@ static NSString *localGroupName;
 -(IBAction)backToMain;
 -(void)getLocationCoords:(double)locationLatitude :(double)locationLongitude;
 -(void)getUserId:(NSString *)userId;
--(void)getUserGroup;
+-(void)setUserGroup;
 
 @end

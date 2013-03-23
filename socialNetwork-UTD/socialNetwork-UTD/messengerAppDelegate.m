@@ -24,6 +24,10 @@
     self.viewController = [[[messengerViewController alloc] initWithNibName:@"messengerViewController" bundle:nil] autorelease];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+    
+    /*Informing device about Push notification enablement*/
+    [[UIApplication sharedApplication]registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
+    
     /*
     if(self.locationManager==nil){
         _locationManager=[[CLLocationManager alloc] init];        
@@ -40,6 +44,17 @@
     */ 
     
     return YES;
+}
+
+/*Device token to be used by the server. This token serves as an address of device for the server to begin pushing messages*/
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+{
+	NSLog(@"My token is: %@", deviceToken);
+}
+
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+{
+	NSLog(@"Failed to get token, error: %@", error);
 }
 
 

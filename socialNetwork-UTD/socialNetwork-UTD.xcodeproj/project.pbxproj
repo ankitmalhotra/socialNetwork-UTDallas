@@ -21,12 +21,14 @@
 		FE0AFD0016255C33000A92C9 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE0AFCFF16255C33000A92C9 /* CoreLocation.framework */; };
 		FE1FCFA6166E7D7D009E61C7 /* groupsTableViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1FCFA4166E7D7C009E61C7 /* groupsTableViewViewController.m */; };
 		FE1FCFA7166E7D7D009E61C7 /* groupsTableViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE1FCFA5166E7D7C009E61C7 /* groupsTableViewViewController.xib */; };
+		FE342B0516F5020400C5A24F /* sign-in-btnx2.png in Resources */ = {isa = PBXBuildFile; fileRef = FE342B0416F5020400C5A24F /* sign-in-btnx2.png */; };
 		FE4718421652C4B1004B4ED0 /* loginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4718401652C4B1004B4ED0 /* loginViewController.m */; };
 		FE4718431652C4B1004B4ED0 /* loginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE4718411652C4B1004B4ED0 /* loginViewController.xib */; };
 		FE502323167FC8F100A560EE /* friendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE502321167FC8F000A560EE /* friendsViewController.m */; };
 		FE502324167FC8F100A560EE /* friendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE502322167FC8F000A560EE /* friendsViewController.xib */; };
 		FE57BD071693F15000B97DCF /* newPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE57BD051693F15000B97DCF /* newPostViewController.m */; };
 		FE57BD081693F15000B97DCF /* newPostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE57BD061693F15000B97DCF /* newPostViewController.xib */; };
+		FE7FACCA16F702F7006684D7 /* main_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = FE7FACC916F702F7006684D7 /* main_logo.png */; };
 		FE89AE7416B90340001FA8C8 /* signupUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE89AE7216B90340001FA8C8 /* signupUserViewController.m */; };
 		FE89AE7516B90340001FA8C8 /* signupUserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE89AE7316B90340001FA8C8 /* signupUserViewController.xib */; };
 		FE90F9A216ACA84B0089B34F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FE90F9A116ACA84B0089B34F /* Settings.bundle */; };
@@ -34,6 +36,7 @@
 		FE90F9A816ACC6520089B34F /* messengerRESTclient.m in Sources */ = {isa = PBXBuildFile; fileRef = FE90F9A716ACC6520089B34F /* messengerRESTclient.m */; };
 		FE91204B16D227480025FF60 /* ChallengeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FE91204A16D227480025FF60 /* ChallengeHandler.m */; };
 		FEABE8A916464064000F27FD /* secureMessageRSA.m in Sources */ = {isa = PBXBuildFile; fileRef = FEABE8A816464064000F27FD /* secureMessageRSA.m */; };
+		FEAD17F116F4FCDD00FB0685 /* sign-in-btn.png in Resources */ = {isa = PBXBuildFile; fileRef = FEAD17F016F4FCDD00FB0685 /* sign-in-btn.png */; };
 		FECCDC5F165727DC0084447E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FECCDC5E165727DC0084447E /* CFNetwork.framework */; };
 		FEEC2C0916314087000B2329 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEEC2C0816314087000B2329 /* MapKit.framework */; };
 		FEFDD41E162E37B600B88CFA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFDD41D162E37B600B88CFA /* Security.framework */; };
@@ -60,6 +63,7 @@
 		FE1FCFA3166E7D7C009E61C7 /* groupsTableViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = groupsTableViewViewController.h; sourceTree = "<group>"; };
 		FE1FCFA4166E7D7C009E61C7 /* groupsTableViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = groupsTableViewViewController.m; sourceTree = "<group>"; };
 		FE1FCFA5166E7D7C009E61C7 /* groupsTableViewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = groupsTableViewViewController.xib; sourceTree = "<group>"; };
+		FE342B0416F5020400C5A24F /* sign-in-btnx2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-in-btnx2.png"; sourceTree = "<group>"; };
 		FE47183F1652C4B1004B4ED0 /* loginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = loginViewController.h; path = ../loginViewController.h; sourceTree = "<group>"; };
 		FE4718401652C4B1004B4ED0 /* loginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = loginViewController.m; path = ../loginViewController.m; sourceTree = "<group>"; };
 		FE4718411652C4B1004B4ED0 /* loginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = loginViewController.xib; path = ../loginViewController.xib; sourceTree = "<group>"; };
@@ -69,6 +73,7 @@
 		FE57BD041693F15000B97DCF /* newPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = newPostViewController.h; sourceTree = "<group>"; };
 		FE57BD051693F15000B97DCF /* newPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = newPostViewController.m; sourceTree = "<group>"; };
 		FE57BD061693F15000B97DCF /* newPostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = newPostViewController.xib; sourceTree = "<group>"; };
+		FE7FACC916F702F7006684D7 /* main_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_logo.png; sourceTree = "<group>"; };
 		FE89AE7116B9033F001FA8C8 /* signupUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = signupUserViewController.h; sourceTree = "<group>"; };
 		FE89AE7216B90340001FA8C8 /* signupUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = signupUserViewController.m; sourceTree = "<group>"; };
 		FE89AE7316B90340001FA8C8 /* signupUserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = signupUserViewController.xib; sourceTree = "<group>"; };
@@ -81,6 +86,7 @@
 		FE91204A16D227480025FF60 /* ChallengeHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeHandler.m; sourceTree = "<group>"; };
 		FEABE8A716464064000F27FD /* secureMessageRSA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = secureMessageRSA.h; sourceTree = "<group>"; };
 		FEABE8A816464064000F27FD /* secureMessageRSA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = secureMessageRSA.m; sourceTree = "<group>"; };
+		FEAD17F016F4FCDD00FB0685 /* sign-in-btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-in-btn.png"; sourceTree = "<group>"; };
 		FECCDC5E165727DC0084447E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		FEEC2C0816314087000B2329 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		FEFDD41D162E37B600B88CFA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -164,6 +170,7 @@
 		FE0AFCE316255A10000A92C9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FEAD17E916F4801600FB0685 /* img_src_files */,
 				FE0AFCE416255A10000A92C9 /* socialNetwork-UTD-Info.plist */,
 				FE0AFCE516255A10000A92C9 /* InfoPlist.strings */,
 				FE0AFCE816255A10000A92C9 /* main.m */,
@@ -208,6 +215,16 @@
 				FEABE8A816464064000F27FD /* secureMessageRSA.m */,
 			);
 			name = cryptoFiles;
+			sourceTree = "<group>";
+		};
+		FEAD17E916F4801600FB0685 /* img_src_files */ = {
+			isa = PBXGroup;
+			children = (
+				FE7FACC916F702F7006684D7 /* main_logo.png */,
+				FE342B0416F5020400C5A24F /* sign-in-btnx2.png */,
+				FEAD17F016F4FCDD00FB0685 /* sign-in-btn.png */,
+			);
+			name = img_src_files;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -273,6 +290,9 @@
 				FE57BD081693F15000B97DCF /* newPostViewController.xib in Resources */,
 				FE90F9A216ACA84B0089B34F /* Settings.bundle in Resources */,
 				FE89AE7516B90340001FA8C8 /* signupUserViewController.xib in Resources */,
+				FEAD17F116F4FCDD00FB0685 /* sign-in-btn.png in Resources */,
+				FE342B0516F5020400C5A24F /* sign-in-btnx2.png in Resources */,
+				FE7FACCA16F702F7006684D7 /* main_logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,8 +390,8 @@
 		FE0AFCFD16255A10000A92C9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Rakesh Kapoor (27DNJ5JEU2)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rakesh Kapoor (27DNJ5JEU2)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ankit Malhotra (T6U27WJNM9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ankit Malhotra (T6U27WJNM9)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "socialNetwork-UTD/socialNetwork-UTD-Prefix.pch";
 				INFOPLIST_FILE = "socialNetwork-UTD/socialNetwork-UTD-Info.plist";
@@ -380,8 +400,8 @@
 				OTHER_LDFLAGS = "-lxml2";
 				"OTHER_LDFLAGS[arch=*]" = "-lxml2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3F19D394-3852-409B-8EF1-E1F69EB324C2";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3F19D394-3852-409B-8EF1-E1F69EB324C2";
+				PROVISIONING_PROFILE = "8783AC10-1958-4408-B8FC-E2F713747470";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8783AC10-1958-4408-B8FC-E2F713747470";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -390,8 +410,8 @@
 		FE0AFCFE16255A10000A92C9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Rakesh Kapoor (27DNJ5JEU2)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rakesh Kapoor (27DNJ5JEU2)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ankit Malhotra (T6U27WJNM9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ankit Malhotra (T6U27WJNM9)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "socialNetwork-UTD/socialNetwork-UTD-Prefix.pch";
 				INFOPLIST_FILE = "socialNetwork-UTD/socialNetwork-UTD-Info.plist";
@@ -400,8 +420,8 @@
 				OTHER_LDFLAGS = "-lxml2";
 				"OTHER_LDFLAGS[arch=*]" = "-lxml2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3F19D394-3852-409B-8EF1-E1F69EB324C2";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "054EF5B8-913D-470C-9748-3C285DB3CCD1";
+				PROVISIONING_PROFILE = "8783AC10-1958-4408-B8FC-E2F713747470";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8783AC10-1958-4408-B8FC-E2F713747470";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

@@ -27,9 +27,9 @@ static NSString *serviceEndPoint;
 }
 
 - (id) init;
-- (void) parseDocument:(NSData *) data:(NSString *)endPoint ;
+- (void) parseDocument:(NSData *) data :(NSString *)endPoint ;
 - (void) clearContentsOfElement ;
-- (void)callMain:(NSArray *)mainContents;
+- (void)callMain:(NSMutableArray *)mainContents;
 - (NSArray *)dataExposer;
 - (int)statusSignal;
 

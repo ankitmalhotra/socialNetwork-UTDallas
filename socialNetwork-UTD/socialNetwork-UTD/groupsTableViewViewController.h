@@ -8,27 +8,30 @@
 
 #import <UIKit/UIKit.h>
 #import "messengerViewController.h"
+#import "newPostViewController.h"
 #import "messengerRESTclient.h"
 
 @class messengerViewController;
 @class messengerRESTclient;
+@class newPostViewController;
 
 static double locationLat,locationLong;
 static NSString *localUserId;
+static NSString *selectedIndex;
+static NSArray *groupList;
 
 @interface groupsTableViewViewController : UIViewController
          <UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
     IBOutlet UITableView *tabVw;
-    NSArray *groupList;
-    NSString *selectedIndex;
     NSString *grpName;
     UITextField *groupNameField;
     int retval;
     
+    messengerViewController *setIndexObj;
     messengerViewController *grabGroupsObj;
-    messengerViewController *grabLocationCoordsObj;
     messengerRESTclient *restObj;
+    newPostViewController *newPostObj;
 }
 
 -(IBAction)backToMain;

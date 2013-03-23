@@ -47,7 +47,6 @@
 						<string key="NSFrame">{{20, 20}, {0, 0}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -82,6 +81,10 @@
 						<reference key="NSNextKeyView" ref="109564190"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<object class="NSColor" key="IBUITintColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC4yMjI0MDcwMTg2IDAuNTE1NTY0ODc0MSAwLjY2Mjc2NzQ5MzIAA</bytes>
+						</object>
 						<array key="IBUIItems">
 							<object class="IBUINavigationItem" id="977888313">
 								<reference key="IBUINavigationBar" ref="443876866"/>
@@ -127,10 +130,15 @@
 								<reference key="IBUIToolbar" ref="925858842"/>
 							</object>
 						</array>
+						<object class="NSColor" key="IBUITintColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC4yMjI0MDcwMTg2IDAuNTE1NTY0ODc0MSAwLjY2Mjc2NzQ5MzIAA</bytes>
+						</object>
 					</object>
 					<object class="IBUIScrollView" id="607181743">
 						<reference key="NSNextResponder" ref="774585933"/>
 						<int key="NSvFlags">268</int>
+						<array class="NSMutableArray" key="NSSubviews"/>
 						<string key="NSFrame">{{13, 72}, {296, 432}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<reference key="NSWindow"/>
@@ -580,6 +588,7 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">389</int>
 						<reference key="object" ref="607181743"/>
+						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="774585933"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -665,7 +674,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">444</int>
+			<int key="maxID">453</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -715,7 +724,6 @@
 						<string key="postBtn">UIBarButtonItem</string>
 						<string key="scrollView">UIScrollView</string>
 						<string key="stopUpdate">UIBarButtonItem</string>
-						<string key="userIdLabel">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="friendsBtn">
@@ -737,10 +745,6 @@
 						<object class="IBToOneOutletInfo" key="stopUpdate">
 							<string key="name">stopUpdate</string>
 							<string key="candidateClassName">UIBarButtonItem</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="userIdLabel">
-							<string key="name">userIdLabel</string>
-							<string key="candidateClassName">UILabel</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">

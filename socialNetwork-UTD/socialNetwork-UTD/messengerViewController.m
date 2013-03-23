@@ -37,6 +37,7 @@
     /*Object instantiations*/
     groups=[[NSMutableArray alloc]init];
     friends=[[NSMutableArray alloc]init];
+    messagePostData=[[NSMutableArray alloc]init];
     restObj=[[messengerRESTclient alloc]init];
     groupViewObj=[[groupsTableViewViewController alloc]init];
     newPostObj=[[newPostViewController alloc]init];
@@ -117,13 +118,56 @@
 /*Receive the index selected in group tableview*/
 -(void)setSelectedIndex:(NSString *)indexVal
 {
-    selectedGroupNameIndex=indexVal;
-    NSLog(@"index selected: %@",selectedGroupNameIndex);
+    grpname=[indexVal retain];
+    NSLog(@"index selected: %@",grpname);
+    [self showPostData:grpname];
 }
+
 
 -(NSString *)signalGroupName
 {
-    return selectedGroupNameIndex;
+    NSLog(@"group sending: %@",grpname);
+    return grpname;
+}
+
+
+-(void)showPostData:(NSString *)groupName
+{
+    restObj=[[messengerRESTclient alloc]init];
+    retVal=[restObj showPostData:groupName :@"getGroupMessages"];
+    if(retVal==1)
+    {
+        NSLog(@"calling for status from server..");
+        receivedStatus=[restObj returnValue];
+        NSLog(@"status received:%d",receivedStatus);
+        if(receivedStatus==1)
+        {
+            NSLog(@"post data: %@",messagePostData);
+            UILabel *messageList=[[UILabel alloc]initWithFrame:CGRectMake(20, 20, 42, 21)];
+            messageList.text=(NSString *)messagePostData;
+            [scrollView addSubview:messageList];
+        }
+        else
+        {
+            UIAlertView *msgListAlert=[[UIAlertView alloc]initWithTitle:@"Failed" message:[NSString stringWithFormat:@"Message list could not be retrieved"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [msgListAlert show];
+            [msgListAlert release];
+        }
+    }
+    else
+    {
+        NSLog(@"retval is: %d",retVal);
+        UIAlertView *connNullAlert=[[UIAlertView alloc]initWithTitle:@"Connection Error" message:@"Unable to contact server" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [connNullAlert show];
+        [connNullAlert release];
+    }
+}
+
+
+-(void)collectedPostData:(NSMutableArray *)inputArray
+{
+    [messagePostData addObjectsFromArray:inputArray];
+    NSLog(@"messagepostadta: %@",messagePostData);
 }
 
 /*Setting the username received from loginView*/
@@ -192,7 +236,7 @@
 /*Show groups listing*/
 -(IBAction)showGroups
 {
-    int retVal=[restObj sendMessage:username :nil :nil :nil :@"listMemberGroups"];
+    retVal=[restObj sendMessage:username :nil :nil :nil :@"listMemberGroups"];
     if(retVal==1)
     {
       groupsTableViewViewController *gTblView=[[groupsTableViewViewController alloc]initWithNibName:nil bundle:nil];

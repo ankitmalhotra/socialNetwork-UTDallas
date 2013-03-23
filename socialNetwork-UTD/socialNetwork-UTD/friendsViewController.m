@@ -8,17 +8,12 @@
 
 #import "friendsViewController.h"
 
-@interface friendsViewController ()
-
-@end
-
 @implementation friendsViewController
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     messengerViewController *grabFriendObj=[[messengerViewController alloc] init];
     friendList=[grabFriendObj getFriendObjects:nil:0];
 }
