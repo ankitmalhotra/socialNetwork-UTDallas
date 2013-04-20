@@ -1,0 +1,47 @@
+/*Handle the synchronous response here*/
+    NSError			*requestError;
+	NSURLResponse	*urlResponse;
+	NSError			*error = nil;
+	NSData *responseData = [NSURLConnection sendSynchronousRequest:request
+												 returningResponse:&urlResponse
+															 error:&requestError];
+	if (error == nil)
+    {
+		if ([urlResponse isKindOfClass:[NSHTTPURLResponse class]])
+        {
+			NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) urlResponse;
+			int status = [httpResponse statusCode];
+			/*If the call was okay, then invoke the parser*/
+			if ((status >= 200) && (status < 300))
+            {
+                NSLog(@"sending parse request with: %@",responseData);
+                accessPtr = [[BaseRESTparser alloc]init];
+                NSLog(@"parsing for: %@",endPointURL);
+                NSString *xml = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+                NSLog(@"xml for: %@ = %@",endPointURL,xml);
+                [xml release];
+				[accessPtr parseDocument:responseData:endPointURL];
+                retVal=1;
+			}
+            else
+            {
+                NSLog(@"status error: %d and %@",status,httpResponse);
+                retVal=0;
+            }
+		}
+        else
+        {
+            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) urlResponse;
+			int status = [httpResponse statusCode];
+            NSLog(@"Unable to complete the request: %@",urlResponse);
+            NSLog(@"status error: %d and %@",status,httpResponse);
+            retVal=0;
+        }
+	}
+    else
+    {
+        retVal=0;
+    }
+    
+	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    return retVal;

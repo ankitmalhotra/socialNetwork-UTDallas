@@ -23,13 +23,12 @@
     }
 
     /*Start the parsing process*/
-    - (void) parseDocument:(NSData *) data:(NSString *)endPoint
+    - (void) parseDocument:(NSData *)data :(NSString *)endPoint
     {
         serviceEndPoint=endPoint;
         mainViewPtr=[[messengerViewController alloc]init];
         NSLog(@"data in: %@",data);
         NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
-        
         [parser setDelegate:self];
         /*Depending on the XML document you're parsing, you may want to enable these features of NSXMLParser*/
         [parser setShouldProcessNamespaces:YES];
@@ -55,7 +54,10 @@
     {
         if([serviceEndPoint isEqualToString:@"add"])
         {
-           /*point to add response handler in mainView*/
+           /*Point to add response handler in mainView*/
+            callRESTclient=[[messengerRESTclient alloc]init];
+            NSLog(@"calling new user signup check with %@",mainContents);
+            [callRESTclient valueToReturn:1];
         }
         else if([serviceEndPoint isEqualToString:@"login"])
         {
@@ -68,16 +70,32 @@
                 NSLog(@"returning 1 from BaseREST");
                 [callRESTclient valueToReturn:1];
             }
-            else
+            else if([[mainContents objectAtIndex:0] isEqual:@"false"])
             {
-                NSLog(@"returning 0 from BaseREST");
-                [callRESTclient valueToReturn:0];
+                NSLog(@"returning -1 from BaseREST");
+                [callRESTclient valueToReturn:-1];
             }
             [callRESTclient release];
         }
         else if([serviceEndPoint isEqualToString:@"listMemberGroups"])
         {
-          NSLog(@"calling groups with: %@",mainContents);
+             callRESTclient=[[messengerRESTclient alloc]init];
+             NSLog(@"calling groups list check with: %@",mainContents);
+             if([mainContents containsObject:@"false"])
+             {
+                [mainContents removeObject:@"false"];
+             }
+             if([mainContents containsObject:@"true"])
+             {
+                [mainContents removeObject:@"true"];
+             }
+             [mainViewPtr getGroupObjects:mainContents :1];
+             [callRESTclient valueToReturn:1];
+        }
+        else if([serviceEndPoint isEqualToString:@"getUsersInGroup"])
+        {
+            callRESTclient=[[messengerRESTclient alloc]init];
+            NSLog(@"calling friends list check with: %@",mainContents);
             if([mainContents containsObject:@"false"])
             {
                 [mainContents removeObject:@"false"];
@@ -86,7 +104,8 @@
             {
                 [mainContents removeObject:@"true"];
             }
-          [mainViewPtr getGroupObjects:mainContents :1];
+            [mainViewPtr getFriendObjects:mainContents :1];
+            [callRESTclient valueToReturn:1];
         }
         else if ([serviceEndPoint isEqualToString:@"addGroup"])
         {
@@ -102,8 +121,8 @@
             }
             else
             {
-                NSLog(@"returning 0 from BaseREST");
-                [callRESTclient valueToReturn:0];
+                NSLog(@"returning -1 from BaseREST");
+                [callRESTclient valueToReturn:-1];
             }
             [callRESTclient release];
         }
@@ -113,7 +132,7 @@
             callRESTclient=[[messengerRESTclient alloc]init];
             
             /*Point to addGroup response handler in loginView*/
-            NSLog(@"calling addGroup check with %@",mainContents);
+            NSLog(@"calling post message check with %@",mainContents);
             if([[mainContents objectAtIndex:0] isEqual:@"true"])
             {
                 NSLog(@"returning 1 from BaseREST");
@@ -121,8 +140,8 @@
             }
             else
             {
-                NSLog(@"returning 0 from BaseREST");
-                [callRESTclient valueToReturn:0];
+                NSLog(@"returning -1 from BaseREST");
+                [callRESTclient valueToReturn:-1];
             }
             [callRESTclient release];
         }
@@ -132,6 +151,21 @@
             [mainViewPtr collectedPostData:mainContents];
             NSLog(@"returning 1 from BaseREST");
             callRESTclient=[[messengerRESTclient alloc]init];
+            [callRESTclient valueToReturn:1];
+        }
+        else if ([serviceEndPoint isEqualToString:@"showGroups"])
+        {
+            callRESTclient=[[messengerRESTclient alloc]init];
+            NSLog(@"calling all groups list check with: %@",mainContents);
+            if([mainContents containsObject:@"false"])
+            {
+                [mainContents removeObject:@"false"];
+            }
+            if([mainContents containsObject:@"true"])
+            {
+                [mainContents removeObject:@"true"];
+            }
+            [mainViewPtr getGroupObjects:mainContents :1];
             [callRESTclient valueToReturn:1];
         }
     }

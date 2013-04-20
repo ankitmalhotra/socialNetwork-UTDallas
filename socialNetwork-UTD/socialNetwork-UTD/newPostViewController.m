@@ -40,37 +40,39 @@
     [self setUserGroup];
     NSLog(@"received: %@",localGrpName);
     /*Place call to server with new post data & user,group,coord details*/
-    retVal=[restObj createNewPost:localUserId :localGrpName :messageData :locationLat :locationLong :@"postMessage"];
-    if(retVal==1)
+    [restObj createNewPost:localUserId :localGrpName :messageData :locationLat :locationLong :@"postMessage"];
+    double delayInSeconds = 2.3;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+    NSLog(@"calling for status from server..");
+    receivedStatus=[restObj returnValue];
+    NSLog(@"status received:%d",receivedStatus);
+    if(receivedStatus==1)
     {
-        NSLog(@"calling for status from server..");
-        receivedStatus=[restObj returnValue];
-        NSLog(@"status received:%d",receivedStatus);
-        if(receivedStatus==1)
-        {
-            /*Call encryption routine to encrypt the message*/
-            [secureMessageRSA encryptMessage:messageData];
-            [secureMessageRSA decryptMessage];
-            
-            UIAlertView *createdAlert=[[UIAlertView alloc]initWithTitle:@"Success" message:[NSString stringWithFormat:@"Message Successfully posted"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [createdAlert show];
-            [createdAlert release];
-            [self dismissViewControllerAnimated:YES completion:NULL];
-        }
-        else
-        {
-            UIAlertView *createdAlert=[[UIAlertView alloc]initWithTitle:@"Failed" message:[NSString stringWithFormat:@"New Message could not be posted"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [createdAlert show];
-            [createdAlert release];
-        }
+        /*Call to main to update table view for new post*/
+        [mainViewController showNewPosts];
+        /*Call encryption routine to encrypt the message*/
+        [secureMessageRSA encryptMessage:messageData];
+        [secureMessageRSA decryptMessage];
+                
+        UIAlertView *createdAlert=[[UIAlertView alloc]initWithTitle:@"Success" message:[NSString stringWithFormat:@"Message Successfully posted"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [createdAlert show];
+        [createdAlert release];
+        [self dismissViewControllerAnimated:YES completion:NULL];
     }
-    else
+    else if (receivedStatus==0)
     {
         UIAlertView *connNullAlert=[[UIAlertView alloc]initWithTitle:@"Connection Error" message:@"Unable to contact server" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [connNullAlert show];
         [connNullAlert release];
     }
-
+    else if(receivedStatus==-1)
+    {
+        UIAlertView *createdAlert=[[UIAlertView alloc]initWithTitle:@"Failed" message:[NSString stringWithFormat:@"New Message could not be posted"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [createdAlert show];
+        [createdAlert release];
+    }
+    });
 }
 
 /*This method will be invoked by main view which will pass location coordinates*/
@@ -91,7 +93,6 @@
 /*This method invoked locally will call main view to retrieve the group name selected*/
 -(void)setUserGroup
 {
-    //localGrpName=@"Can our project be complete";
     localGrpName=[mainViewController signalGroupName];
 }
 

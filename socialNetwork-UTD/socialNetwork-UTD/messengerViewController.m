@@ -19,9 +19,6 @@
 {
     /*Location constants*/
     CLLocationManager *locManager;
-    
-    /*User credentials*/
-    NSString *userPwd;    
 }
 
 @end
@@ -44,7 +41,7 @@
     
     [super viewDidLoad];
 
-    /*Get Location*/
+    /*Setup Location Manager & start updating location*/
     locManager=[[CLLocationManager alloc] init];
     locManager.delegate=self;
     locManager.desiredAccuracy=kCLLocationAccuracyBest;
@@ -55,14 +52,15 @@
     }
     
     /*Set the label to display the logged-in user's ID*/
-    UILabel *userIdLabel=[[UILabel alloc]initWithFrame:CGRectMake(135, 42, 91, 21)];
-    userIdLabel.text=username;
+    UILabel *userIdLabel=[[UILabel alloc]initWithFrame:CGRectMake(130, 42, 120, 30)];
+    NSString *welcomeMsg=username;
+    welcomeMsg=[welcomeMsg stringByAppendingString:@", Hello !"];
+    userIdLabel.text=welcomeMsg;
     userIdLabel.numberOfLines=3;
     userIdLabel.backgroundColor=[UIColor clearColor];
-    userIdLabel.textColor=[UIColor blackColor];
-    userIdLabel.font=[UIFont systemFontOfSize:14.0];
+    userIdLabel.textColor=[UIColor whiteColor];
+    userIdLabel.font=[UIFont systemFontOfSize:18.0];
     [self.view addSubview: userIdLabel];
-            
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -74,6 +72,7 @@
         appearCheck=1;
         loginViewController *loginVw=[[loginViewController alloc]initWithNibName:nil bundle:nil];
         [self presentViewController:loginVw animated:YES completion:NULL];
+        [loginVw release];
     }
 }
 
@@ -99,7 +98,7 @@
 /*Define friend values to be shown in friend tableview*/
 -(NSArray *)getFriendObjects :(NSMutableArray *)arrayInput :(int)toReturn
 {
-    /*If toReturn is 1: collate the data inbound into "friends object*/
+    /*If toReturn is 1: collate the data inbound into friends object*/
     if(toReturn==1)
     {
         [friends addObjectsFromArray:arrayInput];
@@ -123,6 +122,11 @@
     [self showPostData:grpname];
 }
 
+-(void)setSelectedIndexFriends: (NSString *)indexVal
+{
+    friendname=[indexVal retain];
+    NSLog(@"friend index selected: %@",friendname);
+}
 
 -(NSString *)signalGroupName
 {
@@ -134,47 +138,88 @@
 -(void)showPostData:(NSString *)groupName
 {
     restObj=[[messengerRESTclient alloc]init];
-    retVal=[restObj showPostData:groupName :@"getGroupMessages"];
-    if(retVal==1)
-    {
+    [restObj showPostData:groupName :@"getGroupMessages"];
+    double delayInSeconds = 2.3;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         NSLog(@"calling for status from server..");
-        receivedStatus=[restObj returnValue];
-        NSLog(@"status received:%d",receivedStatus);
-        if(receivedStatus==1)
+        retVal=[restObj returnValue];
+        if(retVal==1)
         {
-            NSLog(@"post data: %@",messagePostData);
-            UILabel *messageList=[[UILabel alloc]initWithFrame:CGRectMake(20, 20, 42, 21)];
-            messageList.text=(NSString *)messagePostData;
-            [scrollView addSubview:messageList];
+            int k=0;
+            messageDataToShow=NULL;
+            userNameDataToShow=NULL;
+            NSLog(@"messages data count: %d",[messagePostData count]);
+            while(k<[messagePostData count] && [messagePostData count]!=1)
+            {
+                k++;
+                messageDataToShow=[messagePostData objectAtIndex:k];
+                userNameDataToShow=[messagePostData objectAtIndex:k-1];
+                k++;
+                showPosts=1;
+            }
+            
+            NSLog(@"about to show");
+            double delayInSeconds = 3.0;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [self showNewPosts];
+            });
+            
         }
-        else
+        else if(retVal==-1)
         {
             UIAlertView *msgListAlert=[[UIAlertView alloc]initWithTitle:@"Failed" message:[NSString stringWithFormat:@"Message list could not be retrieved"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [msgListAlert show];
-            [msgListAlert release];
+                [msgListAlert show];
+                [msgListAlert release];
         }
-    }
-    else
-    {
-        NSLog(@"retval is: %d",retVal);
-        UIAlertView *connNullAlert=[[UIAlertView alloc]initWithTitle:@"Connection Error" message:@"Unable to contact server" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        [connNullAlert show];
-        [connNullAlert release];
-    }
+        else if(retVal==0)
+        {
+            NSLog(@"retval is: %d",retVal);
+            UIAlertView *connNullAlert=[[UIAlertView alloc]initWithTitle:@"Connection Error" message:@"Unable to contact server" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [connNullAlert show];
+            [connNullAlert release];
+        }
+    });
 }
 
+
+-(void)showNewPosts
+{
+    NSLog(@"c1: %@",messageDataToShow);
+    NSLog(@"c2: %@",userNameDataToShow);
+    /*Reloead table view to display any newly fetched posts*/
+    postsViewer=[[UITableView alloc]init];
+    [postsViewer reloadData];
+}
 
 -(void)collectedPostData:(NSMutableArray *)inputArray
 {
-    [messagePostData addObjectsFromArray:inputArray];
-    NSLog(@"messagepostadta: %@",messagePostData);
+    [messagePostData addObjectsFromArray:[inputArray retain]];
+    [messagePostData retain];
 }
 
 /*Setting the username received from loginView*/
--(void)getUserId:(NSString *)userId
+-(void)getUserId:(NSString *)userId :(NSString *)userPassword
 {
-    username=userId;
-    NSLog(@"name is: %@",username);
+    userpwd=[[NSString alloc]init];
+    username=[[NSString alloc]init];
+    username=[userId retain];
+    //userpwd=[userPassword retain];
+    
+    /*Signal userId to groupsTableView(to be used for new group creation*/
+    groupViewObj=[[groupsTableViewViewController alloc]init];
+    [groupViewObj getUserData:username :userpwd :userMailID];
+    
+    /*Signal userId to newPostView(to be used for new post creation*/
+    newPostObj=[[newPostViewController alloc]init];
+    [newPostObj getUserId:username];
+}
+
+/*Setting the userEmailID received from signupview*/
+-(void)getUserMailID:(NSString *)mailID
+{
+    userMailID=[mailID retain];
 }
 
 
@@ -192,6 +237,8 @@
         NSString *showPos=[NSString stringWithFormat:@"lat: %f,long: %f",newLocation.coordinate.latitude,newLocation.coordinate.longitude ];
         double latPos=newLocation.coordinate.latitude;
         double longPos=newLocation.coordinate.longitude;
+        locationLatitude=locationLat;
+        locationLongitude=locationLong;
         NSLog(@"Current user position: %@",showPos);
         
         /*Signal location co-ords to groupsTableView(to be used for new group creation)*/
@@ -199,12 +246,6 @@
         
         /*Signal location co-ords to groupsTableView(to be used for new group creation)*/
         [newPostObj getLocationCoords:latPos :longPos];
-        
-        /*Signal userId to groupsTableView(to be used for new group creation*/
-        [groupViewObj getUserId:username];
-        
-        /*Signal userId to groupsTableView(to be used for new group creation*/
-        [newPostObj getUserId:username];
         
         /*
         typedef double CLLocationDistance;
@@ -231,30 +272,72 @@
 -(void)clearBufferList
 {
     [groups removeAllObjects];
+    [messagePostData removeAllObjects];
+    [friends removeAllObjects];
 }
 
 /*Show groups listing*/
 -(IBAction)showGroups
 {
-    retVal=[restObj sendMessage:username :nil :nil :nil :@"listMemberGroups"];
+    groupsBtn.enabled=FALSE;
+    friendsBtn.enabled=FALSE;
+    postBtn.enabled=FALSE;
+    [restObj sendMessage:username :nil :nil :nil :nil :@"listMemberGroups"];
+    double delayInSeconds = 2.3;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+    retVal=[restObj returnValue];
     if(retVal==1)
     {
-      groupsTableViewViewController *gTblView=[[groupsTableViewViewController alloc]initWithNibName:nil bundle:nil];
-      [self presentViewController:gTblView animated:YES completion:NULL];
+        groupsBtn.enabled=TRUE;
+        friendsBtn.enabled=TRUE;
+        postBtn.enabled=TRUE;
+        groupsTableViewViewController *gTblView=[[groupsTableViewViewController alloc]initWithNibName:nil bundle:nil];
+        [self presentViewController:gTblView animated:YES completion:NULL];
+        [gTblView release];
     }
     else
     {
+        groupsBtn.enabled=TRUE;
+        friendsBtn.enabled=TRUE;
+        postBtn.enabled=TRUE;
         UIAlertView *connErr=[[UIAlertView alloc]initWithTitle:@"Connection Error" message:@"Unable to contact server" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [connErr show];
         [connErr release];
     }
+    });
 }
 
 /*show friends listing */
 -(IBAction)showFriends
 {
-    friendsViewController *fTblView=[[friendsViewController alloc]initWithNibName:nil bundle:nil];
-    [self presentViewController:fTblView animated:YES completion:NULL];
+    groupsBtn.enabled=FALSE;
+    friendsBtn.enabled=FALSE;
+    postBtn.enabled=FALSE;
+    [restObj getFriendList:username :grpname :locationLatitude :locationLongitude :@"getUsersInGroup" ];
+    double delayInSeconds = 2.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        retVal=[restObj returnValue];
+        if(retVal==1)
+        {
+            groupsBtn.enabled=TRUE;
+            friendsBtn.enabled=TRUE;
+            postBtn.enabled=TRUE;
+            friendsViewController *fTblView=[[friendsViewController alloc]initWithNibName:nil bundle:nil];
+            [self presentViewController:fTblView animated:YES completion:NULL];
+            [fTblView release];
+        }
+        else
+        {
+            groupsBtn.enabled=TRUE;
+            friendsBtn.enabled=TRUE;
+            postBtn.enabled=TRUE;
+            UIAlertView *connErr=[[UIAlertView alloc]initWithTitle:@"Connection Error" message:@"Unable to contact server" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [connErr show];
+            [connErr release];
+        }
+    });
 }
 
 /*load view for new post*/
@@ -262,12 +345,61 @@
 {
     newPostViewController *newPostView=[[newPostViewController alloc]initWithNibName:nil bundle:nil];
     [self presentViewController:newPostView animated:YES completion:NULL];
+    [newPostView release];
 }
 
 -(IBAction)stopUpdate
 {
     [locManager stopUpdatingLocation];
     NSLog(@"Location updater stoppped.");
+}
+
+#pragma mark - Table view data source
+/*
+ - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+ {
+    return [arr count];
+ }
+*/
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    NSLog(@"delegate 1 called..");
+    if(messagePostData==NULL)
+    {
+        return 0;
+    }
+    else
+    {
+        return [messagePostData count];
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"building cell");
+    static NSString *CellIdentifier = @"PostsCell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil)
+    {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+    }
+    
+    if (messageDataToShow!=NULL && userNameDataToShow!=NULL)
+    {
+        NSLog(@"from table: %@",[userNameDataToShow objectAtIndex:[indexPath row]]);
+        NSLog(@"from table2: %@",[messageDataToShow objectAtIndex:[indexPath row]]);
+        cell.textLabel.text=[userNameDataToShow objectAtIndex:[indexPath row]];
+        cell.detailTextLabel.text=[messageDataToShow objectAtIndex:[indexPath row]];
+    }
+    return cell;
+}
+
+#pragma mark - Table view delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 

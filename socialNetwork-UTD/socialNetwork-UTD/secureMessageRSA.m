@@ -137,5 +137,7 @@ uint8_t *plainBuffer;
     
     NSLog(@"Decrypted text: %s",plainBuffer);
     free(cipherBuffer);
+    [privKeyDict release];
+    [privTag release];
 }
 @end

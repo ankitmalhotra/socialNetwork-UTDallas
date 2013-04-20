@@ -18,7 +18,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
 }
 
 -(IBAction)switchBackLogin
@@ -42,25 +41,41 @@
     password=newPasswordField.text;
     retypePwd=retypePasswordField.text;
     emailID=emailField.text;
+    NSLog(@"password: %@",password);
+    NSLog(@"retypePwd: %@",retypePwd);
     if([password isEqualToString:retypePwd])
     {
         /*Request to "add" endpoint for new user registration*/
         restObj=[[messengerRESTclient alloc]init];
-        retVal=[restObj sendMessage:userID :userName :password :emailID :@"add"];
-        if(retVal==1)
-        {
-            [self dismissViewControllerAnimated:YES completion:nil];
-            UIAlertView *signUpSuccessAlert=[[UIAlertView alloc]initWithTitle:@"SignUp successful" message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            [signUpSuccessAlert show];
-            [signUpSuccessAlert release];
-        }
-        else
-        {
-            UIAlertView *signUpFailAlert=[[UIAlertView alloc]initWithTitle:@"SignUp Failed" message:@"Connection failiure" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            [signUpFailAlert show];
-            [signUpFailAlert release];
-        }
+        /*Retreive the device token ID*/
+        appDelegateObj=[[messengerAppDelegate alloc]init];
+        deviceToken=[appDelegateObj getDeviceToken];
+        NSString *tokenstr=[[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+        tokenstr=[tokenstr stringByReplacingOccurrencesOfString:@" " withString:@""];
+        NSLog(@"My local token is: %@", tokenstr);
         
+        [restObj sendMessage:userID :userName :password :emailID :tokenstr :@"add"];
+        double delayInSeconds = 2.3;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            NSLog(@"calling for status !");
+            retVal=[restObj returnValue];
+            if(retVal==1)
+            {
+                [mainViewCntrlObj getUserMailID:emailID];
+                [self dismissViewControllerAnimated:YES completion:nil];
+                UIAlertView *signUpSuccessAlert=[[UIAlertView alloc]initWithTitle:@"SignUp successful" message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                [signUpSuccessAlert show];
+                [signUpSuccessAlert release];
+            }
+            else
+            {
+                UIAlertView *signUpFailAlert=[[UIAlertView alloc]initWithTitle:@"SignUp Failed" message:@"Connection failiure" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                [signUpFailAlert show];
+                [signUpFailAlert release];
+            }
+
+        });
     }
     else
     {
@@ -69,7 +84,7 @@
         [wrongPwd release];
         retypePwd=NULL;
         password=NULL;
-        newPasswordField=NULL;
+        newPasswordField.text=NULL;
         retypePasswordField.text=NULL;
     }
 }
@@ -88,7 +103,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

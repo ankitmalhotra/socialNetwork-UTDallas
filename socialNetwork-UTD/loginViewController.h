@@ -16,6 +16,7 @@ static int status=0;
 static int receivedStatus;
 
 @class messengerRESTclient;
+@class messengerViewController;
 
 @interface loginViewController : UIViewController
 {
@@ -26,7 +27,8 @@ static int receivedStatus;
     IBOutlet UIActivityIndicatorView *spinningView;
     int retVal;
     
-    messengerRESTclient *restObj;    
+    messengerRESTclient *restObj;
+    messengerViewController *obj;
 }
 -(IBAction)swichBackMain;
 -(IBAction)signupUser;

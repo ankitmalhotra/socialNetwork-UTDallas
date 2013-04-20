@@ -50,6 +50,13 @@
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
 	NSLog(@"My token is: %@", deviceToken);
+    devToken=deviceToken;
+    [devToken retain];
+}
+
+-(NSData *)getDeviceToken
+{
+    return devToken;
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error

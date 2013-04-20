@@ -17,6 +17,9 @@
     IBOutlet UITableView *tabVw;
     NSArray *friendList;
     NSString *selectedIndex;
+    
+    messengerViewController *setIndexObj;
+    messengerViewController *grabFriendObj;
 }
 
 -(IBAction)backToMain;

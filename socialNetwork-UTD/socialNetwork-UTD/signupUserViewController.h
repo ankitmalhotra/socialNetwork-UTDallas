@@ -9,8 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "messengerViewController.h"
 #import "messengerRESTclient.h"
+#import "messengerAppDelegate.h"
 
-@class messengerRESTclient;  /*use this forward declaration to avoid class parse issues*/
+/*use this forward declaration to avoid class parse issues*/
+@class messengerRESTclient;
+@class messengerAppDelegate;
+@class messengerViewController;
 
 @interface signupUserViewController : UIViewController
 {
@@ -27,9 +31,14 @@
     NSString *password;
     NSString *retypePwd;
     NSString *emailID;
+    
+    NSData *deviceToken;
+    
     int retVal;
     
     messengerRESTclient *restObj;
+    messengerAppDelegate *appDelegateObj;
+    messengerViewController *mainViewCntrlObj;
     
 }
 

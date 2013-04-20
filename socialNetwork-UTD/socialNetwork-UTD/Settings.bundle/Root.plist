@@ -16,7 +16,7 @@
 			<key>AutocorrectionType</key>
 			<string>No</string>
 			<key>DefaultValue</key>
-			<string>http://appserver.utdallas.edu:8080/REST</string>
+			<string>https://appserver.utdallas.edu:8443/REST</string>
 			<key>IsSecure</key>
 			<false/>
 			<key>Key</key>

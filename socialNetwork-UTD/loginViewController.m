@@ -26,7 +26,10 @@
     appearFlagCheck=1;
     receivedStatus=0;
     NSLog(@"loaded");
-    NSLog(@"flagval: %d",appearFlagCheck);    
+    NSLog(@"flagval: %d",appearFlagCheck);
+    
+    obj=[[messengerViewController alloc]init];
+    restObj=[[messengerRESTclient alloc]init];
 }
 
 -(IBAction)swichBackMain
@@ -35,43 +38,43 @@
     userId = nameField.text;
     userPwd = passwordField.text;
     
-    /*Signal username to main view*/
-    messengerViewController *obj=[[messengerViewController alloc]init];
-    [obj getUserId:userId];
-    
     /*Start REST request*/
     spinningView.hidden=FALSE;
     [spinningView startAnimating];
-    restObj=[[messengerRESTclient alloc]init];
     
     /*Pass this username to server*/
-    retVal=[restObj sendMessage:userId :nil :userPwd :nil :@"login"];
-
-    if (retVal==1)
+    [restObj sendMessage:userId :nil :userPwd :nil :nil :@"login"];
+    double delayInSeconds = 2.3;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+    NSLog(@"calling for status !");
+    receivedStatus=[restObj returnValue];
+    NSLog(@"status received:%d",receivedStatus);
+    if(receivedStatus==1)
     {
-      NSLog(@"calling for status !");
-      receivedStatus=[restObj returnValue];
-      NSLog(@"status received:%d",receivedStatus);
-      if(receivedStatus==1)
-      {
+        /*Signal username to main view*/
+        obj=[[messengerViewController alloc]init];
+        [obj getUserId:userId:@"test"];
+        [obj release];
+        
         /*Generate Key Pairs routine*/
         [secureMessageRSA generateKeyPairs];
-        
+            
         /*Push back main view*/
         messengerViewController *mainVw=[[messengerViewController alloc]initWithNibName:nil bundle:nil];
         [self presentViewController:mainVw animated:YES completion:NULL];
         [spinningView stopAnimating];
-      }
-      else
-      {
-         UIAlertView *loginFail=[[UIAlertView alloc]initWithTitle:@"Login Failed" message:@"Please check the login credentials" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-         [loginFail show];
-         [loginFail release];
-         [spinningView stopAnimating];
-         spinningView.hidden=TRUE;
-      }
+        [mainVw release];
     }
-    else
+    else if(receivedStatus==-1)
+    {
+        UIAlertView *loginFail=[[UIAlertView alloc]initWithTitle:@"Login Failed" message:@"Please check the login credentials" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [loginFail show];
+        [loginFail release];
+        [spinningView stopAnimating];
+        spinningView.hidden=TRUE;
+    }
+    else if(receivedStatus==0)
     {
         UIAlertView *connNullAlert=[[UIAlertView alloc]initWithTitle:@"Connection Error" message:@"Unable to contact server" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [connNullAlert show];
@@ -80,6 +83,8 @@
         spinningView.hidden=TRUE;
         switchBackBtn.enabled=TRUE;
     }
+
+    });
 }
 
 /*Load new user signup view*/
@@ -87,6 +92,7 @@
 {
     signupUserViewController *signupObj=[[signupUserViewController alloc]initWithNibName:nil bundle:nil];
     [self presentViewController:signupObj animated:YES completion:nil];
+    [signupObj release];
 }
 
 /*Resign the keyboard on pressing return*/

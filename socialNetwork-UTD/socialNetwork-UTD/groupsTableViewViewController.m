@@ -18,13 +18,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    /*Init all objects to be used*/
     grabGroupsObj=[[messengerViewController alloc] init];
     setIndexObj=[[messengerViewController alloc]init];
     restObj=[[messengerRESTclient alloc]init];
     newPostObj=[[newPostViewController alloc]init];
-
+    
+    refreshCntl=[[UIRefreshControl alloc]init];
+    [refreshCntl addTarget:self action:@selector(refreshUI)forControlEvents:UIControlEventValueChanged];
+    
     /*Call to retrieve the collated data from server*/
     groupList=[grabGroupsObj getGroupObjects:nil :0];
+}
+
+-(void)refreshUI
+{
+    NSLog(@"refreshing..");
 }
 
 - (void)didReceiveMemoryWarning
@@ -67,14 +76,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     selectedIndex=[groupList objectAtIndex:[indexPath row]];
-    //selectedIndex=@"test";
     [setIndexObj setSelectedIndex:selectedIndex];
     [grabGroupsObj clearBufferList];
     [self dismissViewControllerAnimated:YES completion:NULL];
+    [grabGroupsObj showNewPosts];
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-
-
 
 -(IBAction)backToMain
 {
@@ -121,31 +128,33 @@
         NSLog(@"coords lat check: %f",locationLat);
         NSLog(@"coords long check: %f",locationLong);
 
-        retval=[restObj createGroup:localUserId :grpName :locationLat :locationLong :@"addGroup"];
-        if(retval==1)
-        {
+        [restObj createGroup:localUserId :grpName :locationLat :locationLong :@"addGroup"];
+        double delayInSeconds = 2.3;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             NSLog(@"calling for status from server..");
-            receivedStatus=[restObj returnValue];
-            NSLog(@"status received:%d",receivedStatus);
-            if(receivedStatus==1)
+            retval=[restObj returnValue];
+            if(retval==1)
             {
                 UIAlertView *createdAlert=[[UIAlertView alloc]initWithTitle:@"Success" message:[NSString stringWithFormat:@"New Group Successfully created"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                [createdAlert show];
-                [createdAlert release];
+                    [createdAlert show];
+                    [createdAlert release];
+                [self dismissViewControllerAnimated:YES completion:nil];
             }
-            else
+            else if(retval==-1)
             {
                 UIAlertView *createdAlert=[[UIAlertView alloc]initWithTitle:@"Failed" message:[NSString stringWithFormat:@"New Group could not be created"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                [createdAlert show];
-                [createdAlert release];
+                    [createdAlert show];
+                    [createdAlert release];
             }
-        }
-        else
-        {
-          UIAlertView *connNullAlert=[[UIAlertView alloc]initWithTitle:@"Connection Error" message:@"Unable to contact server" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-          [connNullAlert show];
-          [connNullAlert release];
-        }
+            else if(retval==0)
+            {
+                UIAlertView *connNullAlert=[[UIAlertView alloc]initWithTitle:@"Connection Error" message:@"Unable to contact server" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                [connNullAlert show];
+                [connNullAlert release];
+            }
+
+        });
     }
 }
 
@@ -157,11 +166,58 @@
     NSLog(@"received coords: lat: %f ,long: %f",locationLat,locationLong);
 }
 
--(void)getUserId:(NSString *)userId
+-(void)getUserData:(NSString *)userId :(NSString *)userPwd :(NSString *)userEmailID
 {
-    localUserId=userId;
+    localUserId=[userId retain];
+    localUserPwd=[userPwd retain];
+    localUserEmailID=[userEmailID retain];
     NSLog(@"received userId: %@",localUserId);
+    NSLog(@"received userPwd: %@",localUserPwd);
+    NSLog(@"received userEmailID: %@",localUserEmailID);
 }
+
+
+-(void)showAllGroups
+{
+    addGrp.enabled=FALSE;
+    backToMain.enabled=FALSE;
+    showAll.enabled=FALSE;
+    [restObj showAllGroups:localUserId :localUserPwd :localUserEmailID :locationLat :locationLong :@"showGroups"];
+    double delayInSeconds = 2.3;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        NSLog(@"calling for status from server..");
+        retval=[restObj returnValue];
+        if(retval==1)
+        {
+            /*Reload table view with updated data*/
+            [tabVw reloadData];
+            
+            addGrp.enabled=TRUE;
+            backToMain.enabled=TRUE;
+            showAll.enabled=TRUE;
+        }
+        else if(retval==-1)
+        {
+            UIAlertView *createdAlert=[[UIAlertView alloc]initWithTitle:@"Sorry" message:[NSString stringWithFormat:@"Groups could not be fetched for you at this time"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [createdAlert show];
+            [createdAlert release];
+            addGrp.enabled=TRUE;
+            backToMain.enabled=TRUE;
+            showAll.enabled=TRUE;
+        }
+        else if(retval==0)
+        {
+            UIAlertView *connNullAlert=[[UIAlertView alloc]initWithTitle:@"Connection Error" message:@"Unable to contact server" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [connNullAlert show];
+            [connNullAlert release];
+            addGrp.enabled=TRUE;
+            backToMain.enabled=TRUE;
+            showAll.enabled=TRUE;
+        }
+    });
+}
+
 
 -(BOOL)shouldAutorotate
 {

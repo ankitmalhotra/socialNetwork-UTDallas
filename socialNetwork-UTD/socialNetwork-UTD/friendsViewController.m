@@ -14,8 +14,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    messengerViewController *grabFriendObj=[[messengerViewController alloc] init];
+    /*Object instantiations*/
+    grabFriendObj=[[messengerViewController alloc] init];
+    setIndexObj=[[messengerViewController alloc] init];
+    
+    /*Call to retrieve the collated data from server*/
     friendList=[grabFriendObj getFriendObjects:nil:0];
+    [grabFriendObj release];
 }
 
 
@@ -57,14 +62,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	selectedIndex=[friendList objectAtIndex:[indexPath row]];
-    messengerViewController *setIndexObj=[[messengerViewController alloc] init];
-    [setIndexObj setSelectedIndex:selectedIndex];
+    [setIndexObj setSelectedIndexFriends:selectedIndex];
+    [setIndexObj clearBufferList];
     [self dismissViewControllerAnimated:YES completion:NULL];
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [setIndexObj release];
 }
 
 -(IBAction)backToMain
 {
+    [setIndexObj clearBufferList];
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 

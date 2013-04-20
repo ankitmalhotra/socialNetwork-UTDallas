@@ -17,6 +17,8 @@
 
 static double locationLat,locationLong;
 static NSString *localUserId;
+static NSString *localUserPwd;
+static NSString *localUserEmailID;
 static NSString *selectedIndex;
 static NSArray *groupList;
 
@@ -24,8 +26,12 @@ static NSArray *groupList;
          <UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
     IBOutlet UITableView *tabVw;
+    IBOutlet UIBarButtonItem *addGrp;
+    IBOutlet UIBarButtonItem *showAll;
+    IBOutlet UIBarButtonItem *backToMain;
     NSString *grpName;
     UITextField *groupNameField;
+    UIRefreshControl *refreshCntl;
     int retval;
     
     messengerViewController *setIndexObj;
@@ -36,7 +42,9 @@ static NSArray *groupList;
 
 -(IBAction)backToMain;
 -(IBAction)createGroup;
+-(IBAction)showAllGroups;
 -(void)getLocationCoords:(double)locationLatitude :(double)locationLongitude;
--(void)getUserId:(NSString *)userId;
+-(void)getUserData:(NSString *)userId :(NSString *)userPwd :(NSString *)userEmailID;
+-(void)refreshUI;
 
 @end

@@ -12,6 +12,8 @@
 
 @class messengerViewController,loginViewController;
 
+static NSData *devToken;
+
 @interface messengerAppDelegate : UIResponder <UIApplicationDelegate>
 {
     NSInteger *networkingCount;
@@ -26,5 +28,6 @@
 //-(void)didStartNetworking;
 + (messengerAppDelegate *)sharedAppDelegate;
 - (NSURL *)smartURLForString:(NSString *)str;
+-(NSData *)getDeviceToken;
 
 @end

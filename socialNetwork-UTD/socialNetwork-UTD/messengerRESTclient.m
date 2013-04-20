@@ -10,11 +10,11 @@
 
 @implementation messengerRESTclient
 
-/*Using this function for handling asynchronous GET calls*/
--(void)receiveMessage:(NSString *)endPoint
+
+-(void)showAllGroups:(NSString *)userID :(NSString *)password :(NSString *)emailID :(double)locationLatitude :(double)locationLongitude :(NSString *)endPointURL
 {
-    serviceEndPoint=endPoint;
-    NSLog(@"receiveMessage in..");
+    serviceEndPoint=endPointURL;
+    
     NSString *settingsBundle=[[NSBundle mainBundle]pathForResource:@"Settings" ofType:@"bundle"];
     if(!settingsBundle)
     {
@@ -42,103 +42,45 @@
             NSLog(@"key not found..");
         }
     }
+    
     [[NSUserDefaults standardUserDefaults]registerDefaults:defaultsToRegister];
     [defaultsToRegister release];
     
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
     NSString *urlString=[defaults stringForKey:@"server_url"];
     
-    NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/v2/%@",urlString,endPoint]];
+    NSURL *url=[[messengerAppDelegate sharedAppDelegate]smartURLForString:[NSString stringWithFormat:@"%@/v1/%@",urlString,endPointURL]];
+    
     NSLog(@"Sending Request to URL %@", url);
-
+    
     [UIApplication sharedApplication].networkActivityIndicatorVisible=YES;
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:url
-										 cachePolicy:NSURLRequestReloadIgnoringCacheData
-									 timeoutInterval:30.0];
+    NSMutableURLRequest *request=[NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:10.0];
+    [request setHTTPMethod:@"POST"];
+    NSString *contentType=[NSString stringWithFormat:@"application/XML"];
+    [request addValue:contentType forHTTPHeaderField:@"Content-type"];
     
-    /*start the async request*/
-	[NSURLConnection connectionWithRequest:request delegate:self];
-}
-
-
-
-
-
-
-
-- (void)_startReceive
-// Starts a connection to download the current URL.
-{
-    BOOL                success;
-    NSURL *             url;
-    NSMutableURLRequest *      request;
-    
-    //assert(connection == nil);         // don't tap receive twice in a row!
-    //assert(currentChallenge == nil);   // ditto
-    //assert(earlyTimeoutTimer == nil);  // ditto
-    
-    // First get and check the URL.
-    
-    url = [[messengerAppDelegate sharedAppDelegate] smartURLForString:@"https://appserver.utdallas.edu:8443/REST/v1/micceo"];
-    success = (url != nil);
-    NSLog(@"%@",url);
-    // If the URL is bogus, let the user know.  Otherwise kick off the connection.
-    
-    if ( ! success) {
-        [self _updateStatus:@"Invalid URL"];
-    } else {
-        
-        // Open a stream for the file we're going to receive into.
-        
-        
-        // Open a connection for the URL.
-        
-        //request=[NSURLRequest requestWithURL:url];
-        request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:10.0];
-        [request setHTTPMethod:@"POST"];
-
-        [NSURLConnection connectionWithRequest:request delegate:self];
-        /*
-        NSError			*requestError;
-        NSURLResponse	*urlResponse;
-        NSData *responseData = [NSURLConnection sendSynchronousRequest:request
-                                                     returningResponse:&urlResponse
-                                                                 error:&requestError];
-        
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) urlResponse;
-        int status = [httpResponse statusCode];
-        NSLog(@"Request: %@",urlResponse);
-        NSLog(@"status error: %d and %@",status,httpResponse);
-        NSLog(@"data: %@",responseData);
-        */
-        
-        //connection = [NSURLConnection connectionWithRequest:request delegate:self];
-        //assert(connection != nil);
-        
-        // If we've been told to use an early timeout for debugging purposes,
-        // set that up now.
-        /*
-        if ([DebugOptions sharedDebugOptions].earlyTimeout) {
-            earlyTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(_earlyTimeout:) userInfo:nil repeats:NO];
-            assert(earlyTimeoutTimer != nil);
-        }
-        */
-        // Tell the UI we're receiving.
-        
-        //[self _receiveDidStart];
+    /*Build the XML structure to send*/
+    if([endPointURL isEqualToString:@"showGroups"])
+    {
+        NSMutableData *postData=[NSMutableData data];
+        [postData appendData:[[NSString stringWithFormat:@"<user xmlns=\"http://appserver.utdallas.edu/schema\">"]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"<UserId>%@</UserId>",userID]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"<UserPassword>%@</UserPassword>",password]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"<EmailAddress>%@</EmailAddress>",emailID]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"<UserLocationLat>%f</UserLocationLat>",locationLatitude]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"<UserLocationLong>%f</UserLocationLong>",locationLong]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"</user>"]dataUsingEncoding:NSUTF8StringEncoding]];
+        [request setHTTPBody:postData];
+        NSLog(@"passing xml: %@",postData);
     }
+    
+    /*Asynchronous call to server initiated. Delegates will be called in order now*/
+    [NSURLConnection connectionWithRequest:request delegate:self];
 }
 
-- (void)_receiveDidStart
+-(void)showPostData:(NSString *)groupName :(NSString *)endPointURL
 {
-    // Clear the current image so that we get a nice visual cue if the receive fails.
-    [[messengerAppDelegate sharedAppDelegate] didStartNetworking];
-}
-
--(int)showPostData:(NSString *)groupName :(NSString *)endPointURL
-{
-    int retVal;
     serviceEndPoint=endPointURL;
     
     NSString *settingsBundle=[[NSBundle mainBundle]pathForResource:@"Settings" ofType:@"bundle"];
@@ -197,57 +139,12 @@
         NSLog(@"passing xml: %@",postData);
     }
     
-    /*Handle the synchronous response here*/
-    NSError			*requestError;
-	NSURLResponse	*urlResponse;
-	NSError			*error = nil;
-	NSData *responseData = [NSURLConnection sendSynchronousRequest:request
-												 returningResponse:&urlResponse
-															 error:&requestError];
-	if (error == nil)
-    {
-		if ([urlResponse isKindOfClass:[NSHTTPURLResponse class]])
-        {
-			NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) urlResponse;
-			int status = [httpResponse statusCode];
-			/*If the call was okay, then invoke the parser*/
-			if ((status >= 200) && (status < 300))
-            {
-                NSLog(@"sending parse request with: %@",responseData);
-                accessPtr = [[BaseRESTparser alloc]init];
-                NSLog(@"parsing for: %@",endPointURL);
-                NSString *xml = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-                NSLog(@"xml for: %@ = %@",endPointURL,xml);
-                [xml release];
-				[accessPtr parseDocument:responseData:endPointURL];
-                retVal=1;
-			}
-            else
-            {
-                NSLog(@"status error: %d and %@",status,httpResponse);
-                retVal=3;
-            }
-		}
-        else
-        {
-            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) urlResponse;
-			int status = [httpResponse statusCode];
-            NSLog(@"Unable to complete the request: %@",urlResponse);
-            NSLog(@"status error: %d and %@",status,httpResponse);
-            retVal=3;
-        }
-	}
-    else
-    {
-        retVal=3;
-    }
-    
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    return retVal;
+    /*Asynchronous call to server initiated. Delegates will be called in order now*/
+    [NSURLConnection connectionWithRequest:request delegate:self];
 }
 
 
--(int)createNewPost:(NSString *)userID :(NSString *)groupName :(NSString *)postMessage :(double)locationLatitude :(double)locationLongitude :(NSString *)endPointURL
+-(void)createNewPost:(NSString *)userID :(NSString *)groupName :(NSString *)postMessage :(double)locationLatitude :(double)locationLongitude :(NSString *)endPointURL
 {
     NSLog(@"userid: %@",userID);
     NSLog(@"grp name: %@",groupName);
@@ -256,8 +153,6 @@
     NSLog(@"long: %f",locationLongitude);
     NSLog(@"endpoint: %@",endPointURL);
 
-
-    int retVal;
     serviceEndPoint=endPointURL;
     
     NSString *settingsBundle=[[NSBundle mainBundle]pathForResource:@"Settings" ofType:@"bundle"];
@@ -319,60 +214,14 @@
         [request setHTTPBody:postData];
     }
     
-    /*Handle the synchronous response here*/
-    NSError			*requestError;
-	NSURLResponse	*urlResponse;
-	NSError			*error = nil;
-	NSData *responseData = [NSURLConnection sendSynchronousRequest:request
-												 returningResponse:&urlResponse
-															 error:&requestError];
-	if (error == nil)
-    {
-		if ([urlResponse isKindOfClass:[NSHTTPURLResponse class]])
-        {
-			NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) urlResponse;
-			int status = [httpResponse statusCode];
-			/*If the call was okay, then invoke the parser*/
-			if ((status >= 200) && (status < 300))
-            {
-                NSLog(@"sending parse request with: %@",responseData);
-                accessPtr = [[BaseRESTparser alloc]init];
-                NSLog(@"parsing for: %@",endPointURL);
-                NSString *xml = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-                NSLog(@"xml for: %@ = %@",endPointURL,xml);
-                [xml release];
-				[accessPtr parseDocument:responseData:endPointURL];
-                retVal=1;
-			}
-            else
-            {
-                NSLog(@"status error: %d and %@",status,httpResponse);
-                retVal=0;
-            }
-		}
-        else
-        {
-            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) urlResponse;
-			int status = [httpResponse statusCode];
-            NSLog(@"Unable to complete the request: %@",urlResponse);
-            NSLog(@"status error: %d and %@",status,httpResponse);
-            retVal=0;
-        }
-	}
-    else
-    {
-        retVal=0;
-    }
-    
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    return retVal;
+    /*Asynchronous call to server initiated. Delegates will be called in order now*/
+    [NSURLConnection connectionWithRequest:request delegate:self];
 }
 
 
 /*This block places request to server to create a new group based on input received from groupsTableView*/
--(int)createGroup:(NSString *)userID :(NSString *)groupName :(double)locationLatitude :(double)locationLongitude :(NSString *)endPointURL
+-(void)createGroup:(NSString *)userID :(NSString *)groupName :(double)locationLatitude :(double)locationLongitude :(NSString *)endPointURL
 {
-    int retVal;
     serviceEndPoint=endPointURL;
     
     NSString *settingsBundle=[[NSBundle mainBundle]pathForResource:@"Settings" ofType:@"bundle"];
@@ -433,67 +282,88 @@
         [request setHTTPBody:postData];
     }
     
-    /*Handle the synchronous response here*/
-    NSError			*requestError;
-	NSURLResponse	*urlResponse;
-	NSError			*error = nil;
-	NSData *responseData = [NSURLConnection sendSynchronousRequest:request
-												 returningResponse:&urlResponse
-															 error:&requestError];
-	if (error == nil)
+    /*Asynchronous call to server initiated. Delegates will be called in order now*/
+    [NSURLConnection connectionWithRequest:request delegate:self];
+}
+
+
+/*This block places request to server to get the list of active users in a group*/
+-(void)getFriendList:(NSString *)userID :(NSString *)groupName :(double)locationLatitude :(double)locationLongitude :(NSString *)endPointURL
+{
+    serviceEndPoint=endPointURL;
+    
+    NSString *settingsBundle=[[NSBundle mainBundle]pathForResource:@"Settings" ofType:@"bundle"];
+    if(!settingsBundle)
     {
-		if ([urlResponse isKindOfClass:[NSHTTPURLResponse class]])
-        {
-			NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) urlResponse;
-			int status = [httpResponse statusCode];
-			/*If the call was okay, then invoke the parser*/
-			if ((status >= 200) && (status < 300))
-            {
-                NSLog(@"sending parse request with: %@",responseData);
-                accessPtr = [[BaseRESTparser alloc]init];
-                NSLog(@"parsing for: %@",endPointURL);
-                NSString *xml = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-                NSLog(@"xml for: %@ = %@",endPointURL,xml);
-                [xml release];
-				[accessPtr parseDocument:responseData:endPointURL];
-                retVal=1;
-			}
-            else
-            {
-                NSLog(@"status error: %d and %@",status,httpResponse);
-                retVal=0;
-            }
-		}
-        else
-        {
-            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) urlResponse;
-			int status = [httpResponse statusCode];
-            NSLog(@"Unable to complete the request: %@",urlResponse);
-            NSLog(@"status error: %d and %@",status,httpResponse);
-            retVal=0;
-        }
-	}
+        NSLog(@"settings found");
+    }
     else
     {
-        retVal=0;
+        NSLog(@"settings missing..");
     }
     
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    return retVal;
-
+    NSDictionary *settings=[NSDictionary dictionaryWithContentsOfFile:[settingsBundle stringByAppendingPathComponent:@"Root.plist"]];
+    NSArray *prefrences=[settings objectForKey:@"PreferenceSpecifiers"];
+    
+    NSMutableDictionary *defaultsToRegister=[[NSMutableDictionary alloc]initWithCapacity:[prefrences count]];
+    
+    for(NSDictionary *prefSpecs in prefrences)
+    {
+        NSString *key=[prefSpecs objectForKey:@"Key"];
+        if(key)
+        {
+            [defaultsToRegister setObject:[prefSpecs objectForKey:@"DefaultValue"] forKey:key];
+        }
+        else
+        {
+            NSLog(@"key not found..");
+        }
+    }
+    
+    [[NSUserDefaults standardUserDefaults]registerDefaults:defaultsToRegister];
+    [defaultsToRegister release];
+    
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    NSString *urlString=[defaults stringForKey:@"server_url"];
+    
+    NSURL *url=[[messengerAppDelegate sharedAppDelegate]smartURLForString:[NSString stringWithFormat:@"%@/v1/%@",urlString,endPointURL]];
+    
+    NSLog(@"Sending Request to URL %@", url);
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible=YES;
+    
+    NSMutableURLRequest *request=[NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:10.0];
+    [request setHTTPMethod:@"POST"];
+    NSString *contentType=[NSString stringWithFormat:@"application/XML"];
+    [request addValue:contentType forHTTPHeaderField:@"Content-type"];
+    
+    /*Build the XML structure to send*/
+    if([endPointURL isEqualToString:@"getUsersInGroup"])
+    {
+        NSMutableData *postData=[NSMutableData data];
+        [postData appendData:[[NSString stringWithFormat:@"<GroupInfo xmlns=\"http://appserver.utdallas.edu/schema\">"]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"<UserId>%@</UserId>",userID]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"<GroupName>%@</GroupName>",groupName]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"<UserLocationLat>%f</UserLocationLat>",locationLongitude]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"<UserLocationLong>%f</UserLocationLong>",locationLongitude]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"</GroupInfo>"]dataUsingEncoding:NSUTF8StringEncoding]];
+        [request setHTTPBody:postData];
+    }
+    
+    /*Asynchronous call to server initiated. Delegates will be called in order now*/
+    [NSURLConnection connectionWithRequest:request delegate:self];
 }
 
 
 
 /*Using this function for handling synchronous POST calls for login, signup
  & listing groups*/
--(int)sendMessage:(NSString *)userID :(NSString *)userName :(NSString *)password :(NSString *)emailID :(NSString *)endPointURL
+-(void)sendMessage:(NSString *)userID :(NSString *)userName :(NSString *)password :(NSString *)emailID :(NSString *)devToken :(NSString *)endPointURL
 {
     NSLog(@"sendMessage in..");
     
-    int retVal;
     serviceEndPoint=endPointURL;
-
+    
     NSString *settingsBundle=[[NSBundle mainBundle]pathForResource:@"Settings" ofType:@"bundle"];
     if(!settingsBundle)
     {
@@ -549,6 +419,7 @@
         [postData appendData:[[NSString stringWithFormat:@"<UserName>%@</UserName>",userName]dataUsingEncoding:NSUTF8StringEncoding]];
         [postData appendData:[[NSString stringWithFormat:@"<UserPassword>%@</UserPassword>",password]dataUsingEncoding:NSUTF8StringEncoding]];
         [postData appendData:[[NSString stringWithFormat:@"<EmailAddress>%@</EmailAddress>",emailID]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"<DeviceToken>%@</DeviceToken>",devToken]dataUsingEncoding:NSUTF8StringEncoding]];
         [postData appendData:[[NSString stringWithFormat:@"</user>"]dataUsingEncoding:NSUTF8StringEncoding]];
         [request setHTTPBody:postData];
     }
@@ -571,56 +442,9 @@
         [postData appendData:[[NSString stringWithFormat:@"</user>"]dataUsingEncoding:NSUTF8StringEncoding]];
         [request setHTTPBody:postData];
     }
-        
     
-    /*Handle the synchronous response here*/
-    NSError			*requestError;
-	NSURLResponse	*urlResponse;
-	NSError			*error = nil;
-	NSData *responseData = [NSURLConnection sendSynchronousRequest:request
-												 returningResponse:&urlResponse
-															 error:&requestError];
-	if (error == nil)
-    {
-		if ([urlResponse isKindOfClass:[NSHTTPURLResponse class]])
-        {
-			NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) urlResponse;
-			int status = [httpResponse statusCode];
-			/*If the call was okay, then invoke the parser*/
-			if ((status >= 200) && (status < 300))
-            {
-                NSLog(@"sending parse request with: %@",responseData);
-                accessPtr = [[BaseRESTparser alloc]init];
-                NSLog(@"parsing for: %@",endPointURL);
-                NSString *xml = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-                NSLog(@"xml for: %@ = %@",endPointURL,xml);
-                [xml release];
-				[accessPtr parseDocument:responseData:endPointURL];
-                //[self receiveMessage:@"list"];
-                retVal=1;
-			}
-            else
-            {
-                NSLog(@"status error: %d and %@",status,httpResponse);
-                retVal=0;
-            }
-		}
-        else
-        {
-            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) urlResponse;
-			int status = [httpResponse statusCode];
-            NSLog(@"Unable to complete the request: %@",urlResponse);
-            NSLog(@"status error: %d and %@",status,httpResponse);
-            retVal=0;
-        }
-	}
-    else
-    {
-        retVal=0;
-    }
-    
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    return retVal;
+    /*Asynchronous call to server initiated. Delegates will be called in order now*/
+    [NSURLConnection connectionWithRequest:request delegate:self];
 }
 
 
@@ -634,6 +458,10 @@
 {
     return valueToReturn;
 }
+
+
+/*All the asynchronous delegates below*/
+
 
 /*Received at the start of the asynchronous response from the server.  This may get called multiple times in certain redirect scenerios.*/
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
@@ -651,6 +479,8 @@
         {
 			NSLog(@"Connection failed with status %d", status);
 			[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            /*Conncetion error, return error signal 0*/
+            [self valueToReturn:0];
         }
         else
         {
@@ -662,7 +492,9 @@
     }
     else
     {
-        NSLog(@"response type: %@",httpResponse);
+        NSLog(@"Invalid response type: %@",httpResponse);
+        /*Conncetion error, return error signal 2*/
+        [self valueToReturn:0];
     }
 }
 
@@ -673,9 +505,9 @@
 - (BOOL)connection:(NSURLConnection *)conn canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace
 {
     NSLog(@"handling challenge..");
-    
-    return TRUE;
+    return [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust];
 }
+
 
 /*A delegate method called by the NSURLConnection when you accept a specific
 authentication challenge by returning YES from connection:canAuthenticateAgainstProtectionSpace:.
@@ -685,39 +517,18 @@ we bail out.
 */
 - (void)connection:(NSURLConnection *)conn didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
 {
-#pragma unused(conn)
-    assert(challenge != nil);
-    
     NSLog(@"didReceiveAuthenticationChallenge %@ %zd", [[challenge protectionSpace] authenticationMethod], (ssize_t) [challenge previousFailureCount]);
     
-    assert(currentChallenge == nil);
-    if ([challenge previousFailureCount] < 5)
-    {
-        currentChallenge = [ChallengeHandler handlerForChallenge:challenge parentViewController:self];
-        if (currentChallenge == nil)
-        {
-            NSLog(@"no challenge ");
-            [[challenge sender] continueWithoutCredentialForAuthenticationChallenge:challenge];
-        }
-        else
-        {
-            NSLog(@"taking challenge ");
-            currentChallenge.delegate = self;
-            [currentChallenge start];
-        }
-    }
-    else
-    {
-        NSLog(@"cancelling challenge ");
-        [[challenge sender] cancelAuthenticationChallenge:challenge];
-    }
+    [challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
 }
+
+
 
 /*Can be called multiple times with chunks of the transfer*/
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     NSLog(@"data received: %@",data);
-	[wipData appendData:data];
+    [wipData appendData:data];
 }
 
 /*Called once at the end of the request*/
@@ -733,7 +544,8 @@ we bail out.
     
     /*Parse inbound XML response to BaseRESTparser*/
 	[accessPtr parseDocument:wipData:serviceEndPoint];
-    
+    /*Set conncetion status signal to 1*/
+    statusSignal=1;
 	/*turn off the network indicator*/
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
@@ -751,6 +563,13 @@ we bail out.
 {
     accessPtr = [[BaseRESTparser alloc]init];
     [accessPtr clearContentsOfElement];
+}
+
+/*This returns the value of conncetion status signal(0 or 1)*/
+-(int)returnStatusSignal
+{
+    NSLog(@"Status signal is: %d",statusSignal);
+    return statusSignal;
 }
 
 @end
