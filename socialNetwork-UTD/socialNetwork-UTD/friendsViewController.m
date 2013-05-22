@@ -8,19 +8,38 @@
 
 #import "friendsViewController.h"
 
+static NSMutableArray *friendNumber;
+
+
 @implementation friendsViewController
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     /*Object instantiations*/
-    grabFriendObj=[[messengerViewController alloc] init];
-    setIndexObj=[[messengerViewController alloc] init];
+    mainViewObj=[[messengerViewController alloc] init];
+    
+    refreshControl=[[UIRefreshControl alloc]init];
+    [refreshControl addTarget:self action:@selector(refreshUI) forControlEvents:UIControlEventValueChanged];
+    [tabVw addSubview:refreshControl];
     
     /*Call to retrieve the collated data from server*/
-    friendList=[grabFriendObj getFriendObjects:nil:0];
-    [grabFriendObj release];
+    friendList=[mainViewObj getFriendObjects:nil:0];
+    NSLog(@"friends got: %@",friendList);
+    friendDictionary=[[NSDictionary alloc]initWithObjects:friendNumber forKeys:friendList];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [tabVw reloadData];
+}
+
+-(void)refreshUI
+{
+    [tabVw reloadData];
+    [refreshControl endRefreshing];
 }
 
 
@@ -39,6 +58,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    NSLog(@"count is not good: %d",[friendList count]);
     return [friendList count];
 }
 
@@ -62,17 +82,30 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	selectedIndex=[friendList objectAtIndex:[indexPath row]];
-    [setIndexObj setSelectedIndexFriends:selectedIndex];
-    [setIndexObj clearBufferList];
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    
+    [mainViewObj setSelectedIndexFriends:selectedIndex];
+    [mainViewObj clearBufferList];
+    
+    NSLog(@"number of selected friend is: %@",[friendDictionary objectForKey:selectedIndex]);
+    userChatObj=[[userChatViewController alloc]initWithNibName:nil bundle:nil];
+    [userChatObj getReceiverNumber:[friendDictionary objectForKey:selectedIndex]];
+    [userChatObj getReceiverName:selectedIndex];
+    [self presentViewController:userChatObj animated:YES completion:nil];
+    
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [setIndexObj release];
+}
+
+-(void)getFriendNumbers:(NSMutableArray *)friendNum
+{
+    friendNumber=[friendNum retain];
+    NSLog(@"friend nums: %@",friendNumber);
 }
 
 -(IBAction)backToMain
 {
-    [setIndexObj clearBufferList];
+    [mainViewObj clearBufferList];
     [self dismissViewControllerAnimated:YES completion:NULL];
+    [mainViewObj release];
 }
 
 

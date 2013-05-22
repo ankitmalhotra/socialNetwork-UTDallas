@@ -19,24 +19,47 @@
 		FE0AFCF616255A10000A92C9 /* messengerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0AFCF516255A10000A92C9 /* messengerViewController.m */; };
 		FE0AFCF916255A10000A92C9 /* messengerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE0AFCF716255A10000A92C9 /* messengerViewController.xib */; };
 		FE0AFD0016255C33000A92C9 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE0AFCFF16255C33000A92C9 /* CoreLocation.framework */; };
+		FE18E15F174C67EC005F4D2A /* tattered_resized.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE18E15E174C67EC005F4D2A /* tattered_resized.jpg */; };
 		FE1FCFA6166E7D7D009E61C7 /* groupsTableViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1FCFA4166E7D7C009E61C7 /* groupsTableViewViewController.m */; };
 		FE1FCFA7166E7D7D009E61C7 /* groupsTableViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE1FCFA5166E7D7C009E61C7 /* groupsTableViewViewController.xib */; };
 		FE342B0516F5020400C5A24F /* sign-in-btnx2.png in Resources */ = {isa = PBXBuildFile; fileRef = FE342B0416F5020400C5A24F /* sign-in-btnx2.png */; };
 		FE4718421652C4B1004B4ED0 /* loginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4718401652C4B1004B4ED0 /* loginViewController.m */; };
 		FE4718431652C4B1004B4ED0 /* loginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE4718411652C4B1004B4ED0 /* loginViewController.xib */; };
+		FE4C15181745421300674A50 /* bubbleMine.png in Resources */ = {isa = PBXBuildFile; fileRef = FE4C15021745421300674A50 /* bubbleMine.png */; };
+		FE4C15191745421300674A50 /* bubbleMine@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE4C15031745421300674A50 /* bubbleMine@2x.png */; };
+		FE4C151A1745421300674A50 /* bubbleSomeone.png in Resources */ = {isa = PBXBuildFile; fileRef = FE4C15041745421300674A50 /* bubbleSomeone.png */; };
+		FE4C151B1745421300674A50 /* bubbleSomeone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE4C15051745421300674A50 /* bubbleSomeone@2x.png */; };
+		FE4C151C1745421300674A50 /* missingAvatar.png in Resources */ = {isa = PBXBuildFile; fileRef = FE4C15061745421300674A50 /* missingAvatar.png */; };
+		FE4C151D1745421300674A50 /* missingAvatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE4C15071745421300674A50 /* missingAvatar@2x.png */; };
+		FE4C151E1745421300674A50 /* typingMine.png in Resources */ = {isa = PBXBuildFile; fileRef = FE4C15081745421300674A50 /* typingMine.png */; };
+		FE4C151F1745421300674A50 /* typingMine@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE4C15091745421300674A50 /* typingMine@2x.png */; };
+		FE4C15201745421300674A50 /* typingSomeone.png in Resources */ = {isa = PBXBuildFile; fileRef = FE4C150A1745421300674A50 /* typingSomeone.png */; };
+		FE4C15211745421300674A50 /* typingSomeone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE4C150B1745421300674A50 /* typingSomeone@2x.png */; };
+		FE4C15221745421300674A50 /* NSBubbleData.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4C150E1745421300674A50 /* NSBubbleData.m */; };
+		FE4C15231745421300674A50 /* UIBubbleHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4C15101745421300674A50 /* UIBubbleHeaderTableViewCell.m */; };
+		FE4C15241745421300674A50 /* UIBubbleTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4C15121745421300674A50 /* UIBubbleTableView.m */; };
+		FE4C15251745421300674A50 /* UIBubbleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4C15141745421300674A50 /* UIBubbleTableViewCell.m */; };
+		FE4C15261745421300674A50 /* UIBubbleTypingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4C15171745421300674A50 /* UIBubbleTypingTableViewCell.m */; };
+		FE4C152B174558C500674A50 /* detailMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4C1529174558C400674A50 /* detailMessageViewController.m */; };
+		FE4C152C174558C500674A50 /* detailMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE4C152A174558C400674A50 /* detailMessageViewController.xib */; };
+		FE4C15341746177000674A50 /* socialNetwork-UTD-appLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = FE4C15331746177000674A50 /* socialNetwork-UTD-appLogo.png */; };
 		FE502323167FC8F100A560EE /* friendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE502321167FC8F000A560EE /* friendsViewController.m */; };
 		FE502324167FC8F100A560EE /* friendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE502322167FC8F000A560EE /* friendsViewController.xib */; };
 		FE57BD071693F15000B97DCF /* newPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE57BD051693F15000B97DCF /* newPostViewController.m */; };
 		FE57BD081693F15000B97DCF /* newPostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE57BD061693F15000B97DCF /* newPostViewController.xib */; };
 		FE7FACCA16F702F7006684D7 /* main_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = FE7FACC916F702F7006684D7 /* main_logo.png */; };
+		FE880EB0172F977A00814C8D /* userChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE880EAE172F977A00814C8D /* userChatViewController.m */; };
+		FE880EB1172F977A00814C8D /* userChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE880EAF172F977A00814C8D /* userChatViewController.xib */; };
 		FE89AE7416B90340001FA8C8 /* signupUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE89AE7216B90340001FA8C8 /* signupUserViewController.m */; };
 		FE89AE7516B90340001FA8C8 /* signupUserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE89AE7316B90340001FA8C8 /* signupUserViewController.xib */; };
 		FE90F9A216ACA84B0089B34F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FE90F9A116ACA84B0089B34F /* Settings.bundle */; };
 		FE90F9A516ACB1EC0089B34F /* BaseRESTparser.m in Sources */ = {isa = PBXBuildFile; fileRef = FE90F9A416ACB1EC0089B34F /* BaseRESTparser.m */; };
 		FE90F9A816ACC6520089B34F /* messengerRESTclient.m in Sources */ = {isa = PBXBuildFile; fileRef = FE90F9A716ACC6520089B34F /* messengerRESTclient.m */; };
 		FE91204B16D227480025FF60 /* ChallengeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FE91204A16D227480025FF60 /* ChallengeHandler.m */; };
+		FEA71A88174A03A400CEEA5C /* beep.caf in Resources */ = {isa = PBXBuildFile; fileRef = FEA71A87174A03A400CEEA5C /* beep.caf */; };
 		FEABE8A916464064000F27FD /* secureMessageRSA.m in Sources */ = {isa = PBXBuildFile; fileRef = FEABE8A816464064000F27FD /* secureMessageRSA.m */; };
 		FEAD17F116F4FCDD00FB0685 /* sign-in-btn.png in Resources */ = {isa = PBXBuildFile; fileRef = FEAD17F016F4FCDD00FB0685 /* sign-in-btn.png */; };
+		FEB39CEE1731E9EE0042413B /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEB39CED1731E9EE0042413B /* AddressBook.framework */; };
 		FECCDC5F165727DC0084447E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FECCDC5E165727DC0084447E /* CFNetwork.framework */; };
 		FEEC2C0916314087000B2329 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEEC2C0816314087000B2329 /* MapKit.framework */; };
 		FEFDD41E162E37B600B88CFA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFDD41D162E37B600B88CFA /* Security.framework */; };
@@ -60,6 +83,7 @@
 		FE0AFCF516255A10000A92C9 /* messengerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = messengerViewController.m; sourceTree = "<group>"; };
 		FE0AFCF816255A10000A92C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/messengerViewController.xib; sourceTree = "<group>"; };
 		FE0AFCFF16255C33000A92C9 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		FE18E15E174C67EC005F4D2A /* tattered_resized.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tattered_resized.jpg; sourceTree = "<group>"; };
 		FE1FCFA3166E7D7C009E61C7 /* groupsTableViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = groupsTableViewViewController.h; sourceTree = "<group>"; };
 		FE1FCFA4166E7D7C009E61C7 /* groupsTableViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = groupsTableViewViewController.m; sourceTree = "<group>"; };
 		FE1FCFA5166E7D7C009E61C7 /* groupsTableViewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = groupsTableViewViewController.xib; sourceTree = "<group>"; };
@@ -67,6 +91,31 @@
 		FE47183F1652C4B1004B4ED0 /* loginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = loginViewController.h; path = ../loginViewController.h; sourceTree = "<group>"; };
 		FE4718401652C4B1004B4ED0 /* loginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = loginViewController.m; path = ../loginViewController.m; sourceTree = "<group>"; };
 		FE4718411652C4B1004B4ED0 /* loginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = loginViewController.xib; path = ../loginViewController.xib; sourceTree = "<group>"; };
+		FE4C15021745421300674A50 /* bubbleMine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubbleMine.png; sourceTree = "<group>"; };
+		FE4C15031745421300674A50 /* bubbleMine@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubbleMine@2x.png"; sourceTree = "<group>"; };
+		FE4C15041745421300674A50 /* bubbleSomeone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubbleSomeone.png; sourceTree = "<group>"; };
+		FE4C15051745421300674A50 /* bubbleSomeone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubbleSomeone@2x.png"; sourceTree = "<group>"; };
+		FE4C15061745421300674A50 /* missingAvatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = missingAvatar.png; sourceTree = "<group>"; };
+		FE4C15071745421300674A50 /* missingAvatar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "missingAvatar@2x.png"; sourceTree = "<group>"; };
+		FE4C15081745421300674A50 /* typingMine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = typingMine.png; sourceTree = "<group>"; };
+		FE4C15091745421300674A50 /* typingMine@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "typingMine@2x.png"; sourceTree = "<group>"; };
+		FE4C150A1745421300674A50 /* typingSomeone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = typingSomeone.png; sourceTree = "<group>"; };
+		FE4C150B1745421300674A50 /* typingSomeone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "typingSomeone@2x.png"; sourceTree = "<group>"; };
+		FE4C150D1745421300674A50 /* NSBubbleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBubbleData.h; sourceTree = "<group>"; };
+		FE4C150E1745421300674A50 /* NSBubbleData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBubbleData.m; sourceTree = "<group>"; };
+		FE4C150F1745421300674A50 /* UIBubbleHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIBubbleHeaderTableViewCell.h; sourceTree = "<group>"; };
+		FE4C15101745421300674A50 /* UIBubbleHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIBubbleHeaderTableViewCell.m; sourceTree = "<group>"; };
+		FE4C15111745421300674A50 /* UIBubbleTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIBubbleTableView.h; sourceTree = "<group>"; };
+		FE4C15121745421300674A50 /* UIBubbleTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIBubbleTableView.m; sourceTree = "<group>"; };
+		FE4C15131745421300674A50 /* UIBubbleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIBubbleTableViewCell.h; sourceTree = "<group>"; };
+		FE4C15141745421300674A50 /* UIBubbleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIBubbleTableViewCell.m; sourceTree = "<group>"; };
+		FE4C15151745421300674A50 /* UIBubbleTableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIBubbleTableViewDataSource.h; sourceTree = "<group>"; };
+		FE4C15161745421300674A50 /* UIBubbleTypingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIBubbleTypingTableViewCell.h; sourceTree = "<group>"; };
+		FE4C15171745421300674A50 /* UIBubbleTypingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIBubbleTypingTableViewCell.m; sourceTree = "<group>"; };
+		FE4C1528174558C400674A50 /* detailMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = detailMessageViewController.h; path = ../detailMessageViewController.h; sourceTree = "<group>"; };
+		FE4C1529174558C400674A50 /* detailMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = detailMessageViewController.m; path = ../detailMessageViewController.m; sourceTree = "<group>"; };
+		FE4C152A174558C400674A50 /* detailMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = detailMessageViewController.xib; path = ../detailMessageViewController.xib; sourceTree = "<group>"; };
+		FE4C15331746177000674A50 /* socialNetwork-UTD-appLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "socialNetwork-UTD-appLogo.png"; sourceTree = "<group>"; };
 		FE502320167FC8F000A560EE /* friendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = friendsViewController.h; sourceTree = "<group>"; };
 		FE502321167FC8F000A560EE /* friendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = friendsViewController.m; sourceTree = "<group>"; };
 		FE502322167FC8F000A560EE /* friendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = friendsViewController.xib; sourceTree = "<group>"; };
@@ -74,6 +123,9 @@
 		FE57BD051693F15000B97DCF /* newPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = newPostViewController.m; sourceTree = "<group>"; };
 		FE57BD061693F15000B97DCF /* newPostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = newPostViewController.xib; sourceTree = "<group>"; };
 		FE7FACC916F702F7006684D7 /* main_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_logo.png; sourceTree = "<group>"; };
+		FE880EAD172F977A00814C8D /* userChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userChatViewController.h; sourceTree = "<group>"; };
+		FE880EAE172F977A00814C8D /* userChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = userChatViewController.m; sourceTree = "<group>"; };
+		FE880EAF172F977A00814C8D /* userChatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = userChatViewController.xib; sourceTree = "<group>"; };
 		FE89AE7116B9033F001FA8C8 /* signupUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = signupUserViewController.h; sourceTree = "<group>"; };
 		FE89AE7216B90340001FA8C8 /* signupUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = signupUserViewController.m; sourceTree = "<group>"; };
 		FE89AE7316B90340001FA8C8 /* signupUserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = signupUserViewController.xib; sourceTree = "<group>"; };
@@ -84,9 +136,11 @@
 		FE90F9A716ACC6520089B34F /* messengerRESTclient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = messengerRESTclient.m; sourceTree = "<group>"; };
 		FE91204916D227480025FF60 /* ChallengeHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeHandler.h; sourceTree = "<group>"; };
 		FE91204A16D227480025FF60 /* ChallengeHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeHandler.m; sourceTree = "<group>"; };
+		FEA71A87174A03A400CEEA5C /* beep.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = beep.caf; sourceTree = "<group>"; };
 		FEABE8A716464064000F27FD /* secureMessageRSA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = secureMessageRSA.h; sourceTree = "<group>"; };
 		FEABE8A816464064000F27FD /* secureMessageRSA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = secureMessageRSA.m; sourceTree = "<group>"; };
 		FEAD17F016F4FCDD00FB0685 /* sign-in-btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-in-btn.png"; sourceTree = "<group>"; };
+		FEB39CED1731E9EE0042413B /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		FECCDC5E165727DC0084447E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		FEEC2C0816314087000B2329 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		FEFDD41D162E37B600B88CFA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -97,9 +151,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEFDD41E162E37B600B88CFA /* Security.framework in Frameworks */,
+				FEB39CEE1731E9EE0042413B /* AddressBook.framework in Frameworks */,
 				FECCDC5F165727DC0084447E /* CFNetwork.framework in Frameworks */,
 				FEEC2C0916314087000B2329 /* MapKit.framework in Frameworks */,
-				FEFDD41E162E37B600B88CFA /* Security.framework in Frameworks */,
 				FE0AFD0016255C33000A92C9 /* CoreLocation.framework in Frameworks */,
 				FE0AFCDD16255A10000A92C9 /* UIKit.framework in Frameworks */,
 				FE0AFCDF16255A10000A92C9 /* Foundation.framework in Frameworks */,
@@ -113,6 +168,7 @@
 		FE0AFCCD16255A0F000A92C9 = {
 			isa = PBXGroup;
 			children = (
+				FE4C15271745421F00674A50 /* UIBubbleTableView */,
 				FE0AFCE216255A10000A92C9 /* socialNetwork-UTD */,
 				FE0AFCDB16255A10000A92C9 /* Frameworks */,
 				FE0AFCD916255A10000A92C9 /* Products */,
@@ -130,6 +186,7 @@
 		FE0AFCDB16255A10000A92C9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FEB39CED1731E9EE0042413B /* AddressBook.framework */,
 				FECCDC5E165727DC0084447E /* CFNetwork.framework */,
 				FEEC2C0816314087000B2329 /* MapKit.framework */,
 				FEFDD41D162E37B600B88CFA /* Security.framework */,
@@ -151,16 +208,20 @@
 				FE0AFCEC16255A10000A92C9 /* messengerAppDelegate.m */,
 				FE0AFCF416255A10000A92C9 /* messengerViewController.h */,
 				FE0AFCF516255A10000A92C9 /* messengerViewController.m */,
+				FE4C1528174558C400674A50 /* detailMessageViewController.h */,
+				FE4C1529174558C400674A50 /* detailMessageViewController.m */,
+				FE89AE7116B9033F001FA8C8 /* signupUserViewController.h */,
+				FE89AE7216B90340001FA8C8 /* signupUserViewController.m */,
 				FE47183F1652C4B1004B4ED0 /* loginViewController.h */,
 				FE4718401652C4B1004B4ED0 /* loginViewController.m */,
 				FE1FCFA3166E7D7C009E61C7 /* groupsTableViewViewController.h */,
 				FE1FCFA4166E7D7C009E61C7 /* groupsTableViewViewController.m */,
-				FE502320167FC8F000A560EE /* friendsViewController.h */,
-				FE502321167FC8F000A560EE /* friendsViewController.m */,
 				FE57BD041693F15000B97DCF /* newPostViewController.h */,
 				FE57BD051693F15000B97DCF /* newPostViewController.m */,
-				FE89AE7116B9033F001FA8C8 /* signupUserViewController.h */,
-				FE89AE7216B90340001FA8C8 /* signupUserViewController.m */,
+				FE502320167FC8F000A560EE /* friendsViewController.h */,
+				FE502321167FC8F000A560EE /* friendsViewController.m */,
+				FE880EAD172F977A00814C8D /* userChatViewController.h */,
+				FE880EAE172F977A00814C8D /* userChatViewController.m */,
 				FE0AFCE316255A10000A92C9 /* Supporting Files */,
 				FE90F9A116ACA84B0089B34F /* Settings.bundle */,
 			);
@@ -170,6 +231,7 @@
 		FE0AFCE316255A10000A92C9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FEA71A87174A03A400CEEA5C /* beep.caf */,
 				FEAD17E916F4801600FB0685 /* img_src_files */,
 				FE0AFCE416255A10000A92C9 /* socialNetwork-UTD-Info.plist */,
 				FE0AFCE516255A10000A92C9 /* InfoPlist.strings */,
@@ -182,11 +244,57 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		FE4C15011745421200674A50 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				FE4C15021745421300674A50 /* bubbleMine.png */,
+				FE4C15031745421300674A50 /* bubbleMine@2x.png */,
+				FE4C15041745421300674A50 /* bubbleSomeone.png */,
+				FE4C15051745421300674A50 /* bubbleSomeone@2x.png */,
+				FE4C15061745421300674A50 /* missingAvatar.png */,
+				FE4C15071745421300674A50 /* missingAvatar@2x.png */,
+				FE4C15081745421300674A50 /* typingMine.png */,
+				FE4C15091745421300674A50 /* typingMine@2x.png */,
+				FE4C150A1745421300674A50 /* typingSomeone.png */,
+				FE4C150B1745421300674A50 /* typingSomeone@2x.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
+		FE4C150C1745421300674A50 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				FE4C150D1745421300674A50 /* NSBubbleData.h */,
+				FE4C150E1745421300674A50 /* NSBubbleData.m */,
+				FE4C150F1745421300674A50 /* UIBubbleHeaderTableViewCell.h */,
+				FE4C15101745421300674A50 /* UIBubbleHeaderTableViewCell.m */,
+				FE4C15111745421300674A50 /* UIBubbleTableView.h */,
+				FE4C15121745421300674A50 /* UIBubbleTableView.m */,
+				FE4C15131745421300674A50 /* UIBubbleTableViewCell.h */,
+				FE4C15141745421300674A50 /* UIBubbleTableViewCell.m */,
+				FE4C15151745421300674A50 /* UIBubbleTableViewDataSource.h */,
+				FE4C15161745421300674A50 /* UIBubbleTypingTableViewCell.h */,
+				FE4C15171745421300674A50 /* UIBubbleTypingTableViewCell.m */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		FE4C15271745421F00674A50 /* UIBubbleTableView */ = {
+			isa = PBXGroup;
+			children = (
+				FE4C15011745421200674A50 /* images */,
+				FE4C150C1745421300674A50 /* src */,
+			);
+			name = UIBubbleTableView;
+			sourceTree = "<group>";
+		};
 		FE89AE6D16B84B74001FA8C8 /* InterfaceBuilders */ = {
 			isa = PBXGroup;
 			children = (
+				FE880EAF172F977A00814C8D /* userChatViewController.xib */,
 				FE89AE7316B90340001FA8C8 /* signupUserViewController.xib */,
 				FE0AFCF716255A10000A92C9 /* messengerViewController.xib */,
+				FE4C152A174558C400674A50 /* detailMessageViewController.xib */,
 				FE4718411652C4B1004B4ED0 /* loginViewController.xib */,
 				FE1FCFA5166E7D7C009E61C7 /* groupsTableViewViewController.xib */,
 				FE502322167FC8F000A560EE /* friendsViewController.xib */,
@@ -220,6 +328,8 @@
 		FEAD17E916F4801600FB0685 /* img_src_files */ = {
 			isa = PBXGroup;
 			children = (
+				FE18E15E174C67EC005F4D2A /* tattered_resized.jpg */,
+				FE4C15331746177000674A50 /* socialNetwork-UTD-appLogo.png */,
 				FE7FACC916F702F7006684D7 /* main_logo.png */,
 				FE342B0416F5020400C5A24F /* sign-in-btnx2.png */,
 				FEAD17F016F4FCDD00FB0685 /* sign-in-btn.png */,
@@ -293,6 +403,21 @@
 				FEAD17F116F4FCDD00FB0685 /* sign-in-btn.png in Resources */,
 				FE342B0516F5020400C5A24F /* sign-in-btnx2.png in Resources */,
 				FE7FACCA16F702F7006684D7 /* main_logo.png in Resources */,
+				FE880EB1172F977A00814C8D /* userChatViewController.xib in Resources */,
+				FE4C15181745421300674A50 /* bubbleMine.png in Resources */,
+				FE4C15191745421300674A50 /* bubbleMine@2x.png in Resources */,
+				FE4C151A1745421300674A50 /* bubbleSomeone.png in Resources */,
+				FE4C151B1745421300674A50 /* bubbleSomeone@2x.png in Resources */,
+				FE4C151C1745421300674A50 /* missingAvatar.png in Resources */,
+				FE4C151D1745421300674A50 /* missingAvatar@2x.png in Resources */,
+				FE4C151E1745421300674A50 /* typingMine.png in Resources */,
+				FE4C151F1745421300674A50 /* typingMine@2x.png in Resources */,
+				FE4C15201745421300674A50 /* typingSomeone.png in Resources */,
+				FE4C15211745421300674A50 /* typingSomeone@2x.png in Resources */,
+				FE4C152C174558C500674A50 /* detailMessageViewController.xib in Resources */,
+				FE4C15341746177000674A50 /* socialNetwork-UTD-appLogo.png in Resources */,
+				FEA71A88174A03A400CEEA5C /* beep.caf in Resources */,
+				FE18E15F174C67EC005F4D2A /* tattered_resized.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,6 +440,13 @@
 				FE90F9A816ACC6520089B34F /* messengerRESTclient.m in Sources */,
 				FE89AE7416B90340001FA8C8 /* signupUserViewController.m in Sources */,
 				FE91204B16D227480025FF60 /* ChallengeHandler.m in Sources */,
+				FE880EB0172F977A00814C8D /* userChatViewController.m in Sources */,
+				FE4C15221745421300674A50 /* NSBubbleData.m in Sources */,
+				FE4C15231745421300674A50 /* UIBubbleHeaderTableViewCell.m in Sources */,
+				FE4C15241745421300674A50 /* UIBubbleTableView.m in Sources */,
+				FE4C15251745421300674A50 /* UIBubbleTableViewCell.m in Sources */,
+				FE4C15261745421300674A50 /* UIBubbleTypingTableViewCell.m in Sources */,
+				FE4C152B174558C500674A50 /* detailMessageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,15 +526,18 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ankit Malhotra (T6U27WJNM9)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "socialNetwork-UTD/socialNetwork-UTD-Prefix.pch";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "socialNetwork-UTD/socialNetwork-UTD-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				OTHER_CFLAGS = "-I/usr/include/libxml2";
-				OTHER_LDFLAGS = "-lxml2";
-				"OTHER_LDFLAGS[arch=*]" = "-lxml2";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				"OTHER_LDFLAGS[arch=*]" = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8783AC10-1958-4408-B8FC-E2F713747470";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8783AC10-1958-4408-B8FC-E2F713747470";
+				PROVISIONING_PROFILE = "E27600CC-77CE-4CBD-8932-E92698DDFA98";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E27600CC-77CE-4CBD-8932-E92698DDFA98";
 				TARGETED_DEVICE_FAMILY = 1;
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -414,15 +549,18 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ankit Malhotra (T6U27WJNM9)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "socialNetwork-UTD/socialNetwork-UTD-Prefix.pch";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "socialNetwork-UTD/socialNetwork-UTD-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				OTHER_CFLAGS = "-I/usr/include/libxml2";
-				OTHER_LDFLAGS = "-lxml2";
-				"OTHER_LDFLAGS[arch=*]" = "-lxml2";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				"OTHER_LDFLAGS[arch=*]" = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8783AC10-1958-4408-B8FC-E2F713747470";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8783AC10-1958-4408-B8FC-E2F713747470";
+				PROVISIONING_PROFILE = "E27600CC-77CE-4CBD-8932-E92698DDFA98";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E27600CC-77CE-4CBD-8932-E92698DDFA98";
 				TARGETED_DEVICE_FAMILY = 1;
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

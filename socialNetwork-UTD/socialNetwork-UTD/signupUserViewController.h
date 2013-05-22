@@ -38,7 +38,7 @@
     
     messengerRESTclient *restObj;
     messengerAppDelegate *appDelegateObj;
-    messengerViewController *mainViewCntrlObj;
+    messengerViewController *mainViewObj;
     
 }
 

@@ -16,8 +16,6 @@
 @class messengerViewController;  /*Holds inbound service endpoint*/
 @class messengerRESTclient;
 
-static NSString *serviceEndPoint;
-
 @interface BaseRESTparser : NSObject
 {
     NSMutableArray	*_contentsOfElement;	// Contents of the current element

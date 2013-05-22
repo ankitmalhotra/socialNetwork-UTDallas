@@ -8,6 +8,9 @@
 
 #import "BaseRESTparser.h"
 
+static NSString *serviceEndPoint;
+
+
 @implementation BaseRESTparser
 
     - (id) init
@@ -62,7 +65,7 @@
         else if([serviceEndPoint isEqualToString:@"login"])
         {
             callRESTclient=[[messengerRESTclient alloc]init];
-           
+                       
             /*Point to login response handler in loginView*/
             NSLog(@"calling login check with %@",mainContents);
             if([[mainContents objectAtIndex:0] isEqual:@"true"])
@@ -72,9 +75,14 @@
             }
             else if([[mainContents objectAtIndex:0] isEqual:@"false"])
             {
+                [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
                 NSLog(@"returning -1 from BaseREST");
                 [callRESTclient valueToReturn:-1];
             }
+            
+            /*Send the user number to main view controller class*/
+            [mainViewPtr storeUserNumber:mainContents];
+
             [callRESTclient release];
         }
         else if([serviceEndPoint isEqualToString:@"listMemberGroups"])
@@ -104,6 +112,10 @@
             {
                 [mainContents removeObject:@"true"];
             }
+            if([mainContents containsObject:@"group does not exist"])
+            {
+                [mainContents removeObject:@"group does not exist"];
+            }
             [mainViewPtr getFriendObjects:mainContents :1];
             [callRESTclient valueToReturn:1];
         }
@@ -121,6 +133,7 @@
             }
             else
             {
+                [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
                 NSLog(@"returning -1 from BaseREST");
                 [callRESTclient valueToReturn:-1];
             }
@@ -140,6 +153,7 @@
             }
             else
             {
+                [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
                 NSLog(@"returning -1 from BaseREST");
                 [callRESTclient valueToReturn:-1];
             }
@@ -167,6 +181,46 @@
             }
             [mainViewPtr getGroupObjects:mainContents :1];
             [callRESTclient valueToReturn:1];
+        }
+        else if ([serviceEndPoint isEqualToString:@"joinGroup"])
+        {
+            NSLog(@"joining group");
+            callRESTclient=[[messengerRESTclient alloc]init];
+            
+            /*Point to joinGroup response handler in groupTableView*/
+            NSLog(@"calling joinGroup check with %@",mainContents);
+            if([[mainContents objectAtIndex:0] isEqual:@"true"])
+            {
+                NSLog(@"returning 1 from BaseREST");
+                [callRESTclient valueToReturn:1];
+            }
+            else
+            {
+                [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
+                NSLog(@"returning -1 from BaseREST");
+                [callRESTclient valueToReturn:-1];
+            }
+            [callRESTclient release];
+        }
+        else if ([serviceEndPoint isEqualToString:@"postMessageToUser"])
+        {
+            NSLog(@"initiating chat");
+            callRESTclient=[[messengerRESTclient alloc]init];
+            
+            /*Point to chatmessage response handler in chatView*/
+            NSLog(@"calling chatView check with %@",mainContents);
+            if([[mainContents objectAtIndex:0] isEqual:@"true"])
+            {
+                NSLog(@"returning 1 from BaseREST");
+                [callRESTclient valueToReturn:1];
+            }
+            else
+            {
+                [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
+                NSLog(@"returning -1 from BaseREST");
+                [callRESTclient valueToReturn:-1];
+            }
+            [callRESTclient release];
         }
     }
 

@@ -10,6 +10,11 @@
 #import "secureMessageRSA.h"
 
 
+static double locationLat,locationLong;
+static NSString *localUserId;
+static NSString *localGrpName;
+
+
 @implementation newPostViewController
 
 
@@ -17,7 +22,10 @@
 {
     [super viewDidLoad];
     restObj=[[messengerRESTclient alloc]init];
-    mainViewController=[[messengerViewController alloc]init];    
+    mainViewObj=[[messengerViewController alloc]init];
+    
+    /*Init loc-update to get the latest coordinates*/
+    [mainViewObj initLocUpdate];
 }
 
 - (void)didReceiveMemoryWarning
@@ -28,12 +36,13 @@
 -(IBAction)backToMain
 {
     /*Call clear buffer in main view*/
-    [mainViewController clearBufferList];
+    [mainViewObj clearBufferList];
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 -(IBAction)createNewPost
 {
+    postButton.enabled=FALSE;
     NSString *messageData;
     messageData=messageVw.text;
     
@@ -45,12 +54,16 @@
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
     NSLog(@"calling for status from server..");
-    receivedStatus=[restObj returnValue];
-    NSLog(@"status received:%d",receivedStatus);
-    if(receivedStatus==1)
+    retVal=[restObj returnValue];
+    NSLog(@"status received:%d",retVal);
+    if(retVal==1)
     {
+        [mainViewObj clearBufferList];
+        [mainViewObj clearAllPosts];
+        
         /*Call to main to update table view for new post*/
-        [mainViewController showNewPosts];
+        [mainViewObj showPostData:localGrpName];
+        
         /*Call encryption routine to encrypt the message*/
         [secureMessageRSA encryptMessage:messageData];
         [secureMessageRSA decryptMessage];
@@ -60,17 +73,19 @@
         [createdAlert release];
         [self dismissViewControllerAnimated:YES completion:NULL];
     }
-    else if (receivedStatus==0)
+    else if (retVal==0)
     {
         UIAlertView *connNullAlert=[[UIAlertView alloc]initWithTitle:@"Connection Error" message:@"Unable to contact server" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [connNullAlert show];
         [connNullAlert release];
+        postButton.enabled=TRUE;
     }
-    else if(receivedStatus==-1)
+    else if(retVal==-1)
     {
         UIAlertView *createdAlert=[[UIAlertView alloc]initWithTitle:@"Failed" message:[NSString stringWithFormat:@"New Message could not be posted"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [createdAlert show];
         [createdAlert release];
+        postButton.enabled=TRUE;
     }
     });
 }
@@ -93,7 +108,7 @@
 /*This method invoked locally will call main view to retrieve the group name selected*/
 -(void)setUserGroup
 {
-    localGrpName=[mainViewController signalGroupName];
+    localGrpName=[mainViewObj signalGroupName];
 }
 
 

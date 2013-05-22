@@ -13,10 +13,6 @@
 @class messengerRESTclient;
 @class messengerViewController;
 
-static double locationLat,locationLong;
-static NSString *localUserId;
-static NSString *localGrpName;
-
 @interface newPostViewController : UIViewController
 {    
     IBOutlet UIBarButtonItem *cancelButton;
@@ -25,7 +21,7 @@ static NSString *localGrpName;
     int retVal;
     
     messengerRESTclient *restObj;
-    messengerViewController *mainViewController;
+    messengerViewController *mainViewObj;
 }
 
 -(IBAction)createNewPost;

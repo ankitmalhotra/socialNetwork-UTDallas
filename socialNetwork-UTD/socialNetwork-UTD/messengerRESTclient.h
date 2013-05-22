@@ -15,13 +15,6 @@
 @class ChallengeHandler;
 @class messengerAppDelegate;
 
-/*endpoint URL received*/
-static NSString *serviceEndPoint;
-static int valueToReturn=0;
-static int statusSignal=0;
-
-
-
 @interface messengerRESTclient : NSObject<NSURLConnectionDelegate,ChallengeHandlerDelegate>
 {
     BaseRESTparser *accessPtr;
@@ -29,15 +22,22 @@ static int statusSignal=0;
     ChallengeHandler *currentChallenge;
     NSURLConnection *connection;
     NSTimer *earlyTimeoutTimer;
+    NSString *serviceEndPoint;
+    clock_t startTime;
+    clock_t stopTime;
+    int statusSignal;
+    double elapsedConnDuration;
 }
 
--(void)receiveMessage:(NSString *)endPoint;
 -(void)sendMessage :(NSString *)userID :(NSString *)userName :(NSString *)password :(NSString *)emailID :(NSString *)devToken :(NSString *)endPointURL;
 -(void)createGroup:(NSString *)userID :(NSString *)groupName :(double)locationLatitude :(double)locationLongitude :(NSString *)endPointURL;
 -(void)createNewPost:(NSString *)userID :(NSString *)groupName :(NSString *) postMessage : (double)locationLatitude :(double)locationLongitude :(NSString *)endPointURL;
 -(void)showPostData:(NSString *)groupName :(NSString *)endPointURL;
 -(void)showAllGroups:(NSString *)userID :(NSString *)password :(NSString *)emailID :(double)locationLatitude :(double)locationLongitude :(NSString *)endPointURL;
+-(void)joinGroup: (NSString *)userID :(NSString *)groupName :(double)locationLatitude :(double)locationLongitude :(NSString *)endPointURL;
 -(void)getFriendList: (NSString *)userID :(NSString *)groupName :(double)locationLatitude :(double)locationLongitude :(NSString *)endPointURL;
+-(void)chatMessage :(NSString *)senderNumber :(NSString *)receiverNumber :(NSString *)chatMessageData :(NSString *)endPointURL;
+
 -(void)valueToReturn:(int)value;
 -(int)returnValue;
 -(int)returnStatusSignal;

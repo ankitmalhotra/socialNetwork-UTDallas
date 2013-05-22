@@ -8,6 +8,9 @@
 
 #import "messengerRESTclient.h"
 
+static int valueToReturn=0;
+
+
 @implementation messengerRESTclient
 
 
@@ -69,8 +72,141 @@
         [postData appendData:[[NSString stringWithFormat:@"<UserPassword>%@</UserPassword>",password]dataUsingEncoding:NSUTF8StringEncoding]];
         [postData appendData:[[NSString stringWithFormat:@"<EmailAddress>%@</EmailAddress>",emailID]dataUsingEncoding:NSUTF8StringEncoding]];
         [postData appendData:[[NSString stringWithFormat:@"<UserLocationLat>%f</UserLocationLat>",locationLatitude]dataUsingEncoding:NSUTF8StringEncoding]];
-        [postData appendData:[[NSString stringWithFormat:@"<UserLocationLong>%f</UserLocationLong>",locationLong]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"<UserLocationLong>%f</UserLocationLong>",locationLongitude]dataUsingEncoding:NSUTF8StringEncoding]];
         [postData appendData:[[NSString stringWithFormat:@"</user>"]dataUsingEncoding:NSUTF8StringEncoding]];
+        [request setHTTPBody:postData];
+        NSLog(@"passing xml: %@",postData);
+    }
+    
+    /*Asynchronous call to server initiated. Delegates will be called in order now*/
+    [NSURLConnection connectionWithRequest:request delegate:self];
+}
+
+-(void)joinGroup:(NSString *)userID :(NSString *)groupName :(double)locationLatitude :(double)locationLongitude :(NSString *)endPointURL
+{
+    serviceEndPoint=endPointURL;
+    
+    NSString *settingsBundle=[[NSBundle mainBundle]pathForResource:@"Settings" ofType:@"bundle"];
+    if(!settingsBundle)
+    {
+        NSLog(@"settings found");
+    }
+    else
+    {
+        NSLog(@"settings missing..");
+    }
+    
+    NSDictionary *settings=[NSDictionary dictionaryWithContentsOfFile:[settingsBundle stringByAppendingPathComponent:@"Root.plist"]];
+    NSArray *prefrences=[settings objectForKey:@"PreferenceSpecifiers"];
+    
+    NSMutableDictionary *defaultsToRegister=[[NSMutableDictionary alloc]initWithCapacity:[prefrences count]];
+    
+    for(NSDictionary *prefSpecs in prefrences)
+    {
+        NSString *key=[prefSpecs objectForKey:@"Key"];
+        if(key)
+        {
+            [defaultsToRegister setObject:[prefSpecs objectForKey:@"DefaultValue"] forKey:key];
+        }
+        else
+        {
+            NSLog(@"key not found..");
+        }
+    }
+    
+    [[NSUserDefaults standardUserDefaults]registerDefaults:defaultsToRegister];
+    [defaultsToRegister release];
+    
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    NSString *urlString=[defaults stringForKey:@"server_url"];
+    
+    NSURL *url=[[messengerAppDelegate sharedAppDelegate]smartURLForString:[NSString stringWithFormat:@"%@/v1/%@",urlString,endPointURL]];
+    
+    NSLog(@"Sending Request to URL %@", url);
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible=YES;
+    
+    NSMutableURLRequest *request=[NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:10.0];
+    [request setHTTPMethod:@"POST"];
+    NSString *contentType=[NSString stringWithFormat:@"application/XML"];
+    [request addValue:contentType forHTTPHeaderField:@"Content-type"];
+    
+    /*Build the XML structure to send*/
+    if([endPointURL isEqualToString:@"joinGroup"])
+    {
+        NSMutableData *postData=[NSMutableData data];
+        [postData appendData:[[NSString stringWithFormat:@"<JoinGroup xmlns=\"http://appserver.utdallas.edu/schema\">"]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"<UserId>%@</UserId>",userID]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"<GroupName>%@</GroupName>",groupName]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"<GroupLocationLat>%f</GroupLocationLat>",locationLatitude]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"<GroupLocationLong>%f</GroupLocationLong>",locationLongitude]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"</JoinGroup>"]dataUsingEncoding:NSUTF8StringEncoding]];
+        [request setHTTPBody:postData];
+        NSLog(@"passing xml: %@",postData);
+    }
+    
+    /*Asynchronous call to server initiated. Delegates will be called in order now*/
+    [NSURLConnection connectionWithRequest:request delegate:self];
+}
+
+-(void)chatMessage:(NSString *)senderNumber :(NSString *)receiverNumber :(NSString *)chatMessageData :(NSString *)endPointURL
+{
+    serviceEndPoint=endPointURL;
+    
+    NSString *settingsBundle=[[NSBundle mainBundle]pathForResource:@"Settings" ofType:@"bundle"];
+    if(!settingsBundle)
+    {
+        NSLog(@"settings found");
+    }
+    else
+    {
+        NSLog(@"settings missing..");
+    }
+    
+    NSDictionary *settings=[NSDictionary dictionaryWithContentsOfFile:[settingsBundle stringByAppendingPathComponent:@"Root.plist"]];
+    NSArray *prefrences=[settings objectForKey:@"PreferenceSpecifiers"];
+    
+    NSMutableDictionary *defaultsToRegister=[[NSMutableDictionary alloc]initWithCapacity:[prefrences count]];
+    
+    for(NSDictionary *prefSpecs in prefrences)
+    {
+        NSString *key=[prefSpecs objectForKey:@"Key"];
+        if(key)
+        {
+            [defaultsToRegister setObject:[prefSpecs objectForKey:@"DefaultValue"] forKey:key];
+        }
+        else
+        {
+            NSLog(@"key not found..");
+        }
+    }
+    
+    [[NSUserDefaults standardUserDefaults]registerDefaults:defaultsToRegister];
+    [defaultsToRegister release];
+    
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    NSString *urlString=[defaults stringForKey:@"server_url"];
+    
+    NSURL *url=[[messengerAppDelegate sharedAppDelegate]smartURLForString:[NSString stringWithFormat:@"%@/v1/%@",urlString,endPointURL]];
+    
+    NSLog(@"Sending Request to URL %@", url);
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible=YES;
+    
+    NSMutableURLRequest *request=[NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:10.0];
+    [request setHTTPMethod:@"POST"];
+    NSString *contentType=[NSString stringWithFormat:@"application/XML"];
+    [request addValue:contentType forHTTPHeaderField:@"Content-type"];
+    
+    /*Build the XML structure to send*/
+    if([endPointURL isEqualToString:@"postMessageToUser"])
+    {
+        NSMutableData *postData=[NSMutableData data];
+        [postData appendData:[[NSString stringWithFormat:@"<MessageToUser xmlns=\"http://appserver.utdallas.edu/schema\">"]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"<SenderNumber>%@</SenderNumber>",senderNumber]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"<ReceiverNumber>%@</ReceiverNumber>",receiverNumber]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"<MessageData>%@</MessageData>",chatMessageData]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"</MessageToUser>"]dataUsingEncoding:NSUTF8StringEncoding]];
         [request setHTTPBody:postData];
         NSLog(@"passing xml: %@",postData);
     }
@@ -209,7 +345,7 @@
         [postData appendData:[[NSString stringWithFormat:@"<GroupName>%@</GroupName>",groupName]dataUsingEncoding:NSUTF8StringEncoding]];
         [postData appendData:[[NSString stringWithFormat:@"<MessageData>%@</MessageData>",postMessage]dataUsingEncoding:NSUTF8StringEncoding]];
         [postData appendData:[[NSString stringWithFormat:@"<UserLocationLat>%f</UserLocationLat>",locationLatitude]dataUsingEncoding:NSUTF8StringEncoding]];
-        [postData appendData:[[NSString stringWithFormat:@"<UserLocationLong>%f</UserLocationLong>",locationLong]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postData appendData:[[NSString stringWithFormat:@"<UserLocationLong>%f</UserLocationLong>",locationLongitude]dataUsingEncoding:NSUTF8StringEncoding]];
         [postData appendData:[[NSString stringWithFormat:@"</Message>"]dataUsingEncoding:NSUTF8StringEncoding]];
         [request setHTTPBody:postData];
     }
@@ -465,7 +601,9 @@
 
 /*Received at the start of the asynchronous response from the server.  This may get called multiple times in certain redirect scenerios.*/
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{	
+{
+    startTime = clock();
+    
 	NSLog(@"Received Response");
 	NSHTTPURLResponse *httpResponse=(NSHTTPURLResponse *) response;;
     
@@ -523,11 +661,15 @@ we bail out.
 }
 
 
+-(void)challengeHandlerDidFinish:(ChallengeHandler *)handler
+{
+    NSLog(@"challenge surpassed successfully");
+}
 
 /*Can be called multiple times with chunks of the transfer*/
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    NSLog(@"data received: %@",data);
+    //NSLog(@"data received: %@",data);
     [wipData appendData:data];
 }
 
@@ -540,12 +682,18 @@ we bail out.
 	NSLog(@"xml = %@", xml);
 	[xml release];
 	
-    NSLog(@"wip data is: %@",wipData);
+    //NSLog(@"wip data is: %@",wipData);
     
     /*Parse inbound XML response to BaseRESTparser*/
 	[accessPtr parseDocument:wipData:serviceEndPoint];
     /*Set conncetion status signal to 1*/
     statusSignal=1;
+    
+    /*Get elapsed duration to load connection*/
+    stopTime = clock();
+    elapsedConnDuration=((double)(stopTime-startTime))/1000;
+    NSLog(@"elapsed: %f secs",elapsedConnDuration);
+    
 	/*turn off the network indicator*/
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }

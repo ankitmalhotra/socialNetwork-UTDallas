@@ -1,0 +1,188 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf370
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red9\green81\blue220;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720
+
+\f0\fs26 \cf0 import java.io.IOException;\
+import java.io.InputStreamReader;\
+import java.io.OutputStreamWriter;\
+import java.net.MalformedURLException;\
+import java.net.URISyntaxException;\
+import java.net.URL;\
+import java.net.URLConnection;\
+import java.util.ArrayList;\
+\
+\
+\
+\
+public class Java_post_xml \{\
+	static String server = "localhost";\
+	//static String server = "10.176.147.32";\'a0\
+	static URL url;\
+	static URLConnection con;\
+	static String requestXml;\
+	\
+\
+	public static void executeTest()\{\
+		try\
+		\{\
+			\
+		\'a0 \'a0URLConnection con = url.openConnection();\
+\
+		\'a0 \'a0// specify that we will send output and accept input\
+		\'a0 \'a0con.setDoInput(true);\
+		\'a0 \'a0con.setDoOutput(true);\
+\
+		\'a0 \'a0con.setConnectTimeout( 20000 ); \'a0// long timeout, but not infinite\
+		\'a0 \'a0con.setReadTimeout( 20000 );\
+\
+		\'a0 \'a0con.setUseCaches (false);\
+		\'a0 \'a0con.setDefaultUseCaches (false);\
+		\'a0 \'a0\
+		\'a0 \'a0// tell the web server what we are sending\
+		\'a0 \'a0con.setRequestProperty ( "Content-Type", "text/xml" );\
+\
+		\'a0 \'a0OutputStreamWriter writer = new OutputStreamWriter( con.getOutputStream() );\
+		\'a0 \'a0\
+		\'a0 \'a0//String requestXml="<MessageToUser xmlns=\\"{\field{\*\fldinst{HYPERLINK "http://appserver.utdallas.edu/schema/"}}{\fldrslt \cf2 \ul \ulc2 http://appserver.utdallas.edu/schema\\}}"><SenderName>Ravi</SenderName><ReceiverName>ankit</ReceiverName><MessageData>Hello ankit</MessageData></MessageToUser>";\
+		\'a0 \'a0//String\'a0\
+		\'a0 \'a0writer.write( requestXml );\
+		\'a0 \'a0writer.flush();\
+		\'a0 \'a0writer.close();\
+\
+		\'a0 \'a0// reading the response\
+		\'a0 \'a0InputStreamReader reader = new InputStreamReader( con.getInputStream() );\
+\
+		\'a0 \'a0StringBuilder buf = new StringBuilder();\
+		\'a0 \'a0char[] cbuf = new char[ 2048 ];\
+		\'a0 \'a0int num;\
+\
+		\'a0 \'a0while ( -1 != (num=reader.read( cbuf )))\
+		\'a0 \'a0\{\
+		\'a0 \'a0 \'a0 \'a0buf.append( cbuf, 0, num );\
+		\'a0 \'a0\}\
+\
+		\'a0 \'a0String result = buf.toString();\
+		\'a0 \'a0System.err.println( "\\nResponse from server after POST:\\n" + result );\
+\
+\
+		\}\
+		catch( Throwable t )\
+		\{\
+		\'a0 \'a0t.printStackTrace( System.out );\
+		\}\
+		\
+	\}\
+	\
+	public static void checkJoinGroup() throws MalformedURLException\{\
+		url = new URL( "http://" + server + ":8080/REST/v1/joinGroup" );\
+		String requestXml="<JoinGroup xmlns=\\"{\field{\*\fldinst{HYPERLINK "http://appserver.utdallas.edu/schema/"}}{\fldrslt \cf2 \ul \ulc2 http://appserver.utdallas.edu/schema\\}}"><UserId>cipher</UserId><GroupName>wazza</GroupName><GroupLocationLat>45.125</GroupLocationLat><GroupLocationLong>38.245</GroupLocationLong></JoinGroup>";\
+		executeTest();\
+	\}\
+	\
+	public static void checkBlockUser() throws MalformedURLException\{\
+		url = new URL( "http://" + server + ":8080/REST/v1/blockUser" );\
+		requestXml="<UserBlockManipulation xmlns=\\"{\field{\*\fldinst{HYPERLINK "http://appserver.utdallas.edu/schema/"}}{\fldrslt \cf2 \ul \ulc2 http://appserver.utdallas.edu/schema\\}}"><UserNumber>2</UserNumber><BlockedUserNumber>9</BlockedUserNumber></UserBlockManipulation>";\
+		executeTest();\
+	\}\
+	\
+	public static void checkUnblockUser() throws MalformedURLException\{\
+		url = new URL( "http://" + server + ":8080/REST/v1/unblockUser" );\
+		requestXml="<UserBlockManipulation xmlns=\\"{\field{\*\fldinst{HYPERLINK "http://appserver.utdallas.edu/schema/"}}{\fldrslt \cf2 \ul \ulc2 http://appserver.utdallas.edu/schema\\}}"><UserNumber>2</UserNumber><BlockedUserNumber>9</BlockedUserNumber></UserBlockManipulation>";\
+		executeTest();\
+	\}\
+	\
+	public static void checkAddGroup() throws MalformedURLException\{\
+		url = new URL( "http://" + server + ":8080/REST/v1/addGroup" );\
+		requestXml="<Group xmlns=\\"{\field{\*\fldinst{HYPERLINK "http://appserver.utdallas.edu/schema/"}}{\fldrslt \cf2 \ul \ulc2 http://appserver.utdallas.edu/schema\\}}"><GroupName>wazza</GroupName><GroupLocationLat>45.125</GroupLocationLat><GroupLocationLong>38.245</GroupLocationLong><GroupOwnerId>micceo</GroupOwnerId></Group>";\
+		executeTest();\
+	\}\
+	\
+	public static void checkListMemberGroups() throws MalformedURLException\{\
+		url = new URL( "http://" + server + ":8080/REST/v1/listMemberGroups" );\
+		\
+		executeTest();\
+	\}\
+	\
+	public static void checkShowGroups() throws MalformedURLException\{\
+		url = new URL( "http://" + server + ":8080/REST/v1/showGroups" );\
+		\
+		executeTest();\
+	\}\
+	\
+	public static void checkLogin() throws MalformedURLException \{\
+		url = new URL( "http://" + server + ":8080/REST/v1/login" );\
+		requestXml="<user xmlns=\\"{\field{\*\fldinst{HYPERLINK "http://appserver.utdallas.edu/schema/"}}{\fldrslt \cf2 \ul \ulc2 http://appserver.utdallas.edu/schema\\}}"><UserId>micceo</UserId><UserName>ravi</UserName><DeviceToken>b68b6849351cdabdb49fc45935465d89b2a114fcffcd7068506369a7d0af4730</DeviceToken><UserPassword>dumm1y1</UserPassword><EmailAddress>{\field{\*\fldinst{HYPERLINK "mailto:mic.ceo@gmail.com"}}{\fldrslt \cf2 \ul \ulc2 mic.ceo@gmail.com}}</EmailAddress></user>";\
+		executeTest();\
+	\}\
+	\
+	public static void checkLogout() throws MalformedURLException \{\
+		url = new URL( "http://" + server + ":8080/REST/v1/logout" );\
+		requestXml="<user xmlns=\\"{\field{\*\fldinst{HYPERLINK "http://appserver.utdallas.edu/schema/"}}{\fldrslt \cf2 \ul \ulc2 http://appserver.utdallas.edu/schema\\}}"><UserId>9</UserId><UserName>ravi</UserName><DeviceToken>b68b6849351cdabdb49fc45935465d89b2a114fcffcd7068506369a7d0af4730</DeviceToken><UserPassword>dumm1y1</UserPassword><EmailAddress>{\field{\*\fldinst{HYPERLINK "mailto:mic.ceo@gmail.com"}}{\fldrslt \cf2 \ul \ulc2 mic.ceo@gmail.com}}</EmailAddress></user>";\
+		executeTest();\
+	\}\
+	\
+	public static void checkPostMessageToUser() throws MalformedURLException \{\
+		url = new URL( "http://" + server + ":8080/REST/v1/postMessageToUser" );\
+		requestXml="<MessageToUser xmlns=\\"{\field{\*\fldinst{HYPERLINK "http://appserver.utdallas.edu/schema/"}}{\fldrslt \cf2 \ul \ulc2 http://appserver.utdallas.edu/schema\\}}"><SenderNumber>9</SenderNumber><ReceiverNumber>2</ReceiverNumber><MessageData>Hello Ankit, once more test</MessageData></MessageToUser>";\
+		executeTest();\
+	\}\
+	\
+	public static void checkAddUser() throws MalformedURLException \{\
+		url = new URL( "http://" + server + ":8080/REST/v1/add" );\
+		requestXml="<user xmlns=\\"{\field{\*\fldinst{HYPERLINK "http://appserver.utdallas.edu/schema/"}}{\fldrslt \cf2 \ul \ulc2 http://appserver.utdallas.edu/schema\\}}"><UserId>micceo</UserId><UserName>ravi</UserName><DeviceToken>b68b6849351cdabdb49fc45935465d89b2a114fcffcd7068506369a7d0af4730</DeviceToken><UserPassword>dumm1y1</UserPassword><EmailAddress>{\field{\*\fldinst{HYPERLINK "mailto:mic.ceo@gmail.com"}}{\fldrslt \cf2 \ul \ulc2 mic.ceo@gmail.com}}</EmailAddress></user>";\
+		//requestXml="<user xmlns=\\"{\field{\*\fldinst{HYPERLINK "http://appserver.utdallas.edu/schema/"}}{\fldrslt \cf2 \ul \ulc2 http://appserver.utdallas.edu/schema\\}}"><UserId>cipher</UserId><UserPassword>dumm2</UserPassword><EmailAddress>{\field{\*\fldinst{HYPERLINK "mailto:cipher.malhotra@gmail.com"}}{\fldrslt \cf2 \ul \ulc2 cipher.malhotra@gmail.com}}</EmailAddress><UserLocationLat>25.42</UserLocationLat><UserLocationLong>11.23</UserLocationLong><DeviceToken>b68b6849351cdabdb49fc45935465d89b2a114fcffcd7068506369a7d0af4730</DeviceToken></user>";\
+		executeTest();\
+	\}\
+	\
+	public static void checkPostMessage() throws MalformedURLException \{\
+		url = new URL( "http://" + server + ":8080/REST/v1/postMessage" );\
+		requestXml="<Message xmlns=\\"{\field{\*\fldinst{HYPERLINK "http://appserver.utdallas.edu/schema/"}}{\fldrslt \cf2 \ul \ulc2 http://appserver.utdallas.edu/schema\\}}"><UserId>ankit</UserId><GroupName>Delhi!!</GroupName><MessageData>let me test message push on message</MessageData><UserLocationLat>45.125</UserLocationLat><UserLocationLong>38.245</UserLocationLong></Message>";\
+		executeTest();\
+	\}\
+	\
+	public static void checkGetUsersInGroup() throws MalformedURLException \{\
+		url = new URL( "http://" + server + ":8080/REST/v1/getUsersInGroup" );\
+		requestXml="<GroupInfo xmlns=\\"{\field{\*\fldinst{HYPERLINK "http://appserver.utdallas.edu/schema/"}}{\fldrslt \cf2 \ul \ulc2 http://appserver.utdallas.edu/schema\\}}"><UserId>micceo</UserId><GroupName>VPN users</GroupName><MessageData>let me test message push on message</MessageData><UserLocationLat>45.125</UserLocationLat><UserLocationLong>38.245</UserLocationLong></GroupInfo>";\
+		executeTest();\
+	\}\
+	\
+	public static void checkGetGroupMessages() throws MalformedURLException \{\
+		url = new URL( "http://" + server + ":8080/REST/v1/getGroupMessages" );\
+		requestXml="<Group xmlns=\\"{\field{\*\fldinst{HYPERLINK "http://appserver.utdallas.edu/schema/"}}{\fldrslt \cf2 \ul \ulc2 http://appserver.utdallas.edu/schema\\}}"><GroupName>VPN users</GroupName><GroupLocationLat>45.125</GroupLocationLat><GroupLocationLong>38.245</GroupLocationLong></Group>";\
+		executeTest();\
+	\}\
+	\
+	\
+	public static void checkLatLongRange(double userLat, double userLong, int mileDist) \{\
+		System.out.println("case 1 latitude changes");\
+		double m1 = Math.sqrt((mileDist/Math.pow(69.172, 2)));	\
+		System.out.println(userLat + m1 + " " + userLong);\
+		System.out.println("case 2 long changes");\
+		double m2 = Math.sqrt((mileDist/Math.pow(69.172*(Math.cos(Math.toDegrees(userLong))), 2)));\
+		System.out.println(userLat + " " + userLong + m2);\
+	\}\
+	\
+	public static void main(String args[]) throws MalformedURLException\{\
+		\
+	\'a0 \'a0//String requestXml="<user xmlns=\\"{\field{\*\fldinst{HYPERLINK "http://appserver.utdallas.edu/schema/"}}{\fldrslt \cf2 \ul \ulc2 http://appserver.utdallas.edu/schema\\}}"><UserId>cipher123456789</UserId><UserPassword>dumm21321234</UserPassword><EmailAddress>{\field{\*\fldinst{HYPERLINK "mailto:ciphsdsdfer2324.malew23hotra@gmail.com"}}{\fldrslt \cf2 \ul \ulc2 ciphsdsdfer2324.malew23hotra@gmail.com}}</EmailAddress><UserLocationLat>25.42</UserLocationLat><UserLocationLong>11.23</UserLocationLong></user>";\
+	\'a0 \'a0//String requestXml="<user xmlns=\\"{\field{\*\fldinst{HYPERLINK "http://appserver.utdallas.edu/schema/"}}{\fldrslt \cf2 \ul \ulc2 http://appserver.utdallas.edu/schema\\}}"><UserId>micwoah</UserId><UserPassword>wtf123</UserPassword><EmailAddress>{\field{\*\fldinst{HYPERLINK "mailto:lolz@gmail.com"}}{\fldrslt \cf2 \ul \ulc2 lolz@gmail.com}}</EmailAddress></user>";\
+		//checkPostMessageToUser();\
+		//checkBlockUser();\
+		//checkUnblockUser();\
+		//checkAddUser();\
+		//checkLogin();\
+		//checkLogout();\
+		//checkPostMessage();\
+		\
+		checkLatLongRange(45.125, 38.245, 100);\
+	\}\
+	\
+	\
+	\
+	\
+			\
+\}\
+}

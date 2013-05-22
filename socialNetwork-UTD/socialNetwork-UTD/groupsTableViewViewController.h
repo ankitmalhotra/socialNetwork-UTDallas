@@ -15,13 +15,6 @@
 @class messengerRESTclient;
 @class newPostViewController;
 
-static double locationLat,locationLong;
-static NSString *localUserId;
-static NSString *localUserPwd;
-static NSString *localUserEmailID;
-static NSString *selectedIndex;
-static NSArray *groupList;
-
 @interface groupsTableViewViewController : UIViewController
          <UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
@@ -29,13 +22,17 @@ static NSArray *groupList;
     IBOutlet UIBarButtonItem *addGrp;
     IBOutlet UIBarButtonItem *showAll;
     IBOutlet UIBarButtonItem *backToMain;
-    NSString *grpName;
+    IBOutlet UIActivityIndicatorView *connProgress;
+    
+    //dispatch_queue_t fetchMyGroupsQueue;
+    //dispatch_queue_t fetchOtherGroupsQueue;
+
+    NSString *newGroupName;
     UITextField *groupNameField;
     UIRefreshControl *refreshCntl;
     int retval;
     
-    messengerViewController *setIndexObj;
-    messengerViewController *grabGroupsObj;
+    messengerViewController *mainViewObj;
     messengerRESTclient *restObj;
     newPostViewController *newPostObj;
 }
@@ -44,7 +41,7 @@ static NSArray *groupList;
 -(IBAction)createGroup;
 -(IBAction)showAllGroups;
 -(void)getLocationCoords:(double)locationLatitude :(double)locationLongitude;
--(void)getUserData:(NSString *)userId :(NSString *)userPwd :(NSString *)userEmailID;
--(void)refreshUI;
+-(void)getUserData: (NSString *)userId :(NSString *)userPwd :(NSString *)userEmailID;
+-(void)getUserNumber: (NSString *)userNum;
 
 @end

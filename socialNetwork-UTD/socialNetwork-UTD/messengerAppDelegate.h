@@ -9,14 +9,19 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "messengerViewController.h"
+#import "userChatViewController.h"
 
-@class messengerViewController,loginViewController;
+@class messengerViewController,loginViewController,userChatViewController;
 
-static NSData *devToken;
 
 @interface messengerAppDelegate : UIResponder <UIApplicationDelegate>
 {
     NSInteger *networkingCount;
+    NSData *devToken;
+    
+    userChatViewController *chatViweObj;
+    NSString *_senderName;
+    NSString *_chatMessage;
 }
 
 @property (strong, nonatomic) UIWindow *window;
@@ -27,7 +32,8 @@ static NSData *devToken;
 
 //-(void)didStartNetworking;
 + (messengerAppDelegate *)sharedAppDelegate;
+- (void)addMessageFromRemoteNotification:(NSDictionary*)userInfo updateUI:(BOOL)updateUI;
 - (NSURL *)smartURLForString:(NSString *)str;
--(NSData *)getDeviceToken;
+- (NSData *)getDeviceToken;
 
 @end

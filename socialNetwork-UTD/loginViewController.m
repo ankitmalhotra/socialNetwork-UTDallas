@@ -9,6 +9,11 @@
 #import "loginViewController.h"
 #import "messengerViewController.h"
 
+
+static int appearFlagCheck=0;
+static int receivedStatus;
+
+
 @interface loginViewController ()
 {
     /*User credentials*/
@@ -40,6 +45,7 @@
     
     /*Start REST request*/
     spinningView.hidden=FALSE;
+    spinningView.transform=CGAffineTransformMakeScale(1.5, 1.5);
     [spinningView startAnimating];
     
     /*Pass this username to server*/

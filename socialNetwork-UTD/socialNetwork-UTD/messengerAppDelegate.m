@@ -19,6 +19,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    chatViweObj = [[userChatViewController alloc]init];
+
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
     self.viewController = [[[messengerViewController alloc] initWithNibName:@"messengerViewController" bundle:nil] autorelease];
@@ -26,22 +28,19 @@
     [self.window makeKeyAndVisible];
     
     /*Informing device about Push notification enablement*/
-    [[UIApplication sharedApplication]registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
+    [[UIApplication sharedApplication]registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert];
+    [[UIApplication sharedApplication]registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge];
+    [[UIApplication sharedApplication]registerForRemoteNotificationTypes:UIRemoteNotificationTypeSound];
     
-    /*
-    if(self.locationManager==nil){
-        _locationManager=[[CLLocationManager alloc] init];        
-        _locationManager.delegate=self;
-        _locationManager.desiredAccuracy=kCLLocationAccuracyBest;
-        _locationManager.distanceFilter=10.0f;
-        self.locationManager=_locationManager;
-    }
-    
-    if([CLLocationManager locationServicesEnabled])
-    {
-        [self.locationManager startUpdatingLocation];
-    }
-    */ 
+    if (launchOptions != nil)
+	{
+		NSDictionary* dictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+		if (dictionary != nil)
+		{
+			NSLog(@"Launched from push notification: %@", dictionary);
+			[self addMessageFromRemoteNotification:dictionary updateUI:NO];
+		}
+	}
     
     return YES;
 }
@@ -64,14 +63,37 @@
 	NSLog(@"Failed to get token, error: %@", error);
 }
 
-
-/*
--(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+- (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
 {
-        NSLog(@"inside handler");
-        
+	NSLog(@"Received notification: %@", userInfo);
+	[self addMessageFromRemoteNotification:userInfo updateUI:YES];
 }
-*/ 
+
+
+
+- (void)addMessageFromRemoteNotification:(NSDictionary*)userInfo updateUI:(BOOL)updateUI
+{    
+	NSString* alertValue = [[userInfo valueForKey:@"aps"] valueForKey:@"alert"];
+    NSString* senderValue = [userInfo valueForKey:@"sender"];
+    
+    if(alertValue!=NULL)
+    {
+        NSMutableArray* alertParts = [NSMutableArray arrayWithArray:[alertValue componentsSeparatedByString:@": "]];
+        _chatMessage = [alertParts objectAtIndex:0];
+        [alertParts removeObjectAtIndex:0];
+    }
+    if(senderValue!=NULL)
+    {
+        NSMutableArray* senderParts = [NSMutableArray arrayWithArray:[senderValue componentsSeparatedByString:@": "]];
+        _senderName = [senderParts objectAtIndex:0];
+    }
+    
+	if (updateUI)
+    {
+		[chatViweObj showNewMessage:_chatMessage :_senderName];
+    }
+    
+}
 
 
 - (void)applicationWillResignActive:(UIApplication *)application

@@ -8,20 +8,29 @@
 
 #import <UIKit/UIKit.h>
 #import "messengerViewController.h"
+#import "userChatViewController.h"
 
 @class messengerViewController;
+@class userChatViewController;
+
 
 @interface friendsViewController : UIViewController
         <UITableViewDataSource,UITableViewDelegate>
 {
     IBOutlet UITableView *tabVw;
+    UIRefreshControl *refreshControl;
+    
     NSArray *friendList;
     NSString *selectedIndex;
+    NSDictionary *friendDictionary;
     
-    messengerViewController *setIndexObj;
-    messengerViewController *grabFriendObj;
+    messengerViewController *mainViewObj;
+    userChatViewController *userChatObj;
 }
 
 -(IBAction)backToMain;
+-(void)refreshUI;
+-(void)getFriendNumbers: (NSArray *)friendNum;
+
 
 @end
